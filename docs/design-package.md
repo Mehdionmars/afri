@@ -71,7 +71,7 @@ Aucune section ne reprend la mise en page de sa voisine.
    Titre « Nos services ». Sous-titre FR « Six métiers, un seul interlocuteur. » / EN « Six skills, one point of contact. »
 2. **Notre méthode** : une route horizontale à quatre escales sur fond clair, tracée au scroll, avec les quatre étapes du client.
    Sous-titre FR « À chaque étape, vous savez ce qui est fait, par qui, et quand. » / EN « At every step, you know what is done, by whom, and when. »
-3. **Pourquoi nous** : grande photo à gauche, les quatre arguments du client à droite, et un chiffre réel en exergue.
+3. **Pourquoi nous** (reprise le 6 octobre 2026 d'après « Bold Stats » de 21st.dev) : le chiffre réel en très grand avec sa phrase, la photo du port à droite, puis un filet et les quatre arguments du client sur une ligne.
    FR « 73 % des PME marocaines exportent. Un tiers seulement le font de façon régulière. » / EN « 73% of Moroccan SMEs export. Only a third do it regularly. »
    Source en petit : FR « Enquête BEI auprès de 150 PME exportatrices, 2025 » / EN « EIB survey of 150 exporting SMEs, 2025 ».
    Suite : FR « Nous aidons les autres à passer le cap. » / EN « We help the others make the leap. »

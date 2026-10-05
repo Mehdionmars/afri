@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "AFRIEXPORT CONSULTING | Conseil en import-export au Maroc",
-    "description": "Cabinet de conseil en import-export basé au Maroc : étude de marché, recherche de partenaires, douane et logistique internationale vers l'Afrique et le monde.",
+    "description": "Cabinet de conseil en import-export basé au Maroc : étude de marché, recherche de partenaires, douane et logistique internationale vers l'Afrique et le monde.",
     "ogImageAlt": "AFRIEXPORT CONSULTING, conseil en import-export entre le Maroc, l'Afrique et le monde",
     "locale": "fr_FR"
   },
@@ -39,7 +39,7 @@
       "Exporter chaque mois, c'est un métier."
     ],
     "title": "Développez vos échanges entre le Maroc, l'Afrique et le monde",
-    "lead": "AFRIEXPORT CONSULTING accompagne les entreprises dans leurs opérations d'import et d'export : étude de marché, recherche de partenaires, réglementation douanière et logistique internationale.",
+    "lead": "AFRIEXPORT CONSULTING accompagne les entreprises dans leurs opérations d'import et d'export : étude de marché, recherche de partenaires, réglementation douanière et logistique internationale.",
     "ctaPrimary": "Parler à un consultant",
     "ctaSecondary": "Découvrir nos services"
   },
@@ -52,42 +52,42 @@
         "id": "etude-de-marche",
         "title": "Étude de marché",
         "tag": "Marchés & prix",
-        "photo": "[Photo : analyse de marché]",
+        "photo": "[Photo : analyse de marché]",
         "alt": "Analyse de marché à l'export"
       },
       {
         "id": "partenaires",
         "title": "Recherche de partenaires",
         "tag": "Acheteurs & fournisseurs",
-        "photo": "[Photo : poignée de main]",
+        "photo": "[Photo : poignée de main]",
         "alt": "Poignée de main entre partenaires commerciaux"
       },
       {
         "id": "douane",
         "title": "Douane et réglementation",
         "tag": "Conformité de vos dossiers",
-        "photo": "[Photo : contrôle douanier]",
+        "photo": "[Photo : contrôle douanier]",
         "alt": "Contrôle douanier de marchandises"
       },
       {
         "id": "logistique",
         "title": "Logistique internationale",
         "tag": "Mer · air · route",
-        "photo": "[Photo : porte-conteneurs]",
+        "photo": "[Photo : porte-conteneurs]",
         "alt": "Porte-conteneurs en mer"
       },
       {
         "id": "contrats",
         "title": "Contrats et paiements",
         "tag": "Paiements sécurisés",
-        "photo": "[Photo : signature de contrat]",
+        "photo": "[Photo : signature de contrat]",
         "alt": "Signature d'un contrat commercial"
       },
       {
         "id": "formation",
         "title": "Formation export",
         "tag": "Équipes formées",
-        "photo": "[Photo : formation]",
+        "photo": "[Photo : formation]",
         "alt": "Formation d'une équipe à l'export"
       }
     ]
@@ -108,7 +108,7 @@
       },
       {
         "title": "Mise en œuvre",
-        "text": "Démarches douanières, contrats, transport : nous coordonnons chaque intervenant."
+        "text": "Démarches douanières, contrats, transport : nous coordonnons chaque intervenant."
       },
       {
         "title": "Suivi",
@@ -119,7 +119,7 @@
   "why": {
     "eyebrow": "Pourquoi AFRIEXPORT",
     "title": "Un partenaire qui connaît le terrain africain",
-    "photo": "[Photo : port, conteneurs ou équipe AFRIEXPORT]",
+    "photo": "[Photo : port, conteneurs ou équipe AFRIEXPORT]",
     "photoAlt": "L'équipe AFRIEXPORT CONSULTING sur un terminal à conteneurs",
     "reasons": [
       {
@@ -132,7 +132,7 @@
       },
       {
         "title": "Réseau de partenaires",
-        "text": "Transitaires, transporteurs, organismes de certification : nous mobilisons les bons acteurs."
+        "text": "Transitaires, transporteurs, organismes de certification : nous mobilisons les bons acteurs."
       },
       {
         "title": "Transparence",
@@ -195,7 +195,7 @@
     "faster": {
       "title": "Dossiers traités plus vite",
       "text": "Procédures douanières et documents préparés en amont",
-      "photo": "[Photo : équipe sur le terminal à conteneurs]",
+      "photo": "[Photo : équipe sur le terminal à conteneurs]",
       "photoAlt": "Équipe sur un terminal à conteneurs"
     },
     "presence": {
@@ -1390,7 +1390,7 @@
   "contact": {
     "eyebrow": "Contact",
     "title": "Parlons de votre projet à l'international",
-    "lead": "Décrivez-nous votre besoin : un consultant vous recontacte pour un premier échange.",
+    "lead": "Décrivez-nous votre besoin : un consultant vous recontacte pour un premier échange.",
     "addressLabel": "Adresse",
     "phoneLabel": "Téléphone",
     "emailLabel": "E-mail",
@@ -1418,7 +1418,7 @@
         "Autre"
       ],
       "message": "Message",
-      "messagePlaceholder": "Décrivez votre projet : produit, pays visés, volumes…",
+      "messagePlaceholder": "Décrivez votre projet : produit, pays visés, volumes…",
       "consent": "J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la",
       "consentLink": "politique de confidentialité",
       "honeypot": "Ne remplissez pas ce champ.",
