@@ -1,0 +1,282 @@
+---
+/**
+ * Sélecteur de conteneur en 3D : le visiteur choisit un format, la caisse s'allonge
+ * ou se rehausse en direct et les chiffres défilent. Utilisé sur l'accueil et la page Conteneurs.
+ * Une seule instance par page.
+ */
+import Container3D from '../three/Container3D.astro';
+import ContainerScene from '../three/ContainerScene.astro';
+import { formatNumber, useTranslations, type Lang } from '../../i18n/utils';
+
+export interface PickerSpec {
+  id: string;
+  /** Libellé court du bouton (« 20' DC »). */
+  label: string;
+  name: string;
+  type: string;
+  lengthM: number;
+  widthM: number;
+  heightM: number;
+  volumeM3: number;
+  payloadKg: number;
+  palletsEuro: number;
+}
+
+interface Props {
+  lang: Lang;
+  specs: PickerSpec[];
+  class?: string;
+}
+
+const { lang, specs, class: className } = Astro.props;
+const t = useTranslations(lang).containers;
+const first = specs[0];
+const SCALE = 32; // px par mètre dans la scène
+
+const fields = [
+  { key: 'lengthM', label: t.length, digits: 2, unit: 'm' },
+  { key: 'widthM', label: t.width, digits: 2, unit: 'm' },
+  { key: 'heightM', label: t.height, digits: 2, unit: 'm' },
+  { key: 'volumeM3', label: t.volume, digits: 1, unit: 'm³', approx: true },
+  { key: 'payloadKg', label: t.payload, digits: 0, unit: 'kg', approx: true },
+  { key: 'palletsEuro', label: t.pallets, digits: 0, unit: '' },
+] as const;
+
+const fmt = (value: number, digits: number, unit: string, approx = false) =>
+  `${approx ? '≈ ' : ''}${formatNumber(lang, value, digits)}${unit ? ` ${unit}` : ''}`;
+
+const payload = JSON.stringify({ lang, scale: SCALE, specs });
+---
+
+<div class:list={['grid items-stretch gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-12', className]} data-picker data-specs={payload}>
+  <div class="stage reveal" data-anim>
+    <div class="ground" aria-hidden="true"></div>
+    <div class="shadow" aria-hidden="true" data-shadow></div>
+    <ContainerScene animation="none" startAngle={-34} tilt={-16} perspective={1600} pausable={false} class="absolute inset-0" rigClass="picker-rig">
+      <Container3D length={first.lengthM} width={first.widthM} height={first.heightM} color="yellow" scale={SCALE} class="morph picker-box" />
+    </ContainerScene>
+    <span class="label-mono stage-ruler" aria-hidden="true" data-ruler>L {formatNumber(lang, first.lengthM, 2)} m</span>
+  </div>
+
+  <div class="flex flex-col gap-7">
+    <div class="segmented" role="radiogroup" aria-label={t.picker}>
+      {
+        specs.map((spec, i) => (
+          <button type="button" role="radio" aria-checked={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-choice={spec.id}>
+            {spec.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <h3 class="m-0 text-h3-lg" data-name>{first.name}</h3>
+      <p class="m-0 text-[15px] text-metal-600" data-type>{first.type}</p>
+    </div>
+
+    <dl class="m-0 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-navy/12 pt-6" aria-live="polite">
+      {
+        fields.map((field) => (
+          <div class="flex flex-col gap-1">
+            <dt class="label-mono text-metal-600">{field.label}</dt>
+            <dd class="m-0 text-[clamp(1.375rem,1.2rem+0.6vw,1.75rem)] font-medium tabular-nums tracking-[-0.02em]" data-field={field.key} data-digits={field.digits} data-unit={field.unit} data-approx={'approx' in field ? '1' : undefined}>
+              {fmt(first[field.key], field.digits, field.unit, 'approx' in field)}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="m-0 text-[13px] text-metal-600">{t.detailsNote}</p>
+  </div>
+</div>
+
+<style>
+  .stage {
+    --rig-s: 0.6;
+    position: relative;
+    min-height: 320px;
+    overflow: hidden;
+    border-radius: 20px;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 38%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
+      linear-gradient(180deg, #f5f6f8 0%, #eef0f2 64%, #dde1e6 64%, #eef0f2 100%);
+  }
+  @media (min-width: 1024px) {
+    .stage {
+      min-height: 440px;
+    }
+  }
+  .ground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 64%;
+    height: 1px;
+    background: rgba(15, 35, 64, 0.15);
+  }
+  .shadow {
+    position: absolute;
+    left: 50%;
+    top: 62%;
+    width: calc(var(--sw, 240px) * var(--rig-s));
+    height: 34px;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(0, 0, 0, 0.22), transparent);
+    transition: width 0.7s var(--ease-out);
+  }
+  .stage-ruler {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 18px;
+    translate: -50% 0;
+    color: #5e6670;
+  }
+  /* `translate` et `scale` se cumulent avec la rotation de la scène sans la remplacer. */
+  :global(.picker-rig) {
+    translate: 0 6%;
+    scale: var(--rig-s);
+  }
+  @media (min-width: 480px) {
+    .stage {
+      --rig-s: 0.78;
+    }
+  }
+  @media (min-width: 1024px) {
+    .stage {
+      --rig-s: 1;
+    }
+  }
+  /* Léger reflet qui passe sur la caisse : la touche vivante de la section. */
+  .stage::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.35) 50%, transparent 58%);
+    animation: afSheen 9s ease-in-out -3s infinite;
+  }
+  @keyframes afSheen {
+    0%, 60% { translate: -60% 0; }
+    100% { translate: 60% 0; }
+  }
+
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    padding: 4px;
+    gap: 4px;
+    border-radius: 24px;
+    background: #eef0f2;
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.12);
+  }
+  .segmented button {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #3F4650;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  }
+  .segmented button:hover {
+    color: #0b0b0c;
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .segmented button[aria-checked='true'] {
+    background: #0b0b0c;
+    color: #fff;
+  }
+</style>
+
+<script>
+  interface Spec {
+    id: string;
+    name: string;
+    type: string;
+    lengthM: number;
+    widthM: number;
+    heightM: number;
+    volumeM3: number;
+    payloadKg: number;
+    palletsEuro: number;
+  }
+
+  const picker = document.querySelector<HTMLElement>('[data-picker]');
+  if (picker) {
+    const data = JSON.parse(picker.dataset.specs!) as { lang: string; scale: number; specs: Spec[] };
+    const locale = data.lang === 'fr' ? 'fr-FR' : 'en-GB';
+    const box = picker.querySelector<HTMLElement>('.picker-box')!;
+    const shadow = picker.querySelector<HTMLElement>('[data-shadow]')!;
+    const choices = [...picker.querySelectorAll<HTMLButtonElement>('[data-choice]')];
+    const fields = [...picker.querySelectorAll<HTMLElement>('[data-field]')];
+    const name = picker.querySelector<HTMLElement>('[data-name]')!;
+    const typeEl = picker.querySelector<HTMLElement>('[data-type]')!;
+    const ruler = picker.querySelector<HTMLElement>('[data-ruler]')!;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    let current = data.specs[0];
+    let rollId = 0;
+
+    const format = (value: number, digits: number, unit: string, approx: boolean) =>
+      `${approx ? '≈ ' : ''}${new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value)}${unit ? ` ${unit}` : ''}`;
+
+    const px = (m: number) => `${Math.round(m * data.scale * 10) / 10}px`;
+
+    function render(spec: Spec, t: number, from: Spec) {
+      for (const el of fields) {
+        const key = el.dataset.field as keyof Spec;
+        const a = from[key] as number;
+        const b = spec[key] as number;
+        el.textContent = format(a + (b - a) * t, Number(el.dataset.digits), el.dataset.unit ?? '', !!el.dataset.approx);
+      }
+    }
+
+    function select(spec: Spec) {
+      if (spec.id === current.id) return;
+      const from = current;
+      current = spec;
+      choices.forEach((button) => {
+        const on = button.dataset.choice === spec.id;
+        button.setAttribute('aria-checked', String(on));
+        button.tabIndex = on ? 0 : -1;
+      });
+      box.style.setProperty('--l', px(spec.lengthM));
+      box.style.setProperty('--w', px(spec.widthM));
+      box.style.setProperty('--h', px(spec.heightM));
+      shadow.style.setProperty('--sw', `${Math.round(spec.lengthM * data.scale * 0.95)}px`);
+      name.textContent = spec.name;
+      typeEl.textContent = spec.type;
+      ruler.textContent = `L ${new Intl.NumberFormat(locale, { minimumFractionDigits: 2 }).format(spec.lengthM)} m`;
+
+      // Les chiffres défilent jusqu'à leur nouvelle valeur (instantané avec mouvement réduit).
+      const id = ++rollId;
+      if (reduce.matches) return render(spec, 1, from);
+      const start = performance.now();
+      const step = (now: number) => {
+        if (id !== rollId) return;
+        const t = Math.min(1, (now - start) / 600);
+        render(spec, 1 - Math.pow(1 - t, 3), from);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    shadow.style.setProperty('--sw', `${Math.round(current.lengthM * data.scale * 0.95)}px`);
+    choices.forEach((button, i) => {
+      button.addEventListener('click', () => select(data.specs[i]));
+      button.addEventListener('keydown', (event) => {
+        const delta = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 0;
+        if (!delta) return;
+        event.preventDefault();
+        const next = (i + delta + choices.length) % choices.length;
+        choices[next].focus();
+        select(data.specs[next]);
+      });
+    });
+  }
+</script>

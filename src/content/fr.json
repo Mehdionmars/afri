@@ -1,0 +1,1475 @@
+{
+  "meta": {
+    "title": "AFRIEXPORT CONSULTING | Conseil en import-export au Maroc",
+    "description": "Cabinet de conseil en import-export basé au Maroc : étude de marché, recherche de partenaires, douane et logistique internationale vers l'Afrique et le monde.",
+    "ogImageAlt": "AFRIEXPORT CONSULTING, conseil en import-export entre le Maroc, l'Afrique et le monde",
+    "locale": "fr_FR"
+  },
+  "a11y": {
+    "skip": "Aller au contenu",
+    "home": ", retour à l'accueil",
+    "mainNav": "Navigation principale",
+    "footerNav": "Navigation du pied de page",
+    "legalNav": "Informations légales",
+    "menuOpen": "Ouvrir le menu",
+    "menuClose": "Fermer le menu",
+    "langGroup": "Langue",
+    "newWindow": "(nouvelle fenêtre)"
+  },
+  "loader": {
+    "tagline": "Maroc · Afrique · Monde"
+  },
+  "nav": {
+    "services": "Services",
+    "method": "Notre méthode",
+    "why": "Pourquoi nous",
+    "containers": "Conteneurs",
+    "results": "Résultats",
+    "contact": "Contact",
+    "cta": "Demander un rendez-vous"
+  },
+  "route": {
+    "label": "Plan de la page",
+    "home": "Accueil"
+  },
+  "hero": {
+    "eyebrow": "Conseil en import-export · Maroc",
+    "bands": [
+      "Exporter une fois, c'est un essai.",
+      "Exporter chaque mois, c'est un métier."
+    ],
+    "title": "Développez vos échanges entre le Maroc, l'Afrique et le monde",
+    "lead": "AFRIEXPORT CONSULTING accompagne les entreprises dans leurs opérations d'import et d'export : étude de marché, recherche de partenaires, réglementation douanière et logistique internationale.",
+    "ctaPrimary": "Parler à un consultant",
+    "ctaSecondary": "Découvrir nos services"
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Six métiers, un seul interlocuteur.",
+    "cta": "Demander un rendez-vous",
+    "items": [
+      {
+        "id": "etude-de-marche",
+        "title": "Étude de marché",
+        "tag": "Marchés & prix",
+        "photo": "[Photo : analyse de marché]",
+        "alt": "Analyse de marché à l'export"
+      },
+      {
+        "id": "partenaires",
+        "title": "Recherche de partenaires",
+        "tag": "Acheteurs & fournisseurs",
+        "photo": "[Photo : poignée de main]",
+        "alt": "Poignée de main entre partenaires commerciaux"
+      },
+      {
+        "id": "douane",
+        "title": "Douane et réglementation",
+        "tag": "Conformité de vos dossiers",
+        "photo": "[Photo : contrôle douanier]",
+        "alt": "Contrôle douanier de marchandises"
+      },
+      {
+        "id": "logistique",
+        "title": "Logistique internationale",
+        "tag": "Mer · air · route",
+        "photo": "[Photo : porte-conteneurs]",
+        "alt": "Porte-conteneurs en mer"
+      },
+      {
+        "id": "contrats",
+        "title": "Contrats et paiements",
+        "tag": "Paiements sécurisés",
+        "photo": "[Photo : signature de contrat]",
+        "alt": "Signature d'un contrat commercial"
+      },
+      {
+        "id": "formation",
+        "title": "Formation export",
+        "tag": "Équipes formées",
+        "photo": "[Photo : formation]",
+        "alt": "Formation d'une équipe à l'export"
+      }
+    ]
+  },
+  "method": {
+    "eyebrow": "Notre méthode",
+    "title": "Quatre étapes pour sécuriser vos opérations",
+    "subtitle": "À chaque étape, vous savez ce qui est fait, par qui, et quand.",
+    "stepLabel": "Étape",
+    "steps": [
+      {
+        "title": "Diagnostic",
+        "text": "Nous analysons votre produit, vos capacités et vos objectifs à l'international."
+      },
+      {
+        "title": "Stratégie",
+        "text": "Choix des marchés, des partenaires et du plan d'action adapté à votre budget."
+      },
+      {
+        "title": "Mise en œuvre",
+        "text": "Démarches douanières, contrats, transport : nous coordonnons chaque intervenant."
+      },
+      {
+        "title": "Suivi",
+        "text": "Nous restons à vos côtés pour développer et pérenniser vos flux commerciaux."
+      }
+    ]
+  },
+  "why": {
+    "eyebrow": "Pourquoi AFRIEXPORT",
+    "title": "Un partenaire qui connaît le terrain africain",
+    "photo": "[Photo : port, conteneurs ou équipe AFRIEXPORT]",
+    "photoAlt": "L'équipe AFRIEXPORT CONSULTING sur un terminal à conteneurs",
+    "reasons": [
+      {
+        "title": "Expertise Maroc – Afrique",
+        "text": "Une connaissance concrète des marchés africains et des corridors commerciaux depuis le Maroc."
+      },
+      {
+        "title": "Accompagnement sur mesure",
+        "text": "Un interlocuteur unique qui adapte la mission à la taille et aux objectifs de votre entreprise."
+      },
+      {
+        "title": "Réseau de partenaires",
+        "text": "Transitaires, transporteurs, organismes de certification : nous mobilisons les bons acteurs."
+      },
+      {
+        "title": "Transparence",
+        "text": "Des étapes claires, des délais annoncés et un suivi régulier de votre dossier."
+      }
+    ],
+    "stat": {
+      "value": 73,
+      "text": "des PME marocaines exportent. Un tiers seulement le font de façon régulière.",
+      "source": "Enquête BEI auprès de 150 PME exportatrices, 2025",
+      "follow": "Nous aidons les autres à passer le cap."
+    }
+  },
+  "containers": {
+    "eyebrow": "Conteneurs maritimes · Dimensions",
+    "title": "Le bon conteneur, dès le départ",
+    "lead": "Les formats de conteneurs les plus utilisés pour vos expéditions, pour choisir le bon volume dès le départ.",
+    "picker": "Choisir un format",
+    "format": "Format",
+    "length": "Longueur",
+    "width": "Largeur",
+    "height": "Hauteur",
+    "volume": "Volume utile",
+    "payload": "Charge utile max.",
+    "pallets": "Palettes Europe au sol",
+    "detailsNote": "Valeurs indicatives, variables selon le fabricant.",
+    "compare": "Comparer les trois formats",
+    "types": {
+      "20dc": "Conteneur sec · 20 pieds",
+      "40dc": "Conteneur sec · 40 pieds",
+      "40hc": "Conteneur sec haut · 40 pieds"
+    },
+    "conditionsTitle": "États des conteneurs",
+    "conditions": [
+      {
+        "title": "Neuf (One Trip)",
+        "text": "Sorti d'usine, utilisé pour un seul voyage."
+      },
+      {
+        "title": "Cargo Worthy (CW)",
+        "text": "Réparé selon les normes IICL et recertifié pour le transport maritime international."
+      },
+      {
+        "title": "Wind and Watertight (WWT)",
+        "text": "Étanche, mais réservé au stockage : pas de transport maritime."
+      },
+      {
+        "title": "En l'état (As Is)",
+        "text": "Vendu sans garantie, à inspecter avant tout achat."
+      }
+    ]
+  },
+  "results": {
+    "eyebrow": "Résultats",
+    "title": "Ce que nous apportons à nos clients",
+    "partnerships": {
+      "title": "Nouveaux partenariats stratégiques",
+      "text": "Grâce à une mise en relation ciblée avec acheteurs et fournisseurs"
+    },
+    "faster": {
+      "title": "Dossiers traités plus vite",
+      "text": "Procédures douanières et documents préparés en amont",
+      "photo": "[Photo : équipe sur le terminal à conteneurs]",
+      "photoAlt": "Équipe sur un terminal à conteneurs"
+    },
+    "presence": {
+      "title": "Présence internationale",
+      "text": "Vos produits visibles sur de nouveaux marchés",
+      "unit": "pays"
+    },
+    "growth": {
+      "title": "Croissance de vos échanges",
+      "text": "Un plan d'action suivi et des flux commerciaux qui se développent"
+    }
+  },
+  "pages": {
+    "breadcrumb": "Fil d'Ariane",
+    "home": "Accueil",
+    "faqTitle": "Questions fréquentes",
+    "photo": "Photo",
+    "indicative": "Valeurs indicatives",
+    "routeLabel": "Plan de la page",
+    "homeLinks": {
+      "services": "Tous les services en détail",
+      "method": "La méthode en détail",
+      "why": "Découvrir le cabinet",
+      "containers": "Le guide complet des conteneurs",
+      "results": "Nos résultats en détail",
+      "service": "Voir le service"
+    },
+    "footerServices": "Services",
+    "footerFirm": "Le cabinet",
+    "credits": {
+      "title": "Crédits photos",
+      "intro": "Les photos du site sont publiées sous licence libre. Merci à leurs auteurs.",
+      "by": "par",
+      "license": "licence",
+      "source": "source",
+      "cropped": "recadrée"
+    }
+  },
+  "serviceSummaries": {
+    "etude-de-marche": "Identifier les pays où votre produit a sa place, les prix pratiqués et les règles d'accès.",
+    "partenaires": "Trouver et vérifier des acheteurs, distributeurs ou fournisseurs fiables à l'étranger.",
+    "douane": "Classer vos produits, réunir les bons documents et dédouaner sans blocage.",
+    "logistique": "Choisir le mode de transport, l'Incoterm et le transitaire adaptés à chaque envoi.",
+    "contrats": "Sécuriser vos contrats de vente et vos paiements internationaux.",
+    "formation": "Rendre vos équipes autonomes sur les démarches d'export et d'import."
+  },
+  "servicesPage": {
+    "meta": {
+      "title": "Nos services d'import-export au Maroc | AFRIEXPORT CONSULTING",
+      "description": "Étude de marché, recherche de partenaires, douane, logistique internationale, contrats et formation : six services pour exporter et importer depuis le Maroc."
+    },
+    "eyebrow": "Services · 06",
+    "title": "Six métiers, un seul interlocuteur pour vos échanges internationaux",
+    "lead": "De la première étude de marché jusqu'à la livraison chez votre client, nous prenons en charge les étapes qui vous freinent. Vous choisissez un service, ou la mission complète.",
+    "photoAlt": "Mur de conteneurs maritimes de toutes les couleurs",
+    "photoCaption": "Conteneurs en attente de chargement",
+    "listTitle": "Choisissez votre besoin",
+    "listLead": "Chaque service peut être commandé seul. Ensemble, ils couvrent toute la chaîne d'une opération d'export ou d'import.",
+    "bundleTitle": "Une mission complète, pilotée par une seule personne",
+    "bundleText": "La plupart de nos clients combinent plusieurs services. Un consultant unique coordonne alors l'étude, les partenaires, la douane et le transport : vous n'avez qu'un seul point de contact.",
+    "bundleCta": "Voir notre méthode"
+  },
+  "serviceLabels": {
+    "what": "Ce que nous faisons",
+    "forWho": "Pour qui ?",
+    "steps": "Comment se déroule la mission",
+    "deliverables": "Ce que vous recevez",
+    "cta": "Parler de mon projet",
+    "related": "Les autres services",
+    "all": "Tous les services"
+  },
+  "serviceDetails": {
+    "etude-de-marche": {
+      "meta": {
+        "title": "Étude de marché à l'export au Maroc | AFRIEXPORT CONSULTING",
+        "description": "Choisissez les bons pays avant d'exporter : demande, prix, concurrence, règles d'accès et circuits de distribution. Une étude de marché export sur mesure."
+      },
+      "h1": "Étude de marché à l'export",
+      "lead": "Avant d'investir dans un salon, un stock ou un transport, sachez où votre produit a vraiment sa place. Nous comparons les marchés possibles et vous indiquons ceux qui valent l'effort.",
+      "photoAlt": "Données de marché affichées sur une tablette pendant une réunion",
+      "photoCaption": "Comparer les marchés, chiffres à l'appui",
+      "what": [
+        {
+          "title": "Présélection des pays",
+          "text": "Nous croisons la demande, les flux d'importation et la distance logistique pour retenir les marchés les plus prometteurs."
+        },
+        {
+          "title": "Prix et concurrence",
+          "text": "Relevé des prix de vente, des marges de distribution et des concurrents déjà présents, pour savoir si votre prix tient."
+        },
+        {
+          "title": "Règles d'accès",
+          "text": "Droits de douane, normes, certifications, étiquetage : tout ce que le pays exige avant de laisser entrer votre produit."
+        },
+        {
+          "title": "Circuits de distribution",
+          "text": "Importateur, grossiste, centrale d'achat ou vente directe : le circuit le plus réaliste pour votre volume."
+        },
+        {
+          "title": "Accords commerciaux",
+          "text": "Nous vérifions si un accord de libre-échange (Union européenne, accord d'Agadir, ZLECAf…) réduit vos droits de douane."
+        }
+      ],
+      "forWho": [
+        "Les entreprises qui exportent pour la première fois et veulent choisir le bon pays.",
+        "Les exportateurs qui cherchent un nouveau marché après un premier succès.",
+        "Les importateurs qui comparent plusieurs pays fournisseurs.",
+        "Les porteurs de projet qui doivent convaincre une banque ou un investisseur."
+      ],
+      "steps": [
+        {
+          "title": "Cadrage",
+          "text": "Un entretien pour comprendre votre produit, vos capacités de production et vos objectifs."
+        },
+        {
+          "title": "Recherche",
+          "text": "Analyse des statistiques d'échanges, des réglementations et des prix sur les marchés retenus."
+        },
+        {
+          "title": "Vérification terrain",
+          "text": "Échanges avec des importateurs, des distributeurs et notre réseau pour confirmer les chiffres."
+        },
+        {
+          "title": "Restitution",
+          "text": "Présentation des résultats et d'un plan d'entrée concret, marché par marché."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Rapport de marché",
+          "text": "Un document clair, avec les chiffres clés et leurs sources."
+        },
+        {
+          "title": "Classement des pays",
+          "text": "Les marchés notés selon leur potentiel et leur difficulté d'accès."
+        },
+        {
+          "title": "Fiche d'accès par pays",
+          "text": "Droits, normes, documents et délais à prévoir."
+        },
+        {
+          "title": "Plan d'entrée",
+          "text": "Les premières actions à mener, avec un budget indicatif."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Combien de temps dure une étude de marché ?",
+          "a": "Cela dépend du nombre de pays et de la profondeur souhaitée. Nous vous donnons un calendrier précis à la fin de l'entretien de cadrage."
+        },
+        {
+          "q": "Faut-il déjà avoir un produit prêt à exporter ?",
+          "a": "Non. L'étude sert justement à vérifier si votre produit doit être adapté (emballage, étiquetage, normes) avant de partir."
+        },
+        {
+          "q": "Travaillez-vous uniquement sur l'Afrique ?",
+          "a": "L'Afrique est notre terrain de prédilection, mais nous étudions aussi l'Europe, le Moyen-Orient et les Amériques selon votre produit."
+        },
+        {
+          "q": "Que se passe-t-il après l'étude ?",
+          "a": "Vous pouvez mener la suite seul avec le plan d'entrée, ou nous confier la recherche de partenaires et la logistique."
+        }
+      ]
+    },
+    "partenaires": {
+      "meta": {
+        "title": "Recherche d'acheteurs et de fournisseurs à l'international | AFRIEXPORT CONSULTING",
+        "description": "Nous identifions, vérifions et vous présentons des acheteurs, distributeurs et fournisseurs fiables au Maroc, en Afrique et dans le monde."
+      },
+      "h1": "Recherche de partenaires à l'international",
+      "lead": "Un bon partenaire vaut mieux qu'un grand marché. Nous identifions les acheteurs, distributeurs ou fournisseurs qui correspondent à votre offre, nous les vérifions, puis nous organisons la rencontre.",
+      "photoAlt": "Poignée de main entre deux partenaires commerciaux",
+      "photoCaption": "Une première rencontre qui se conclut",
+      "what": [
+        {
+          "title": "Profil du partenaire idéal",
+          "text": "Nous définissons avec vous le partenaire recherché : taille, circuit, volumes, exigences."
+        },
+        {
+          "title": "Identification",
+          "text": "Recherche dans les bases professionnelles, les annuaires sectoriels, les salons et notre réseau."
+        },
+        {
+          "title": "Vérification",
+          "text": "Existence légale, solidité, références, réputation : nous écartons les contacts douteux."
+        },
+        {
+          "title": "Prise de contact",
+          "text": "Présentation de votre offre, premiers échanges et envoi d'échantillons si nécessaire."
+        },
+        {
+          "title": "Rendez-vous d'affaires",
+          "text": "Rendez-vous en visioconférence ou sur place, avec notre accompagnement si vous le souhaitez."
+        }
+      ],
+      "forWho": [
+        "Les producteurs qui cherchent un importateur ou un distributeur à l'étranger.",
+        "Les entreprises qui veulent diversifier leurs fournisseurs.",
+        "Les sociétés étrangères qui cherchent un partenaire au Maroc.",
+        "Les exportateurs qui viennent de perdre un client important."
+      ],
+      "steps": [
+        {
+          "title": "Brief",
+          "text": "Votre offre, vos conditions commerciales et le profil recherché."
+        },
+        {
+          "title": "Liste longue",
+          "text": "Une sélection large de partenaires possibles dans les pays retenus."
+        },
+        {
+          "title": "Qualification",
+          "text": "Prise de contact, vérification et tri : il reste les plus sérieux."
+        },
+        {
+          "title": "Mise en relation",
+          "text": "Rendez-vous organisés et suivi jusqu'aux premières commandes."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Liste qualifiée",
+          "text": "Les partenaires retenus, avec leurs coordonnées et notre avis."
+        },
+        {
+          "title": "Fiches de vérification",
+          "text": "Ce que nous avons contrôlé pour chaque entreprise."
+        },
+        {
+          "title": "Agenda de rendez-vous",
+          "text": "Les rencontres planifiées et les points à aborder."
+        },
+        {
+          "title": "Comptes rendus",
+          "text": "Le résumé de chaque échange et les prochaines étapes."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Garantissez-vous une commande ?",
+          "a": "Personne ne peut garantir une commande. Nous garantissons des contacts vérifiés, sérieux et intéressés par votre offre."
+        },
+        {
+          "q": "Comment vérifiez-vous un partenaire ?",
+          "a": "Registre du commerce, ancienneté, références clients, informations commerciales disponibles et échanges directs avec l'entreprise."
+        },
+        {
+          "q": "Pouvez-vous m'accompagner aux rendez-vous ?",
+          "a": "Oui, en visioconférence ou sur place, notamment lors des salons professionnels."
+        },
+        {
+          "q": "Cherchez-vous aussi des fournisseurs ?",
+          "a": "Oui. Pour un import, nous identifions et comparons des fournisseurs, et nous pouvons faire contrôler la marchandise avant son expédition."
+        }
+      ]
+    },
+    "douane": {
+      "meta": {
+        "title": "Douane et réglementation import-export au Maroc | AFRIEXPORT CONSULTING",
+        "description": "Classement tarifaire, origine, certificats, autorisations et documents : nous préparons vos dossiers douaniers pour un dédouanement sans blocage."
+      },
+      "h1": "Douane et réglementation",
+      "lead": "Une erreur de code douanier ou un certificat manquant peut bloquer un conteneur pendant des jours. Nous préparons vos dossiers en amont pour que la marchandise passe sans surprise.",
+      "photoAlt": "Scellé de sécurité jaune posé sur la porte d'un conteneur",
+      "photoCaption": "Scellé de sécurité sur un conteneur prêt à partir",
+      "what": [
+        {
+          "title": "Classement tarifaire",
+          "text": "Nous déterminons le bon code du Système harmonisé pour chaque produit : il fixe les droits et les contrôles."
+        },
+        {
+          "title": "Origine des marchandises",
+          "text": "Vérification des règles d'origine et préparation des preuves d'origine (EUR.1, certificats d'origine) pour profiter des accords."
+        },
+        {
+          "title": "Autorisations et contrôles",
+          "text": "Licences, certificats sanitaires ou phytosanitaires, conformité aux normes : nous listons et obtenons ce qui est exigé."
+        },
+        {
+          "title": "Dossier documentaire",
+          "text": "Facture commerciale, liste de colisage, documents de transport : des documents complets et cohérents entre eux."
+        },
+        {
+          "title": "Coordination avec le transitaire",
+          "text": "Nous travaillons avec votre transitaire ou votre déclarant pour que la déclaration parte complète."
+        }
+      ],
+      "forWho": [
+        "Les entreprises qui découvrent les formalités d'export ou d'import.",
+        "Celles qui ont déjà connu un blocage ou un redressement en douane.",
+        "Les exportateurs de produits contrôlés : agroalimentaire, cosmétique, produits industriels.",
+        "Les importateurs qui veulent connaître le coût réel de leur marchandise rendue au Maroc."
+      ],
+      "steps": [
+        {
+          "title": "Audit des flux",
+          "text": "Vos produits, vos pays et vos documents actuels."
+        },
+        {
+          "title": "Analyse réglementaire",
+          "text": "Codes, droits, accords et contrôles applicables."
+        },
+        {
+          "title": "Constitution du dossier",
+          "text": "Documents et certificats préparés et vérifiés."
+        },
+        {
+          "title": "Suivi du dédouanement",
+          "text": "Nous restons joignables jusqu'à la mainlevée de la marchandise."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Fiche douane par produit",
+          "text": "Code, droits, taxes et contrôles pour chaque produit."
+        },
+        {
+          "title": "Check-list documentaire",
+          "text": "Les documents à réunir, envoi par envoi."
+        },
+        {
+          "title": "Calcul du coût rendu",
+          "text": "Droits et taxes estimés pour fixer le bon prix."
+        },
+        {
+          "title": "Procédure écrite",
+          "text": "Les étapes à suivre pour vos prochains envois."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Qu'est-ce qu'un code SH ?",
+          "a": "C'est le code du Système harmonisé, la nomenclature mondiale des marchandises. Il détermine les droits de douane, les taxes et les contrôles applicables à votre produit."
+        },
+        {
+          "q": "Comment profiter d'un accord de libre-échange ?",
+          "a": "Votre produit doit respecter les règles d'origine de l'accord, et vous devez fournir la preuve d'origine demandée, par exemple un certificat EUR.1 vers l'Union européenne."
+        },
+        {
+          "q": "Quels documents faut-il pour exporter ?",
+          "a": "Au minimum une facture commerciale, une liste de colisage et un document de transport. Selon le produit et le pays, s'ajoutent un certificat d'origine, sanitaire ou de conformité."
+        },
+        {
+          "q": "Pouvez-vous intervenir sur une marchandise bloquée ?",
+          "a": "Oui, contactez-nous : nous analysons le motif du blocage et les documents manquants pour débloquer la situation au plus vite."
+        }
+      ]
+    },
+    "logistique": {
+      "meta": {
+        "title": "Logistique internationale et transport maritime | AFRIEXPORT CONSULTING",
+        "description": "Mer, air ou route, Incoterms, choix du conteneur et du transitaire : nous organisons vos expéditions depuis et vers le Maroc."
+      },
+      "h1": "Logistique internationale",
+      "lead": "Le transport pèse lourd dans le prix rendu. Nous choisissons avec vous le bon mode, le bon Incoterm et le bon transitaire, puis nous suivons chaque envoi jusqu'à la livraison.",
+      "photoAlt": "Porte-conteneurs chargé, à quai sous les grues du port de Casablanca",
+      "photoCaption": "Porte-conteneurs au port de Casablanca",
+      "what": [
+        {
+          "title": "Choix du mode de transport",
+          "text": "Maritime, aérien, routier ou combiné : selon le délai, le volume et le budget."
+        },
+        {
+          "title": "Incoterms",
+          "text": "Nous vous aidons à choisir l'Incoterm® 2020 qui répartit clairement les coûts et les risques avec votre client ou votre fournisseur."
+        },
+        {
+          "title": "Conteneur et chargement",
+          "text": "Le bon format (20', 40', High Cube, frigorifique…) et un plan de chargement qui évite de payer du vide."
+        },
+        {
+          "title": "Mise en concurrence",
+          "text": "Appel d'offres auprès des transitaires et transporteurs, et comparaison des devis à périmètre égal."
+        },
+        {
+          "title": "Suivi des envois",
+          "text": "Réservation, documents, suivi du navire ou du camion, et alerte en cas de retard."
+        }
+      ],
+      "forWho": [
+        "Les entreprises qui expédient régulièrement et veulent réduire leurs coûts.",
+        "Celles qui préparent leur premier envoi en conteneur.",
+        "Les importateurs qui veulent maîtriser leurs délais d'approvisionnement.",
+        "Les exportateurs vers l'Afrique subsaharienne, par mer ou par route."
+      ],
+      "steps": [
+        {
+          "title": "Analyse des flux",
+          "text": "Volumes, fréquences, destinations et contraintes de votre marchandise."
+        },
+        {
+          "title": "Schéma de transport",
+          "text": "Le mode, l'Incoterm, le port et le format de conteneur recommandés."
+        },
+        {
+          "title": "Sélection des prestataires",
+          "text": "Devis comparés et choix du transitaire."
+        },
+        {
+          "title": "Pilotage des envois",
+          "text": "Suivi de chaque expédition jusqu'à la livraison."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Schéma logistique",
+          "text": "Le circuit recommandé, du site de production jusqu'au client."
+        },
+        {
+          "title": "Comparatif de devis",
+          "text": "Les offres des transporteurs, comparées ligne à ligne."
+        },
+        {
+          "title": "Plan de chargement",
+          "text": "Le remplissage optimal du conteneur ou du camion."
+        },
+        {
+          "title": "Tableau de suivi",
+          "text": "L'état de chaque envoi, partagé avec vous."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quel Incoterm choisir pour un premier export ?",
+          "a": "Souvent un Incoterm où vos responsabilités s'arrêtent tôt, comme FCA ou FOB, pour limiter les risques. Le bon choix dépend aussi de ce que votre client sait organiser : nous en discutons avec vous."
+        },
+        {
+          "q": "Groupage ou conteneur complet ?",
+          "a": "Pour un petit volume, le groupage (LCL) partage un conteneur entre plusieurs expéditeurs. Au-delà d'une quinzaine de mètres cubes, un conteneur complet (FCL) devient souvent plus intéressant."
+        },
+        {
+          "q": "Peut-on expédier vers l'Afrique de l'Ouest par la route ?",
+          "a": "Oui, la route est une vraie option depuis le Maroc vers l'Afrique de l'Ouest. Nous la comparons au maritime selon votre marchandise, vos délais et votre budget."
+        },
+        {
+          "q": "Comment éviter les frais de surestaries ?",
+          "a": "En préparant les documents avant l'arrivée du conteneur et en planifiant son enlèvement. Les jours de franchise sont limités : au-delà, chaque jour supplémentaire est facturé."
+        }
+      ]
+    },
+    "contrats": {
+      "meta": {
+        "title": "Contrats de vente internationale et paiements sécurisés | AFRIEXPORT CONSULTING",
+        "description": "Contrat de vente, Incoterms, crédit documentaire, remise documentaire, assurance-crédit : sécurisez vos opérations et vos encaissements à l'international."
+      },
+      "h1": "Contrats et paiements internationaux",
+      "lead": "Vendre à l'étranger, c'est aussi s'assurer d'être payé. Nous vous aidons à fixer des conditions claires et à choisir le moyen de paiement adapté au niveau de risque.",
+      "photoAlt": "Signature d'un contrat commercial au stylo",
+      "photoCaption": "Des conditions claires avant d'expédier",
+      "what": [
+        {
+          "title": "Contrat de vente internationale",
+          "text": "Prix, quantités, délais, Incoterm, pénalités, loi applicable : nous structurons les clauses commerciales qui vous protègent."
+        },
+        {
+          "title": "Choix du moyen de paiement",
+          "text": "Virement, remise documentaire, crédit documentaire, lettre de crédit stand-by : la bonne solution selon le pays et le client."
+        },
+        {
+          "title": "Crédit documentaire",
+          "text": "Vérification des conditions du crédit pour éviter les réserves qui retardent le paiement."
+        },
+        {
+          "title": "Couverture des risques",
+          "text": "Assurance-crédit, garanties bancaires, assurance transport : ce qu'il faut couvrir, et comment."
+        },
+        {
+          "title": "Conditions générales export",
+          "text": "Des conditions de vente adaptées à l'international, à joindre à vos offres et à vos factures."
+        }
+      ],
+      "forWho": [
+        "Les entreprises qui vendent à un nouveau client étranger.",
+        "Celles qui ont déjà subi un impayé ou un litige.",
+        "Les exportateurs vers des pays où le risque de paiement est élevé.",
+        "Les importateurs qui versent un acompte à un fournisseur lointain."
+      ],
+      "steps": [
+        {
+          "title": "Évaluation du risque",
+          "text": "Le client, le pays, le montant et la durée de crédit."
+        },
+        {
+          "title": "Choix des sécurités",
+          "text": "Le moyen de paiement et les garanties adaptés à ce risque."
+        },
+        {
+          "title": "Rédaction",
+          "text": "Les clauses du contrat et les conditions de paiement."
+        },
+        {
+          "title": "Contrôle documentaire",
+          "text": "Vérification des documents exigés par la banque avant l'expédition."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Analyse de risque",
+          "text": "Le niveau de risque du client et du pays, expliqué simplement."
+        },
+        {
+          "title": "Clauses commerciales",
+          "text": "Les clauses clés de votre contrat, prêtes à négocier."
+        },
+        {
+          "title": "Recommandation de paiement",
+          "text": "Le moyen de paiement conseillé et son coût."
+        },
+        {
+          "title": "Check-list bancaire",
+          "text": "Les documents à présenter pour être payé sans retard."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Qu'est-ce qu'un crédit documentaire ?",
+          "a": "C'est l'engagement de la banque de l'acheteur de payer le vendeur, à condition que celui-ci présente des documents conformes dans les délais. Il protège les deux parties."
+        },
+        {
+          "q": "Remise documentaire ou crédit documentaire ?",
+          "a": "La remise documentaire coûte moins cher mais n'engage pas la banque : l'acheteur peut refuser les documents. Le crédit documentaire est plus sûr pour le vendeur, et plus coûteux."
+        },
+        {
+          "q": "Faut-il toujours demander un acompte ?",
+          "a": "Ce n'est pas obligatoire, mais un acompte à la commande réduit le risque, surtout avec un nouveau client."
+        },
+        {
+          "q": "Remplacez-vous un avocat ?",
+          "a": "Non. Nous préparons les aspects commerciaux et financiers ; pour les questions juridiques complexes, nous vous orientons vers un avocat spécialisé."
+        }
+      ]
+    },
+    "formation": {
+      "meta": {
+        "title": "Formation export et import pour vos équipes | AFRIEXPORT CONSULTING",
+        "description": "Formations pratiques au commerce international : Incoterms, douane, paiements, logistique. En entreprise ou à distance, adaptées à vos produits et à vos marchés."
+      },
+      "h1": "Formation export et import",
+      "lead": "Des équipes formées font moins d'erreurs et gagnent du temps à chaque envoi. Nos formations partent de vos propres dossiers pour être utiles dès le lendemain.",
+      "photoAlt": "Séance de travail autour d'une table, avec carnets et tablette",
+      "photoCaption": "Atelier pratique sur les dossiers de l'entreprise",
+      "what": [
+        {
+          "title": "Les bases du commerce international",
+          "text": "Le déroulé d'une opération, ses acteurs et ses documents, expliqués simplement."
+        },
+        {
+          "title": "Incoterms® 2020",
+          "text": "Choisir et appliquer le bon Incoterm, avec des cas concrets."
+        },
+        {
+          "title": "Douane et origine",
+          "text": "Classement tarifaire, règles d'origine et documents douaniers."
+        },
+        {
+          "title": "Paiements et risques",
+          "text": "Crédit documentaire, remise documentaire et prévention des impayés."
+        },
+        {
+          "title": "Logistique et conteneurs",
+          "text": "Modes de transport, choix du conteneur et coûts cachés."
+        }
+      ],
+      "forWho": [
+        "Les assistants et responsables export ou import.",
+        "Les commerciaux qui négocient avec des clients étrangers.",
+        "Les équipes administratives, comptables et logistiques.",
+        "Les dirigeants de PME qui veulent comprendre les risques."
+      ],
+      "steps": [
+        {
+          "title": "Évaluation des besoins",
+          "text": "Le niveau de l'équipe et les difficultés rencontrées."
+        },
+        {
+          "title": "Programme sur mesure",
+          "text": "Des modules choisis selon vos produits et vos marchés."
+        },
+        {
+          "title": "Sessions pratiques",
+          "text": "En entreprise ou à distance, sur vos propres documents."
+        },
+        {
+          "title": "Suivi",
+          "text": "Des réponses à vos questions après la formation."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Programme personnalisé",
+          "text": "Les modules, la durée et les objectifs de chaque session."
+        },
+        {
+          "title": "Supports de formation",
+          "text": "Des fiches pratiques à garder sous la main."
+        },
+        {
+          "title": "Exercices sur vos dossiers",
+          "text": "Des cas tirés de vos opérations réelles."
+        },
+        {
+          "title": "Attestation",
+          "text": "Une attestation de participation pour chaque stagiaire."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Où se déroulent les formations ?",
+          "a": "Dans vos locaux, dans une salle de votre choix ou à distance, en visioconférence."
+        },
+        {
+          "q": "Combien de participants par session ?",
+          "a": "Nous privilégions les petits groupes pour que chacun travaille sur des cas concrets. Le nombre exact est fixé avec vous."
+        },
+        {
+          "q": "Faut-il des connaissances préalables ?",
+          "a": "Non. Nous adaptons le niveau à votre équipe, des débutants aux profils confirmés."
+        },
+        {
+          "q": "Pouvez-vous former sur un seul sujet ?",
+          "a": "Oui, un module court peut porter sur un seul thème : Incoterms, crédit documentaire, origine des marchandises…"
+        }
+      ]
+    }
+  },
+  "methodPage": {
+    "meta": {
+      "title": "Notre méthode en quatre étapes | AFRIEXPORT CONSULTING",
+      "description": "Diagnostic, stratégie, mise en œuvre, suivi : la méthode d'AFRIEXPORT CONSULTING pour sécuriser vos opérations d'import et d'export, étape par étape."
+    },
+    "eyebrow": "Notre méthode",
+    "title": "Quatre étapes pour sécuriser vos opérations",
+    "lead": "Chaque mission suit le même chemin, du premier entretien au suivi de vos flux. À chaque étape, vous savez ce qui est fait, par qui, et ce que vous recevez.",
+    "photoAlt": "Le port de Tanger Med au pied des collines",
+    "photoCaption": "Port de Tanger Med, Maroc",
+    "labels": {
+      "weDo": "Ce que nous faisons",
+      "youBring": "Ce que vous apportez",
+      "deliverable": "Ce que vous recevez",
+      "duration": "Durée indicative"
+    },
+    "steps": [
+      {
+        "intro": "Tout commence par une bonne compréhension de votre entreprise. Nous regardons votre produit, votre capacité de production, vos prix et vos ambitions, sans jargon.",
+        "weDo": [
+          "Entretien avec la direction et les équipes concernées",
+          "Analyse du produit, des prix de revient et des capacités",
+          "Repérage des points forts et des risques"
+        ],
+        "youBring": [
+          "Fiches produits et prix de revient",
+          "Vos expériences passées à l'international",
+          "Vos objectifs à un et à trois ans"
+        ],
+        "deliverable": "Un diagnostic écrit : vos atouts, vos points de vigilance et les priorités.",
+        "duration": "[1 à 2 semaines, à confirmer]",
+        "photoAlt": "Analyse chiffrée notée dans un carnet : coûts, taux et graphique"
+      },
+      {
+        "intro": "À partir du diagnostic, nous construisons un plan réaliste : quels marchés, quels partenaires, quel budget, et dans quel ordre.",
+        "weDo": [
+          "Choix des marchés prioritaires",
+          "Définition des partenaires recherchés",
+          "Plan d'action chiffré et calendrier"
+        ],
+        "youBring": [
+          "Votre budget et vos ressources disponibles",
+          "Vos contraintes de production et de trésorerie",
+          "Votre validation des priorités"
+        ],
+        "deliverable": "Une feuille de route claire : les actions, les responsables et le budget.",
+        "duration": "[2 à 4 semaines, à confirmer]",
+        "photoAlt": "Planification d'un itinéraire sur une carte, à côté d'un ordinateur portable"
+      },
+      {
+        "intro": "Nous passons à l'action avec vous. Douane, contrats, transport : nous coordonnons chaque intervenant pour que la première opération se passe bien.",
+        "weDo": [
+          "Recherche et rencontre des partenaires",
+          "Préparation des documents douaniers et des contrats",
+          "Organisation du transport et du conteneur"
+        ],
+        "youBring": [
+          "Les décisions commerciales finales",
+          "Les échantillons et les informations produit",
+          "La signature des contrats"
+        ],
+        "deliverable": "Une première opération réalisée, avec des dossiers complets et vérifiés.",
+        "duration": "[Selon l'opération, à confirmer]",
+        "photoAlt": "Grues portiques au-dessus des conteneurs au port de Tanger Med"
+      },
+      {
+        "intro": "Une première vente n'est qu'un début. Nous restons à vos côtés pour rendre les flux réguliers, corriger ce qui doit l'être et ouvrir de nouveaux marchés.",
+        "weDo": [
+          "Bilan de chaque opération",
+          "Réduction des coûts et des délais",
+          "Développement de nouveaux marchés et partenaires"
+        ],
+        "youBring": [
+          "Vos retours clients et vos chiffres de vente",
+          "Vos nouvelles ambitions",
+          "Un point régulier avec votre consultant"
+        ],
+        "deliverable": "Un tableau de suivi partagé et un point régulier sur vos résultats.",
+        "duration": "[En continu, selon la formule choisie]",
+        "photoAlt": "Camion transportant deux conteneurs à la sortie d'un terminal"
+      }
+    ],
+    "commitmentsTitle": "Nos engagements, à chaque étape",
+    "commitments": [
+      {
+        "title": "Un interlocuteur unique",
+        "text": "Le même consultant suit votre dossier du début à la fin."
+      },
+      {
+        "title": "Des délais annoncés",
+        "text": "Chaque étape a une date de remise connue à l'avance."
+      },
+      {
+        "title": "Des devis clairs",
+        "text": "Vous validez le budget de chaque étape avant qu'elle commence."
+      },
+      {
+        "title": "La confidentialité",
+        "text": "Vos informations commerciales restent entre vous et nous."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Peut-on commencer directement par la mise en œuvre ?",
+        "a": "Oui, si vous avez déjà un client ou un marché. Nous faisons alors un diagnostic court, centré sur l'opération à réaliser."
+      },
+      {
+        "q": "Faut-il s'engager sur les quatre étapes ?",
+        "a": "Non. Chaque étape fait l'objet d'un devis séparé : vous pouvez vous arrêter après le diagnostic ou la stratégie."
+      },
+      {
+        "q": "Comment se passe le suivi au quotidien ?",
+        "a": "Par des points réguliers avec votre consultant, un tableau de suivi partagé et une disponibilité par téléphone, e-mail ou WhatsApp."
+      },
+      {
+        "q": "Accompagnez-vous des entreprises étrangères ?",
+        "a": "Oui. Nous accompagnons aussi des entreprises étrangères qui veulent acheter ou vendre au Maroc et en Afrique."
+      }
+    ]
+  },
+  "whyPage": {
+    "meta": {
+      "title": "Pourquoi choisir AFRIEXPORT CONSULTING | Conseil import-export au Maroc",
+      "description": "Expertise Maroc-Afrique, accompagnement sur mesure, réseau de partenaires et transparence : ce qui distingue AFRIEXPORT CONSULTING."
+    },
+    "eyebrow": "Pourquoi AFRIEXPORT",
+    "title": "Un partenaire qui connaît le terrain africain",
+    "lead": "Exporter depuis le Maroc ouvre l'accès à l'Europe, à l'Afrique et au-delà. Encore faut-il connaître les règles, les acteurs et les habitudes de chaque marché : c'est notre métier.",
+    "photoAlt": "Grues et porte-conteneurs au port de Tanger Med",
+    "photoCaption": "Port de Tanger Med, Maroc",
+    "reasonsTitle": "Ce qui nous distingue",
+    "reasonPoints": [
+      [
+        "Les corridors maritimes et routiers depuis le Maroc",
+        "Les accords commerciaux africains et européens",
+        "Les habitudes commerciales de chaque marché"
+      ],
+      [
+        "Une mission adaptée à votre taille et à votre budget",
+        "Un consultant dédié du début à la fin",
+        "Des services à la carte ou une mission complète"
+      ],
+      [
+        "Transitaires et transporteurs",
+        "Organismes de certification et de contrôle",
+        "Banques et assureurs"
+      ],
+      [
+        "Étapes et délais annoncés dès le départ",
+        "Devis détaillés, sans frais cachés",
+        "Un point régulier sur l'avancement"
+      ]
+    ],
+    "statTitle": "Pourquoi c'est important",
+    "networkTitle": "Un réseau mobilisé pour vous",
+    "networkLead": "Une opération d'export fait intervenir une dizaine d'acteurs. Nous savons qui appeler, et quand.",
+    "network": [
+      {
+        "title": "Transitaires",
+        "text": "Pour réserver le transport et passer la douane."
+      },
+      {
+        "title": "Compagnies maritimes et transporteurs",
+        "text": "Pour acheminer par mer, par air ou par route."
+      },
+      {
+        "title": "Organismes de contrôle",
+        "text": "Pour les certificats sanitaires, phytosanitaires et de conformité."
+      },
+      {
+        "title": "Banques",
+        "text": "Pour les crédits documentaires et les garanties."
+      },
+      {
+        "title": "Assureurs",
+        "text": "Pour l'assurance transport et l'assurance-crédit."
+      },
+      {
+        "title": "Chambres de commerce",
+        "text": "Pour les certificats d'origine et les contacts locaux."
+      },
+      {
+        "title": "Avocats et juristes",
+        "text": "Pour les contrats et les litiges complexes."
+      },
+      {
+        "title": "Salons et réseaux professionnels",
+        "text": "Pour rencontrer acheteurs et fournisseurs."
+      }
+    ],
+    "zonesTitle": "Depuis le Maroc, vers le monde",
+    "zonesLead": "Le Maroc est un carrefour entre l'Europe, l'Afrique et l'Atlantique. Nous accompagnons vos flux dans toutes ces directions.",
+    "zones": [
+      {
+        "name": "Afrique de l'Ouest",
+        "text": "Sénégal, Côte d'Ivoire, Mauritanie, Mali…"
+      },
+      {
+        "name": "Afrique centrale",
+        "text": "Cameroun, Gabon, République démocratique du Congo…"
+      },
+      {
+        "name": "Europe",
+        "text": "France, Espagne, Italie, Belgique…"
+      },
+      {
+        "name": "Moyen-Orient",
+        "text": "Émirats arabes unis, Arabie saoudite, Qatar…"
+      },
+      {
+        "name": "Amériques",
+        "text": "États-Unis, Canada, Brésil…"
+      }
+    ],
+    "zonesNote": "[Zones et pays à confirmer par le cabinet]",
+    "teamTitle": "L'équipe",
+    "teamText": "[Présentation de l'équipe : parcours, spécialités, langues parlées]",
+    "teamPhoto": "[Photo de l'équipe à fournir]"
+  },
+  "containersPage": {
+    "meta": {
+      "title": "Guide des conteneurs maritimes : dimensions, types et états | AFRIEXPORT CONSULTING",
+      "description": "Dimensions des conteneurs 20', 40', High Cube, frigorifiques, open top, flat rack et citernes. Comparateur, calculateur de volume et guide des états (neuf, CW, WWT)."
+    },
+    "eyebrow": "Guide des conteneurs",
+    "title": "Tout pour choisir le bon conteneur",
+    "lead": "Formats, dimensions, familles et états : comparez les conteneurs maritimes et estimez en quelques secondes ce qu'il faut pour votre marchandise.",
+    "photoAlt": "Piles de conteneurs maritimes jaunes et rouges sous un ciel bleu",
+    "photoCaption": "Parc à conteneurs",
+    "nav": {
+      "picker": "En 3D",
+      "families": "Familles",
+      "compare": "Comparateur",
+      "calculator": "Calculateur",
+      "states": "États",
+      "faq": "Questions"
+    },
+    "pickerTitle": "Les conteneurs secs, en 3D",
+    "pickerLead": "Le conteneur sec (Dry) transporte la grande majorité des marchandises. Choisissez un format pour voir ses dimensions intérieures.",
+    "familiesTitle": "Cinq familles de conteneurs",
+    "familiesLead": "Chaque famille répond à un type de marchandise. Le bon choix évite les surcoûts et les refus au chargement.",
+    "familyLabels": {
+      "uses": "Idéal pour",
+      "watch": "À savoir",
+      "formats": "Formats"
+    },
+    "families": {
+      "dry": {
+        "name": "Sec (Dry)",
+        "text": "Le conteneur standard, fermé et étanche, pour les marchandises sans contrainte de température.",
+        "uses": "Cartons, palettes, sacs, produits manufacturés, textile, matériaux.",
+        "watch": "La version High Cube offre 30 cm de hauteur en plus, utile pour les marchandises légères et volumineuses."
+      },
+      "reefer": {
+        "name": "Frigorifique (Reefer)",
+        "text": "Isolé et équipé d'un groupe froid, il maintient une température réglée pendant tout le voyage.",
+        "uses": "Fruits et légumes, produits de la mer, viandes, produits laitiers, médicaments.",
+        "watch": "Il doit être branché à quai et à bord. La marchandise doit être chargée déjà à la bonne température."
+      },
+      "openTop": {
+        "name": "Toit ouvert (Open Top)",
+        "text": "Sans toit rigide, il se charge par le haut à la grue et se couvre d'une bâche.",
+        "uses": "Machines, marbre et pierre, bois, marchandises trop hautes pour les portes.",
+        "watch": "Une marchandise qui dépasse en hauteur devient « hors gabarit » : le fret est alors majoré."
+      },
+      "flatRack": {
+        "name": "Plateau (Flat Rack)",
+        "text": "Un plancher renforcé avec deux parois d'extrémité, sans côtés ni toit.",
+        "uses": "Engins, véhicules, bobines, structures métalliques, colis lourds.",
+        "watch": "L'arrimage doit être confié à des professionnels, et la marchandise protégée des intempéries."
+      },
+      "tank": {
+        "name": "Citerne (Tank)",
+        "text": "Une cuve en acier inoxydable maintenue dans un cadre aux dimensions d'un 20 pieds.",
+        "uses": "Liquides alimentaires, huiles, produits chimiques, produits dangereux.",
+        "watch": "La cuve se remplit en général entre 80 et 95 % pour limiter les mouvements de liquide pendant le transport."
+      }
+    },
+    "formats": {
+      "20dc": "20' Dry",
+      "40dc": "40' Dry",
+      "40hc": "40' High Cube",
+      "45hc": "45' High Cube",
+      "20rf": "20' Reefer",
+      "40rh": "40' Reefer High Cube",
+      "20ot": "20' Open Top",
+      "40ot": "40' Open Top",
+      "20fr": "20' Flat Rack",
+      "40fr": "40' Flat Rack",
+      "20tk": "20' Citerne"
+    },
+    "spec": {
+      "family": "Famille",
+      "internal": "Dimensions intérieures",
+      "length": "Longueur intérieure",
+      "width": "Largeur intérieure",
+      "height": "Hauteur intérieure",
+      "door": "Ouverture de porte",
+      "volume": "Volume utile",
+      "capacity": "Capacité de la cuve",
+      "tare": "Tare (poids à vide)",
+      "maxGross": "Poids brut maximal",
+      "payload": "Charge utile maximale",
+      "pallets": "Palettes Europe",
+      "temp": "Température",
+      "none": "Sans objet",
+      "open": "Ouvert"
+    },
+    "compareTitle": "Comparateur de conteneurs",
+    "compareLead": "Choisissez deux formats : leurs silhouettes s'affichent à la même échelle et les écarts apparaissent ligne par ligne.",
+    "compareA": "Premier format",
+    "compareB": "Second format",
+    "swap": "Inverser les deux formats",
+    "scaleNote": "Silhouettes à l'échelle, vue de côté",
+    "tableTitle": "Tous les formats en un tableau",
+    "filterLabel": "Filtrer par famille",
+    "filterAll": "Tous",
+    "note": "Valeurs indicatives : elles varient selon le fabricant et la compagnie maritime. Vérifiez toujours auprès du transporteur avant de charger.",
+    "calcTitle": "Quel conteneur pour ma marchandise ?",
+    "calcLead": "Indiquez le volume, le poids ou le nombre de palettes : nous estimons le nombre de conteneurs nécessaires, format par format.",
+    "calc": {
+      "type": "Marchandise",
+      "types": {
+        "dry": "Sèche",
+        "reefer": "Réfrigérée"
+      },
+      "volume": "Volume total",
+      "volumeUnit": "m³",
+      "weight": "Poids brut total",
+      "weightUnit": "kg",
+      "pallets": "Palettes Europe",
+      "palletsUnit": "palettes",
+      "fill": "Remplissage visé",
+      "fillHint": "On remplit rarement un conteneur à 100 % : 85 % est une hypothèse prudente.",
+      "best": "Notre suggestion",
+      "perFormat": "Format par format",
+      "limitedBy": "Limité par {what}",
+      "by": {
+        "volume": "le volume",
+        "weight": "le poids",
+        "pallets": "les palettes"
+      },
+      "usageLabel": "Remplissage moyen",
+      "usageParts": {
+        "volume": "{p} du volume",
+        "weight": "{p} de la charge utile",
+        "pallets": "{p} des places palettes"
+      },
+      "empty": "Renseignez au moins un champ pour voir l'estimation.",
+      "note": "Estimation indicative. Le chargement réel dépend de l'emballage, du gerbage possible et de la répartition du poids.",
+      "cta": "Demander un plan de chargement"
+    },
+    "statesTitle": "États des conteneurs : neuf ou d'occasion ?",
+    "statesLead": "Pour acheter ou louer un conteneur, son état compte autant que sa taille. Voici les quatre catégories utilisées dans le métier.",
+    "stateLabels": {
+      "age": "Âge typique",
+      "export": "Transport maritime",
+      "use": "Usage conseillé",
+      "price": "Prix relatif",
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "states": [
+      {
+        "code": "1 TRIP",
+        "title": "Neuf (One Trip)",
+        "text": "Sorti d'usine, il n'a fait qu'un seul voyage, le plus souvent depuis l'Asie, pour être livré. Aspect et étanchéité impeccables.",
+        "age": "Moins d'un an",
+        "export": true,
+        "use": "Export régulier, stockage de valeur, aménagement",
+        "price": 4,
+        "photoAlt": "Portes de conteneurs récents, peinture intacte"
+      },
+      {
+        "code": "CW",
+        "title": "Cargo Worthy (CW)",
+        "text": "D'occasion, inspecté et réparé selon les normes de l'IICL, il est apte au transport maritime international, avec une plaque CSC valide.",
+        "age": "8 à 12 ans",
+        "export": true,
+        "use": "Export ponctuel, transport à moindre coût",
+        "price": 3
+      },
+      {
+        "code": "WWT",
+        "title": "Wind and Watertight (WWT)",
+        "text": "Étanche au vent et à l'eau, mais pas certifié pour la mer. Il présente souvent des bosses et de la rouille de surface.",
+        "age": "10 à 15 ans",
+        "export": false,
+        "use": "Stockage sur site, entrepôt d'appoint",
+        "price": 2
+      },
+      {
+        "code": "AS IS",
+        "title": "En l'état (As Is)",
+        "text": "Vendu sans garantie : il peut avoir des trous, des portes difficiles ou un plancher abîmé. À inspecter avant tout achat.",
+        "age": "Plus de 15 ans",
+        "export": false,
+        "use": "Pièces détachées, transformation, usages non critiques",
+        "price": 1,
+        "photoAlt": "Portes de conteneurs anciens, marquées par la rouille"
+      }
+    ],
+    "statesCompareTitle": "Les quatre états, comparés",
+    "checklistTitle": "Check-list avant d'acheter ou de louer",
+    "checklistLead": "Huit points à vérifier sur place, ou à faire vérifier par un inspecteur.",
+    "checklist": [
+      {
+        "title": "Plaque CSC",
+        "text": "Présente, lisible et à jour : sans elle, pas de transport maritime."
+      },
+      {
+        "title": "Numéro du conteneur",
+        "text": "Quatre lettres, six chiffres et un chiffre de contrôle, identiques sur toutes les faces."
+      },
+      {
+        "title": "Portes et joints",
+        "text": "Les portes ferment sans forcer, les joints sont souples et continus."
+      },
+      {
+        "title": "Test de lumière",
+        "text": "Portes fermées, aucun rayon de lumière ne doit passer : sinon, l'eau passera aussi."
+      },
+      {
+        "title": "Plancher",
+        "text": "Pas de planches cassées, molles ou tachées d'huile ou de produits chimiques."
+      },
+      {
+        "title": "Rouille et bosses",
+        "text": "La rouille de surface est normale ; la rouille qui perce ne l'est pas."
+      },
+      {
+        "title": "Odeurs et propreté",
+        "text": "Indispensable pour l'alimentaire : aucune odeur ni trace d'ancien chargement."
+      },
+      {
+        "title": "Documents",
+        "text": "Facture, rapport d'inspection et, pour l'export, preuve de l'état Cargo Worthy."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Quelle différence entre un 40' Dry et un 40' High Cube ?",
+        "a": "Même longueur et même largeur, mais le High Cube mesure environ 30 cm de plus en hauteur. Il offre près de 9 m³ supplémentaires, souvent pour un fret proche."
+      },
+      {
+        "q": "Faut-il acheter ou louer un conteneur pour exporter ?",
+        "a": "Pour expédier, on utilise le plus souvent le conteneur de la compagnie maritime, compris dans le fret. L'achat se justifie pour un stockage durable ou des envois réguliers vers des destinations mal desservies."
+      },
+      {
+        "q": "Qu'est-ce que la plaque CSC ?",
+        "a": "C'est la plaque d'agrément prévue par la Convention internationale sur la sécurité des conteneurs. Elle atteste que le conteneur peut être manutentionné et gerbé en sécurité. Sans plaque valide, il ne voyage pas par mer."
+      },
+      {
+        "q": "Qu'est-ce que la VGM ?",
+        "a": "La masse brute vérifiée (Verified Gross Mass). Depuis 2016, la convention SOLAS impose de déclarer le poids réel du conteneur chargé avant l'embarquement. Sans VGM, le conteneur n'est pas chargé."
+      },
+      {
+        "q": "Peut-on dépasser la charge utile indiquée ?",
+        "a": "Non. La charge utile est un maximum technique. Il faut aussi respecter les limites de poids sur route de chaque pays traversé, souvent plus basses."
+      }
+    ]
+  },
+  "resultsPage": {
+    "meta": {
+      "title": "Nos résultats et missions types | AFRIEXPORT CONSULTING",
+      "description": "Partenariats signés, dossiers traités plus vite, nouveaux marchés : ce qu'AFRIEXPORT CONSULTING apporte à ses clients, avec des exemples de missions."
+    },
+    "eyebrow": "Résultats",
+    "title": "Ce que nous apportons à nos clients",
+    "lead": "Des chiffres, et surtout ce qu'il y a derrière : comment nous les mesurons, et à quoi ressemble une mission, du point de départ au résultat.",
+    "photoAlt": "Vue aérienne d'un terminal à conteneurs",
+    "photoCaption": "Terminal à conteneurs vu du ciel",
+    "figuresTitle": "Nos chiffres, expliqués",
+    "figuresLead": "Quatre indicateurs que nous suivons pour chaque client accompagné.",
+    "howLabel": "Comment nous le mesurons",
+    "period": "[Période et périmètre de mesure à préciser]",
+    "figures": [
+      {
+        "detail": "Accords signés entre nos clients et des acheteurs, distributeurs ou fournisseurs que nous leur avons présentés.",
+        "how": "Contrats ou premières commandes confirmés par le client."
+      },
+      {
+        "detail": "Gain de temps moyen sur la préparation et le dédouanement des dossiers, par rapport à la situation avant notre intervention.",
+        "how": "Délai entre la commande et la mainlevée, avant et après la mission."
+      },
+      {
+        "detail": "Pays dans lesquels nos clients ont réalisé au moins une vente ou un achat grâce à notre accompagnement.",
+        "how": "Pays de destination ou d'origine des opérations réalisées."
+      },
+      {
+        "detail": "Progression moyenne du chiffre d'affaires international des clients que nous suivons dans la durée.",
+        "how": "Chiffre d'affaires export ou volume importé, d'une année sur l'autre."
+      }
+    ],
+    "missionsTitle": "Trois missions types",
+    "missionsLead": "Des exemples représentatifs de nos interventions. Ils illustrent notre façon de travailler et ne décrivent pas des clients nommés.",
+    "missionLabels": {
+      "tag": "Exemple de mission",
+      "situation": "Le point de départ",
+      "action": "Notre intervention",
+      "outcome": "Ce qui change"
+    },
+    "missions": [
+      {
+        "sector": "Agroalimentaire",
+        "title": "Un producteur d'agrumes vers l'Afrique de l'Ouest",
+        "situation": "Une exploitation qui vend en Europe veut diversifier ses débouchés, sans savoir quel pays viser ni comment expédier des produits frais.",
+        "action": [
+          "Étude de trois marchés d'Afrique de l'Ouest",
+          "Recherche et vérification d'importateurs",
+          "Choix du conteneur frigorifique et du transitaire"
+        ],
+        "outcome": "Un nouveau débouché, des documents sanitaires prêts à chaque envoi et un circuit logistique éprouvé.",
+        "photoAlt": "Orangers chargés de fruits dans un verger"
+      },
+      {
+        "sector": "Artisanat et décoration",
+        "title": "Un atelier de céramique vers l'Amérique du Nord",
+        "situation": "Un atelier reçoit des demandes d'acheteurs étrangers mais n'a jamais exporté, et craint les impayés et la casse.",
+        "action": [
+          "Conditions de vente et paiement sécurisé",
+          "Emballage et assurance transport adaptés",
+          "Groupage maritime pour les petits volumes"
+        ],
+        "outcome": "Des ventes à l'export payées à temps, et une marchandise qui arrive intacte.",
+        "photoAlt": "Étalage de céramiques colorées à Safi"
+      },
+      {
+        "sector": "Industrie",
+        "title": "Une PME qui importe ses équipements",
+        "situation": "Une entreprise industrielle importe des machines et des pièces de plusieurs pays, avec des coûts et des délais mal maîtrisés.",
+        "action": [
+          "Comparaison de fournisseurs et contrôle avant expédition",
+          "Classement tarifaire et calcul du coût rendu",
+          "Regroupement des envois et suivi"
+        ],
+        "outcome": "Des coûts d'import connus à l'avance et des approvisionnements plus réguliers.",
+        "photoAlt": "Atelier industriel avec machines et postes de travail"
+      }
+    ],
+    "testimonialsTitle": "Ce que disent nos clients",
+    "testimonials": [
+      {
+        "quote": "[Témoignage client à fournir : deux ou trois phrases sur la mission et son résultat.]",
+        "name": "[Nom et fonction]",
+        "company": "[Entreprise, secteur]"
+      },
+      {
+        "quote": "[Témoignage client à fournir : deux ou trois phrases sur la mission et son résultat.]",
+        "name": "[Nom et fonction]",
+        "company": "[Entreprise, secteur]"
+      }
+    ],
+    "sectorsTitle": "Secteurs accompagnés",
+    "sectorsNote": "[Liste des secteurs à valider par le cabinet]",
+    "sectors": [
+      "Agroalimentaire",
+      "Produits de la mer",
+      "Textile et cuir",
+      "Artisanat et décoration",
+      "Cosmétique et argan",
+      "Matériaux de construction",
+      "Pièces automobiles",
+      "Équipements industriels"
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Parlons de votre projet à l'international",
+    "lead": "Décrivez-nous votre besoin : un consultant vous recontacte pour un premier échange.",
+    "addressLabel": "Adresse",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "E-mail",
+    "placeholders": {
+      "address": "[Adresse du cabinet]",
+      "phone": "[+212 …]",
+      "email": "[contact@afriexport…]"
+    },
+    "whatsapp": "Écrire sur WhatsApp",
+    "whatsappMessage": "Bonjour AFRIEXPORT CONSULTING, je souhaite parler de mon projet.",
+    "form": {
+      "title": "Formulaire de contact",
+      "name": "Nom complet",
+      "namePlaceholder": "Votre nom",
+      "company": "Société",
+      "companyPlaceholder": "Nom de l'entreprise",
+      "optional": "facultatif",
+      "email": "E-mail",
+      "emailPlaceholder": "vous@entreprise.ma",
+      "need": "Votre besoin",
+      "needs": [
+        "Exporter mes produits",
+        "Importer / trouver des fournisseurs",
+        "Douane et réglementation",
+        "Autre"
+      ],
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre projet : produit, pays visés, volumes…",
+      "consent": "J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la",
+      "consentLink": "politique de confidentialité",
+      "honeypot": "Ne remplissez pas ce champ.",
+      "required": "obligatoire",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours…",
+      "subject": "Nouvelle demande depuis le site AFRIEXPORT CONSULTING",
+      "success": "Merci, votre demande est bien envoyée. Un consultant vous recontacte pour un premier échange.",
+      "error": "L'envoi n'a pas abouti. Réessayez dans un instant, ou écrivez-nous sur WhatsApp ou par e-mail.",
+      "summary": "Vérifiez les champs signalés.",
+      "errors": {
+        "required": "Ce champ est obligatoire.",
+        "email": "Saisissez une adresse e-mail valide, par exemple nom@entreprise.ma.",
+        "messageShort": "Ajoutez quelques mots sur votre projet (20 caractères minimum).",
+        "consent": "Cochez cette case pour que nous puissions traiter votre demande."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Conseil en import-export et développement international.",
+    "method": "Méthode",
+    "rights": "Tous droits réservés.",
+    "cookieSettings": "Gérer les cookies"
+  },
+  "cookies": {
+    "dialogLabel": "Gestion des cookies",
+    "title": "Nous utilisons des cookies",
+    "text": "Ils assurent le bon fonctionnement du site et, avec votre accord, mesurent l'audience. Vous pouvez changer d'avis à tout moment.",
+    "policyLink": "Politique de cookies",
+    "acceptAll": "Tout accepter",
+    "rejectAll": "Tout refuser",
+    "customise": "Personnaliser",
+    "save": "Enregistrer mes choix",
+    "necessary": "Nécessaires",
+    "necessaryHint": "Toujours actifs",
+    "analytics": "Mesure d'audience",
+    "analyticsHint": "Statistiques de visite anonymes",
+    "marketing": "Marketing",
+    "marketingHint": "Publicités personnalisées",
+    "saved": "Vos choix sont enregistrés."
+  },
+  "legal": {
+    "notice": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Politique de cookies",
+    "back": "Retour à l'accueil",
+    "updated": "Dernière mise à jour"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "Cette page n'existe pas ou a été déplacée.",
+    "cta": "Retour à l'accueil"
+  }
+}

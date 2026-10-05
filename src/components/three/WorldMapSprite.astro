@@ -1,0 +1,15 @@
+---
+/**
+ * Carte du monde en pointillés, déclarée une seule fois par page (<symbol>)
+ * et réutilisée par <DottedWorldMap /> via <use>. Les terres prennent la
+ * couleur du texte courant ; le Maroc est en jaune.
+ */
+import { LAND_PATH, MOROCCO_PATH, WORLD_VIEWBOX } from '../../data/world-dots';
+---
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="world-dots" viewBox={WORLD_VIEWBOX}>
+    <path d={LAND_PATH} fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" />
+    <path d={MOROCCO_PATH} fill="none" stroke="#FFC342" stroke-width="5.2" stroke-linecap="round" />
+  </symbol>
+</svg>

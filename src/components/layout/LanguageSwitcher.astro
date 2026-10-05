@@ -1,0 +1,47 @@
+---
+import { languages, langs, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** URL de la page courante dans chaque langue. */
+  alternates: Record<Lang, string>;
+  /** Doit fournir l'affichage (ex. `inline-flex`, `hidden sm:inline-flex`). */
+  class?: string;
+}
+
+const { lang, alternates, class: className } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div role="group" aria-label={t.a11y.langGroup} class:list={['items-center rounded-full border border-navy/15 bg-white/50 p-[3px]', className]}>
+  {
+    langs.map((code) => (
+      <a
+        href={alternates[code]}
+        hreflang={code}
+        lang={code}
+        aria-current={code === lang ? 'true' : undefined}
+        data-lang-link
+        class:list={[
+          'tap inline-flex min-h-9 items-center rounded-full px-3 py-2 text-[13px] font-bold no-underline transition-colors duration-200',
+          code === lang ? 'bg-navy text-white' : 'text-metal-700 hover:text-ink',
+        ]}
+      >
+        {code.toUpperCase()}
+        <span class="sr-only"> {languages[code]}</span>
+      </a>
+    ))
+  }
+</div>
+
+<script>
+  // Garde la section en cours (#services…) quand on change de langue : les ancres sont identiques en FR et en EN.
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const target = new URL(link.href);
+      if (location.hash && target.pathname.split('/').length <= 3) {
+        link.href = target.pathname + location.hash;
+      }
+    });
+  });
+</script>

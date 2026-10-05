@@ -1,0 +1,141 @@
+---
+import Icon from '../ui/Icon.astro';
+import { routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).contact.form;
+
+// Clé Web3Forms : elle désigne la boîte e-mail de destination (voir README).
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+const messages = {
+  ...t.errors,
+  summary: t.summary,
+  success: t.success,
+  error: t.error,
+  sending: t.sending,
+  submit: t.submit,
+};
+
+const input = 'min-h-12 w-full rounded-lg border border-metal bg-white px-3.5 py-3 text-base text-ink placeholder:text-metal-600 transition-[border-color,box-shadow] duration-200 focus:border-navy focus:outline-none focus:ring-[3px] focus:ring-yellow aria-[invalid=true]:border-ink aria-[invalid=true]:shadow-[inset_4px_0_0_#FFC342,0_0_0_1px_#0B0B0C]';
+const label = 'text-sm font-bold text-ink';
+const error = 'field-error m-0 text-sm font-semibold text-ink';
+---
+
+<form
+  class="reveal on-light flex flex-col gap-[18px] rounded-panel bg-white p-6 sm:p-9"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  novalidate
+  aria-labelledby="contact-form-title"
+  data-contact-form
+  data-messages={JSON.stringify(messages)}
+>
+  <h3 id="contact-form-title" class="sr-only">{t.title}</h3>
+
+  <div class="form-success flex items-start gap-3 rounded-xl bg-metal-100 p-4 text-ink" tabindex="-1" hidden data-form-success>
+    <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-navy text-white"><Icon name="check" size={14} stroke={3} /></span>
+    <p class="m-0 text-[15px] leading-normal">{t.success}</p>
+  </div>
+
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={t.subject} />
+  <input type="hidden" name="from_name" value="AFRIEXPORT CONSULTING" />
+  <input type="hidden" name="langue" value={lang.toUpperCase()} />
+  <!-- Piège à robots (honeypot) : invisible pour les visiteurs, rempli par les robots. -->
+  <label class="hp" aria-hidden="true">
+    {t.honeypot}
+    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
+  </label>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="cf-name" class={label}>{t.name}</label>
+      <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder={t.namePlaceholder} class={input} aria-describedby="cf-name-error" />
+      <p id="cf-name-error" class={error} hidden></p>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="cf-company" class={label}>{t.company} <span class="font-normal text-metal-600">({t.optional})</span></label>
+      <input id="cf-company" name="company" type="text" autocomplete="organization" maxlength="120" placeholder={t.companyPlaceholder} class={input} />
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="cf-email" class={label}>{t.email}</label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="160" placeholder={t.emailPlaceholder} class={input} aria-describedby="cf-email-error" />
+      <p id="cf-email-error" class={error} hidden></p>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="cf-need" class={label}>{t.need}</label>
+      <select id="cf-need" name="need" required class={input}>
+        {t.needs.map((need) => <option value={need}>{need}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="cf-message" class={label}>{t.message}</label>
+    <textarea id="cf-message" name="message" rows="5" required minlength="20" maxlength="4000" placeholder={t.messagePlaceholder} class:list={[input, 'resize-y']} aria-describedby="cf-message-error"></textarea>
+    <p id="cf-message-error" class={error} hidden></p>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex items-start gap-3">
+      <input id="cf-consent" name="consent" type="checkbox" value="oui" required class="mt-0.5 size-[22px] shrink-0 cursor-pointer accent-navy" aria-describedby="cf-consent-error" />
+      <label for="cf-consent" class="cursor-pointer text-sm leading-normal text-metal-700">
+        {t.consent} <a href={routes.privacy[lang]} class="font-semibold text-ink underline underline-offset-2">{t.consentLink}</a>.
+      </label>
+    </div>
+    <p id="cf-consent-error" class={error} hidden></p>
+  </div>
+
+  <p class="m-0 rounded-lg border-l-4 border-yellow bg-metal-100 p-3 text-sm font-semibold text-ink" role="alert" hidden data-form-error></p>
+
+  <button type="submit" class="btn min-h-12 w-full border-0 bg-navy p-4 text-base text-white disabled:cursor-wait disabled:opacity-80" data-form-submit>
+    {t.submit}
+  </button>
+</form>
+
+<style>
+  /* Message d'erreur : pictogramme « ! » jaune devant le texte. */
+  .field-error:not([hidden]) {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .field-error::before {
+    content: '!';
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: #ffc342;
+    color: #0b0b0c;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .hp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    left: -9999px;
+  }
+</style>
+
+<script>
+  import { initContactForm } from '../../scripts/contact-form';
+  initContactForm();
+</script>

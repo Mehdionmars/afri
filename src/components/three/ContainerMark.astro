@@ -1,0 +1,35 @@
+---
+/** Sigle AFRIEXPORT peint sur un conteneur : globe + nom, à la taille de la face (--h). */
+---
+
+<span class="mark">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M3 12h18"></path>
+    <path d="M12 3a14 14 0 0 1 0 18"></path>
+    <path d="M12 3a14 14 0 0 0 0 18"></path>
+  </svg>
+  <span>AFRIEXPORT</span>
+</span>
+
+<style>
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.18em 0.45em;
+    font-size: calc(var(--h) * 0.2);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #0b0b0c;
+    background: color-mix(in srgb, var(--side) 92%, white);
+    border-radius: 0.12em;
+    white-space: nowrap;
+  }
+  svg {
+    width: 1.15em;
+    height: 1.15em;
+    flex: none;
+  }
+</style>

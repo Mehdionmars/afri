@@ -1,0 +1,22 @@
+{
+  "_lisezmoi": "Adresses des pages dans chaque langue. Utilisé par le site (liens, sélecteur FR | EN) et par le sitemap (balises hreflang). Changer une adresse ici la change partout.",
+  "pages": {
+    "home": { "fr": "/fr/", "en": "/en/" },
+    "services": { "fr": "/fr/services/", "en": "/en/services/" },
+    "method": { "fr": "/fr/methode/", "en": "/en/method/" },
+    "why": { "fr": "/fr/pourquoi-nous/", "en": "/en/why-us/" },
+    "containers": { "fr": "/fr/conteneurs/", "en": "/en/containers/" },
+    "results": { "fr": "/fr/resultats/", "en": "/en/results/" },
+    "notice": { "fr": "/fr/mentions-legales/", "en": "/en/legal-notice/" },
+    "privacy": { "fr": "/fr/politique-de-confidentialite/", "en": "/en/privacy-policy/" },
+    "cookies": { "fr": "/fr/politique-de-cookies/", "en": "/en/cookie-policy/" }
+  },
+  "services": {
+    "etude-de-marche": { "fr": "etude-de-marche", "en": "market-research" },
+    "partenaires": { "fr": "recherche-de-partenaires", "en": "partner-search" },
+    "douane": { "fr": "douane-et-reglementation", "en": "customs-and-compliance" },
+    "logistique": { "fr": "logistique-internationale", "en": "international-logistics" },
+    "contrats": { "fr": "contrats-et-paiements", "en": "contracts-and-payments" },
+    "formation": { "fr": "formation-export", "en": "export-training" }
+  }
+}

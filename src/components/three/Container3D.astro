@@ -1,0 +1,178 @@
+---
+/**
+ * Conteneur maritime en 3D CSS (transform-style: preserve-3d), sans JavaScript.
+ *
+ *   <Container3D length={12.03} width={2.35} height={2.39} color="yellow" />
+ *
+ * Les dimensions sont en mètres, converties en pixels avec `scale` (px par mètre).
+ * À placer dans une <ContainerScene>, qui fournit la perspective et la rotation.
+ */
+import { brand, shades } from '../../../tailwind.config';
+import Mark from './ContainerMark.astro';
+
+type Palette = 'yellow' | 'navy' | 'metal';
+
+interface Props {
+  /** Longueur en mètres. */
+  length: number;
+  /** Largeur en mètres. */
+  width: number;
+  /** Hauteur en mètres. */
+  height: number;
+  /** Palette de la charte (jaune, bleu marine, gris métal), ou une couleur CSS de la charte. */
+  color?: Palette | (string & {});
+  /** Couleur des portes, si elle diffère de la caisse. */
+  doorColor?: string;
+  /** Pixels par mètre. */
+  scale?: number;
+  /** Peint le sigle AFRIEXPORT (globe + nom) sur les deux grandes faces. */
+  branded?: boolean;
+  /** Position dans la scène, en pixels. */
+  x?: number;
+  y?: number;
+  z?: number;
+  class?: string;
+}
+
+const {
+  length,
+  width,
+  height,
+  color = 'yellow',
+  doorColor,
+  scale = 20,
+  branded = false,
+  x = 0,
+  y = 0,
+  z = 0,
+  class: className,
+} = Astro.props;
+
+// Les trois palettes de conteneur, dans la charte : face, nervures, dessus éclairé, arêtes.
+const palettes: Record<Palette, { side: string; rib: string; top: string; edge: string }> = {
+  yellow: { side: brand.yellow, rib: shades['yellow-shade'], top: shades['yellow-light'], edge: brand.navy },
+  navy: { side: brand.navy, rib: '#0A1830', top: shades['navy-light'], edge: brand.ink },
+  metal: { side: shades['metal-200'], rib: shades['metal-300'], top: shades['metal-100'], edge: shades['metal-600'] },
+};
+
+// Couleur libre : nuances calculées par le navigateur avec color-mix().
+const p =
+  color in palettes
+    ? palettes[color as Palette]
+    : {
+        side: color,
+        rib: `color-mix(in srgb, ${color} 88%, black)`,
+        top: `color-mix(in srgb, ${color} 70%, white)`,
+        edge: `color-mix(in srgb, ${color} 45%, black)`,
+      };
+
+const door = doorColor ?? p.rib;
+const doorRib = doorColor ? `color-mix(in srgb, ${doorColor} 40%, black)` : p.edge;
+
+const px = (m: number) => `${Math.round(m * scale * 10) / 10}px`;
+
+const style = [
+  `--l:${px(length)}`,
+  `--w:${px(width)}`,
+  `--h:${px(height)}`,
+  `--side:${p.side}`,
+  `--rib:${p.rib}`,
+  `--top:${p.top}`,
+  `--edge:${p.edge}`,
+  `--door:${door}`,
+  `--door-rib:${doorRib}`,
+  `transform:translate3d(${x}px,${y}px,${z}px)`,
+].join(';');
+---
+
+<div class:list={['c3d', branded && 'branded', className]} style={style} aria-hidden="true">
+  <div class="f f-front">{branded && <Mark />}</div>
+  <div class="f f-back">{branded && <Mark />}</div>
+  <div class="f f-door"><i></i><i></i></div>
+  <div class="f f-end"></div>
+  <div class="f f-top"></div>
+  <div class="f f-bottom"></div>
+</div>
+
+<style>
+  .c3d {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+  /* Changement de format animé (sélecteur) : --l, --w, --h sont déclarées animables dans global.css. */
+  .c3d.morph {
+    transition: --l 0.7s var(--ease-out), --w 0.7s var(--ease-out), --h 0.7s var(--ease-out);
+  }
+  .f {
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid var(--edge);
+    backface-visibility: visible;
+  }
+  /* Marquage peint, comme sur les conteneurs d'une compagnie maritime. */
+  .branded .f-front,
+  .branded .f-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Faces longues : nervures verticales. */
+  .f-front,
+  .f-back {
+    left: calc(var(--l) / -2);
+    top: calc(var(--h) / -2);
+    width: var(--l);
+    height: var(--h);
+    background: repeating-linear-gradient(90deg, var(--side) 0 6px, var(--rib) 6px 9px);
+  }
+  .f-front {
+    transform: translateZ(calc(var(--w) / 2));
+  }
+  .f-back {
+    transform: rotateY(180deg) translateZ(calc(var(--w) / 2));
+  }
+  /* Extrémités : la face portes (deux battants) et la face pleine. */
+  .f-door,
+  .f-end {
+    left: calc(var(--w) / -2);
+    top: calc(var(--h) / -2);
+    width: var(--w);
+    height: var(--h);
+  }
+  .f-door {
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    background: var(--door);
+    transform: rotateY(90deg) translateZ(calc(var(--l) / 2));
+  }
+  .f-door i {
+    flex-grow: 1;
+    border: 1px solid var(--door-rib);
+    background: repeating-linear-gradient(90deg, var(--door) 0 5px, var(--door-rib) 5px 7px);
+  }
+  .f-end {
+    background: repeating-linear-gradient(90deg, var(--rib) 0 5px, var(--edge) 5px 8px);
+    transform: rotateY(-90deg) translateZ(calc(var(--l) / 2));
+  }
+  /* Toit et plancher. */
+  .f-top,
+  .f-bottom {
+    left: calc(var(--l) / -2);
+    top: calc(var(--w) / -2);
+    width: var(--l);
+    height: var(--w);
+  }
+  .f-top {
+    background: repeating-linear-gradient(90deg, var(--top) 0 8px, var(--side) 8px 11px);
+    transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+  }
+  .f-bottom {
+    background: var(--edge);
+    transform: rotateX(-90deg) translateZ(calc(var(--h) / 2));
+  }
+</style>

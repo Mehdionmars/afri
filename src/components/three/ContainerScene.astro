@@ -1,0 +1,61 @@
+---
+/**
+ * Scène 3D : perspective + plateau qui tourne (spin), se balance (swing) ou reste fixe.
+ * Les animations s'arrêtent hors écran (data-anim, voir src/scripts/motion.ts)
+ * et avec prefers-reduced-motion : la scène reste alors sur son angle de départ.
+ */
+interface Props {
+  animation?: 'spin' | 'swing' | 'none';
+  /** Durée d'un tour (spin) ou d'un aller-retour (swing), en secondes. */
+  duration?: number;
+  /** Angle de départ autour de l'axe vertical, en degrés. */
+  startAngle?: number;
+  /** Inclinaison de la caméra, en degrés. */
+  tilt?: number;
+  perspective?: number;
+  /** Ajoute data-anim pour mettre en pause hors écran. */
+  pausable?: boolean;
+  class?: string;
+  rigClass?: string;
+}
+
+const {
+  animation = 'spin',
+  duration = 16,
+  startAngle = -30,
+  tilt = -22,
+  perspective = 1400,
+  pausable = true,
+  class: className,
+  rigClass,
+} = Astro.props;
+
+// Un délai négatif démarre le tour à l'angle voulu, déjà en mouvement au premier affichage.
+const turn = ((startAngle % 360) + 360) % 360;
+const delay = animation === 'spin' ? -(turn / 360) * duration : -duration / 4;
+---
+
+<div class:list={['scene', className]} style={`perspective:${perspective}px`} data-anim={pausable ? '' : undefined} aria-hidden="true">
+  <div
+    class:list={['rig', `rig-${animation}`, rigClass]}
+    style={`--dur:${duration}s;--delay:${delay.toFixed(2)}s;transform:rotateX(${tilt}deg) rotateY(${startAngle}deg)`}
+  >
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* La scène se place via ses classes (ex. absolute inset-0) : pas de position ici,
+     un style de composant passerait devant les utilitaires Tailwind. */
+  .rig {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+  .rig-spin {
+    animation: afSpin var(--dur) linear var(--delay) infinite;
+  }
+  .rig-swing {
+    animation: afSwing var(--dur) ease-in-out var(--delay) infinite;
+  }
+</style>

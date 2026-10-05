@@ -1,0 +1,282 @@
+---
+/**
+ * Méthode (accueil) : adaptée du composant « How It Works » de 21st.dev (chamaac).
+ * Quatre cartes épinglées, légèrement inclinées en zigzag, reliées par une route en pointillés
+ * qui avance doucement, sur un fond ligné. Chaque carte porte la photo de son étape
+ * et mène à cette étape sur la page Méthode. Sous 1024 px : cartes empilées, sans la route.
+ */
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { colon, routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.method;
+// Une photo par étape (src/assets/photos/methode-*.jpg) ; ancres des étapes sur la page Méthode.
+const photos = ['methode-diagnostic', 'methode-strategie', 'methode-mise-en-oeuvre', 'methode-suivi'];
+const anchors = lang === 'fr' ? ['diagnostic', 'strategie', 'mise-en-oeuvre', 'suivi'] : ['diagnostic', 'strategy', 'execution', 'follow-up'];
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<section id="methode" class="method on-light relative isolate overflow-hidden bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="methode-title">
+  <div class="paper" aria-hidden="true"></div>
+  <div class="mx-auto flex max-w-page flex-col gap-14 lg:gap-20">
+    <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+      <h2 id="methode-title" class="reveal m-0 max-w-[16ch] text-h2-xl">{t.title}</h2>
+      <div class="flex flex-col gap-4 lg:justify-self-end">
+        <p class="m-0 max-w-[40ch] text-lead text-metal-600">{t.subtitle}</p>
+        <a href={routes.method[lang]} class="link-u self-start text-base font-semibold text-ink">{all.pages.homeLinks.method} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <div class="board relative mx-auto w-full max-w-[1000px]" data-board>
+      <svg class="route" aria-hidden="true" focusable="false" data-anim data-route-path>
+        <path d="" />
+      </svg>
+      <ol class="cards m-0 list-none p-0" role="list">
+        {
+          t.steps.map((step, i) => (
+            <li class:list={['card-slot', i % 2 === 0 ? 'is-left' : 'is-right']} data-card>
+              <a href={`${routes.method[lang]}#${anchors[i]}`} class:list={['card', i % 2 === 0 ? 'tone-metal' : 'tone-yellow']}>
+                <svg class="pin" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M16 3a1 1 0 0 1 .117 1.993l-.117 .007v4.764l1.894 3.789a1 1 0 0 1 .1 .331l.006 .116v2a1 1 0 0 1 -.883 .993l-.117 .007h-4v4a1 1 0 0 1 -1.993 .117l-.007 -.117v-4h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-2a1 1 0 0 1 .06 -.34l.046 -.107l1.894 -3.791v-4.762a1 1 0 0 1 -.117 -1.993l.117 -.007h8z" />
+                </svg>
+                <span class="inner">
+                  <span class="photo">
+                    <PhotoSlot
+                      photo={photos[i]}
+                      alt=""
+                      placeholder=""
+                      sizes="(min-width: 1024px) 300px, 90vw"
+                      widths={[320, 480, 640]}
+                      imgClass="absolute inset-0 size-full object-cover"
+                    />
+                  </span>
+                  <span class="number" aria-hidden="true">
+                    {num(i)}
+                  </span>
+                  <h3 class="title">
+                    <span class="sr-only">
+                      {t.stepLabel} {i + 1}
+                      {colon(lang)}
+                    </span>
+                    {step.title}
+                  </h3>
+                  <span class="text">{step.text}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fond ligné comme un carnet, qui s'efface sur les côtés. */
+  .paper {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(rgba(15, 35, 64, 0.07) 1px, transparent 1px);
+    background-size: 100% 32px;
+    background-position: 0 4px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  }
+
+  /* ---------- Cartes empilées (téléphone, tablette) ---------- */
+  .cards {
+    display: grid;
+    gap: 36px;
+    justify-items: center;
+  }
+  .card-slot {
+    width: 100%;
+    max-width: 340px;
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+    display: block;
+    padding: 8px;
+    border-radius: 25px;
+    background: #fff;
+    border: 1px solid #eef0f2;
+    box-shadow: 0 12px 28px -8px rgba(15, 35, 64, 0.18);
+    color: #0b0b0c;
+    text-decoration: none;
+    rotate: var(--tilt, 0deg);
+    transition: scale 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+  .is-left .card {
+    --tilt: 2deg;
+  }
+  .is-right .card {
+    --tilt: -2deg;
+  }
+  .card:hover,
+  .card:focus-visible {
+    z-index: 3;
+    scale: 1.05;
+    box-shadow: 0 22px 40px -12px rgba(15, 35, 64, 0.28);
+  }
+  .card:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 4px;
+  }
+  .pin {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 16px;
+    fill: #0f2340;
+  }
+  .tone-yellow .pin {
+    fill: #e5ac33;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #dde1e6;
+    background: #eef0f2;
+  }
+  .tone-yellow .inner {
+    border-color: #e5ac33;
+    background: #ffd677;
+  }
+  .photo {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    background: #dde1e6;
+  }
+  .number {
+    margin-bottom: 14px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: #0f2340;
+  }
+  .title {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+  .text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #5e6670;
+  }
+  .tone-yellow .text {
+    color: #3f4650;
+  }
+  .route {
+    display: none;
+  }
+
+  /* ---------- Ordinateur : zigzag, cartes inclinées, route en pointillés ---------- */
+  @media (min-width: 1024px) {
+    .cards {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 80px;
+      row-gap: 0;
+      justify-items: stretch;
+    }
+    .card-slot {
+      max-width: 300px;
+    }
+    .is-left {
+      justify-self: start;
+      margin-left: 6%;
+    }
+    .is-right {
+      justify-self: end;
+      margin-right: 6%;
+      margin-top: 150px;
+    }
+    /* Les cartes de gauche descendent sous la carte de droite précédente. */
+    .card-slot:nth-child(3) {
+      margin-top: -30px;
+    }
+    .is-left .card {
+      --tilt: 7deg;
+    }
+    .is-right .card {
+      --tilt: -7deg;
+    }
+    .route {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .route path {
+      fill: none;
+      stroke: #8b949e;
+      stroke-width: 2;
+      stroke-dasharray: 8 6;
+      stroke-linecap: round;
+      animation: afMarch 4s linear infinite;
+    }
+  }
+  /* La route avance doucement, comme un navire sur sa ligne (arrêtée avec « mouvement réduit »). */
+  @keyframes afMarch {
+    to {
+      stroke-dashoffset: -140;
+    }
+  }
+</style>
+
+<script>
+  // La route en pointillés relie le centre des cartes, d'une carte à la suivante.
+  const board = document.querySelector<HTMLElement>('[data-board]');
+  const svg = board?.querySelector<SVGSVGElement>('[data-route-path]');
+  const path = svg?.querySelector('path');
+  if (board && svg && path) {
+    const cards = [...board.querySelectorAll<HTMLElement>('[data-card] .card')];
+    let last = '';
+    const draw = () => {
+      if (getComputedStyle(svg).display === 'none') return;
+      const b = board.getBoundingClientRect();
+      // Centre de chaque carte, mesuré sans son inclinaison (offset*), relatif au plateau.
+      const points = cards.map((card) => {
+        const slot = card.parentElement!;
+        const r = slot.getBoundingClientRect();
+        return { x: r.left - b.left + r.width / 2, y: r.top - b.top + card.offsetHeight * 0.42 };
+      });
+      let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+      for (let i = 1; i < points.length; i++) {
+        const a = points[i - 1];
+        const c = points[i];
+        const dx = (c.x - a.x) * 0.55;
+        d += ` C ${(a.x + dx).toFixed(1)} ${a.y.toFixed(1)}, ${(c.x - dx).toFixed(1)} ${c.y.toFixed(1)}, ${c.x.toFixed(1)} ${c.y.toFixed(1)}`;
+      }
+      if (d !== last) {
+        path.setAttribute('d', d);
+        last = d;
+      }
+    };
+    draw();
+    addEventListener('resize', draw, { passive: true });
+    addEventListener('load', draw);
+    document.fonts?.ready.then(draw);
+  }
+</script>

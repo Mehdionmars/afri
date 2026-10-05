@@ -1,0 +1,218 @@
+---
+/**
+ * Page « Pourquoi nous » : atouts détaillés, chiffre clé, réseau de partenaires,
+ * zones couvertes (routes tracées depuis le Maroc) et équipe (à fournir par le client).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteRail from '../layout/RouteRail.astro';
+import PageHero from '../sections/PageHero.astro';
+import Contact from '../sections/Contact.astro';
+import WorldMapSprite from '../three/WorldMapSprite.astro';
+import Icon, { type IconName } from '../ui/Icon.astro';
+import { formatPercent, routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.whyPage;
+const why = t.why;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+const networkIcons: IconName[] = ['truck', 'ship', 'shield', 'bank', 'umbrella', 'building', 'scale', 'calendar'];
+
+// Carte en pointillés (viewBox 720 × 276) : le Maroc vers chaque zone.
+const origin = { x: 346, y: 106 };
+const targets = [
+  { x: 325, y: 140 }, // Afrique de l'Ouest (Dakar)
+  { x: 379, y: 160 }, // Afrique centrale (Douala)
+  { x: 366, y: 70 }, // Europe (Paris)
+  { x: 471, y: 118 }, // Moyen-Orient (Dubaï)
+  { x: 212, y: 87 }, // Amériques (New York)
+];
+const arc = (to: { x: number; y: number }) => {
+  const mx = (origin.x + to.x) / 2;
+  const my = (origin.y + to.y) / 2 - Math.max(12, Math.abs(to.x - origin.x) * 0.28);
+  return `M${origin.x} ${origin.y}Q${mx} ${my} ${to.x} ${to.y}`;
+};
+---
+
+<BaseLayout lang={lang} title={p.meta.title} description={p.meta.description} alternates={routes.why} current="why" hasContact>
+  <WorldMapSprite />
+  <RouteRail
+    lang={lang}
+    stops={[
+      { id: 'intro', label: t.nav.why },
+      { id: 'atouts', label: p.reasonsTitle },
+      { id: 'reseau', label: p.networkTitle },
+      { id: 'zones', label: p.zonesTitle },
+      { id: 'equipe', label: p.teamTitle },
+      { id: 'contact', label: t.nav.contact },
+    ]}
+  />
+  <PageHero lang={lang} title={p.title} lead={p.lead} photo="pourquoi" photoAlt={p.photoAlt} />
+
+  <section id="atouts" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="atouts-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="flex flex-col gap-4">
+        <h2 id="atouts-title" class="reveal m-0 text-h2-xl">{p.reasonsTitle}</h2>
+      </div>
+      <ul class="m-0 grid list-none gap-5 p-0 md:grid-cols-2" role="list">
+        {
+          why.reasons.map((reason, i) => (
+            <li class="reveal lift flex flex-col gap-5 rounded-panel bg-metal-100 p-7 sm:p-9" style={`--i:${i % 2}`}>
+              <h3 class="m-0 text-h3-lg">{reason.title}</h3>
+              <p class="m-0 text-[16.5px] leading-[1.6] text-metal-600">{reason.text}</p>
+              <ul class="m-0 mt-auto flex list-none flex-col gap-2.5 border-t border-navy/10 p-0 pt-5" role="list">
+                {p.reasonPoints[i].map((point) => (
+                  <li class="flex items-start gap-3 text-[15.5px] leading-[1.5] text-metal-700">
+                    <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-navy text-white">
+                      <Icon name="check" size={11} stroke={3} />
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="chiffre" class="on-light bg-yellow px-[max(16px,5%)] py-16 sm:py-20" aria-labelledby="chiffre-title">
+    <div class="mx-auto grid max-w-page items-center gap-8 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-16">
+      <h2 id="chiffre-title" class="sr-only">{p.statTitle}</h2>
+      <p class="reveal m-0 text-[clamp(5rem,3.5rem+6vw,9rem)] font-medium leading-[0.9] tracking-[-0.05em] text-ink">{formatPercent(lang, why.stat.value)}</p>
+      <div class="flex flex-col gap-3">
+        <p class="label-mono m-0 text-ink">{p.statTitle}</p>
+        <p class="m-0 max-w-[34ch] text-h3 font-medium text-ink">{why.stat.text}</p>
+        <p class="m-0 text-[17px] font-semibold text-ink">{why.stat.follow}</p>
+        <p class="label-mono m-0 text-ink">{why.stat.source}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reseau" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="reseau-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="reseau-title" class="reveal m-0 text-h2-xl">{p.networkTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.networkLead}</p>
+      </div>
+      <ul class="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {
+          p.network.map((item, i) => (
+            <li class="reveal flex flex-col gap-3 rounded-card bg-white p-6" style={`--i:${i % 4}`}>
+              <span class="flex size-11 items-center justify-center rounded-tile bg-metal-100 text-ink">
+                <Icon name={networkIcons[i]} size={22} stroke={1.8} />
+              </span>
+              <h3 class="m-0 text-[19px] font-medium leading-snug tracking-[-0.01em]">{item.title}</h3>
+              <p class="m-0 text-[15px] leading-[1.55] text-metal-600">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="zones" class="on-dark relative isolate overflow-hidden bg-navy px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="zones-title">
+    <div class="mx-auto grid max-w-page items-center gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:gap-16">
+      <div class="flex flex-col gap-6">
+        <h2 id="zones-title" class="reveal m-0 text-h2-xl text-white">{p.zonesTitle}</h2>
+        <p class="m-0 max-w-[44ch] text-lead text-metal-200">{p.zonesLead}</p>
+        <ol class="m-0 flex list-none flex-col p-0" role="list">
+          {
+            p.zones.map((zone, i) => (
+              <li class="reveal flex items-baseline gap-4 border-t border-white/10 py-3.5" style={`--i:${i}`}>
+                <span class="label-mono text-yellow">{num(i)}</span>
+                <span class="flex flex-col gap-0.5">
+                  <span class="text-[18px] font-medium text-white">{zone.name}</span>
+                  <span class="text-[14.5px] text-metal-300">{zone.text}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="m-0 text-[13px] text-metal-300">{p.zonesNote}</p>
+      </div>
+      <div class="map-wrap" data-anim>
+        {/* Carte recadrée sur l'Atlantique, l'Europe, l'Afrique et le Moyen-Orient. */}
+        <svg class="routes block h-auto w-full" viewBox="170 36 330 186" aria-hidden="true" focusable="false">
+          <use href="#world-dots" x="0" y="0" width="720" height="276" class="land" />
+          {
+            targets.map((to, i) => (
+              <g style={`--i:${i}`}>
+                <path class="route" d={arc(to)} pathLength="1" />
+                <circle class="stop" cx={to.x} cy={to.y} r="2.6" />
+                <text class="stop-num" x={to.x} y={to.y - 6}>
+                  {num(i)}
+                </text>
+              </g>
+            ))
+          }
+          <circle class="origin-pulse" cx={origin.x} cy={origin.y} r="7" />
+          <circle cx={origin.x} cy={origin.y} r="3.6" fill="#FFC342" stroke="#0B0B0C" stroke-width="1.2" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="equipe" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="equipe-title">
+    <div class="mx-auto grid max-w-page items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+      <div class="placeholder-photo aspect-[4/3] rounded-panel bg-metal-200 text-[15px] text-metal-700">{p.teamPhoto}</div>
+      <div class="flex flex-col gap-4">
+        <h2 id="equipe-title" class="reveal m-0 text-h2-xl">{p.teamTitle}</h2>
+        <p class="m-0 max-w-[46ch] text-lead text-metal-600">{p.teamText}</p>
+      </div>
+    </div>
+  </section>
+
+  <Contact lang={lang} />
+</BaseLayout>
+
+<style>
+  .routes .land {
+    color: #8b949e;
+  }
+  .routes .route {
+    fill: none;
+    stroke: #ffc342;
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .routes .stop {
+    fill: #ffc342;
+    stroke: #0b0b0c;
+    stroke-width: 1.2;
+  }
+  .routes .stop-num {
+    fill: #eef0f2;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 7px;
+    font-weight: 500;
+    text-anchor: middle;
+    paint-order: stroke;
+    stroke: #0b0b0c;
+    stroke-width: 2px;
+  }
+  .origin-pulse {
+    fill: none;
+    stroke: #ffc342;
+    stroke-width: 1;
+  }
+  /* Les routes se tracent quand la carte arrive à l'écran. */
+  @supports (animation-timeline: view()) {
+    .routes .route {
+      animation-name: afDash;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry calc(20% + var(--i) * 8%) cover calc(45% + var(--i) * 6%);
+    }
+  }
+</style>

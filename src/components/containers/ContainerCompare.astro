@@ -1,0 +1,374 @@
+---
+/**
+ * Comparateur : deux formats au choix, silhouettes à la même échelle, écarts ligne par ligne,
+ * puis le tableau de tous les formats, filtrable par famille. Fonctionne sans JavaScript
+ * (état initial rendu côté serveur ; les menus se mettent à jour avec le script).
+ */
+import Icon from '../ui/Icon.astro';
+import { byId, families, formats, sideView, specKeys, specText, specValue, type SpecKey } from '../../lib/containers';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).containersPage;
+const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
+const words = { none: t.spec.none, open: t.spec.open, to: lang === 'fr' ? 'à' : 'to' };
+const S = 44; // px par mètre
+const VB = { x: -10, y: -26, w: Math.ceil(13.716 * S) + 20, h: Math.ceil(2.896 * S) + 36 };
+const name = (id: string) => t.formats[id as keyof typeof t.formats];
+const label: Record<SpecKey, string> = {
+  volume: t.spec.volume,
+  payload: t.spec.payload,
+  length: t.spec.length,
+  width: t.spec.width,
+  height: t.spec.height,
+  door: t.spec.door,
+  pallets: t.spec.pallets,
+  tare: t.spec.tare,
+  maxGross: t.spec.maxGross,
+  temp: t.spec.temp,
+};
+const A = byId('20dc');
+const B = byId('40hc');
+const bar = (key: SpecKey, f: typeof A) => {
+  const a = specValue(A, key);
+  const b = specValue(B, key);
+  const v = specValue(f, key);
+  const max = Math.max(a ?? 0, b ?? 0);
+  return v && max ? Math.round((v / max) * 1000) / 10 : 0;
+};
+const diff = (key: SpecKey) => {
+  const a = specValue(A, key);
+  const b = specValue(B, key);
+  if (a === null || b === null) return '';
+  const d = b - a;
+  if (Math.abs(d) < 1e-9) return '=';
+  const digits = key === 'volume' ? 1 : key === 'length' || key === 'width' || key === 'height' ? 2 : 0;
+  return `${d > 0 ? '+' : '−'}${new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(Math.abs(d))}`;
+};
+const ticks = Array.from({ length: 15 }, (_, m) => m);
+const payload = JSON.stringify({
+  locale,
+  words,
+  names: t.formats,
+  scale: S,
+});
+---
+
+<div class="cmp flex flex-col gap-8" data-compare data-cmp={payload}>
+  <div class="pick grid items-end gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+    {
+      (['a', 'b'] as const).map((slot) => (
+        <label class:list={['flex flex-col gap-2', slot === 'b' && 'sm:order-3']}>
+          <span class="label-mono flex items-center gap-2 text-metal-600">
+            <span class:list={['swatch', slot]} aria-hidden="true" />
+            {slot === 'a' ? t.compareA : t.compareB}
+          </span>
+          <span class="select-wrap">
+            <select data-select={slot}>
+              {families.map((family) => (
+                <optgroup label={t.families[family].name}>
+                  {formats
+                    .filter((f) => f.family === family)
+                    .map((f) => (
+                      <option value={f.id} selected={(slot === 'a' ? A : B).id === f.id}>
+                        {name(f.id)}
+                      </option>
+                    ))}
+                </optgroup>
+              ))}
+            </select>
+            <Icon name="arrow" size={16} stroke={2} class="chev" />
+          </span>
+        </label>
+      ))
+    }
+    <button type="button" class="swap sm:order-2" data-swap aria-label={t.swap} title={t.swap}>
+      <Icon name="swap" size={20} stroke={2} />
+    </button>
+  </div>
+
+  <div class="grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-10">
+  <figure class="sil m-0 flex flex-col gap-2 rounded-panel bg-metal-100 p-5 sm:p-7 lg:sticky" aria-hidden="true">
+    {
+      (['a', 'b'] as const).map((slot) => (
+        <div class="sil-row">
+          <span class="sil-name label-mono" data-sil-name={slot}>
+            <span class:list={['swatch', slot]} />
+            {name((slot === 'a' ? A : B).id)}
+          </span>
+          <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} focusable="false">
+            <line x1={VB.x} x2={VB.x + VB.w} y1={Math.round((slot === 'a' ? A : B).ext[2] * S) + 1} y2={Math.round((slot === 'a' ? A : B).ext[2] * S) + 1} stroke="rgba(15, 35, 64,.2)" stroke-width="1.5" data-ground />
+            <g data-sil={slot} set:html={sideView(slot === 'a' ? A : B, S)} />
+          </svg>
+        </div>
+      ))
+    }
+    <svg class="ruler" viewBox={`${VB.x} 0 ${VB.w} 30`} focusable="false">
+      <line x1="0" x2={14 * S} y1="4" y2="4" stroke="#8b949e" stroke-width="1.2" />
+      {
+        ticks.map((m) => (
+          <g>
+            <line x1={m * S} x2={m * S} y1="0" y2={m % 2 === 0 ? 10 : 7} stroke="#8b949e" stroke-width="1.2" />
+            {m % 2 === 0 && (
+              <text x={m * S} y="27" text-anchor="middle">
+                {m} m
+              </text>
+            )}
+          </g>
+        ))
+      }
+    </svg>
+    <figcaption class="label-mono text-metal-600">{t.scaleNote}</figcaption>
+  </figure>
+
+  <table class="rows w-full border-collapse text-left">
+    <caption class="sr-only">{t.compareTitle}</caption>
+    <thead>
+      <tr>
+        <td></td>
+        <th scope="col" class="label-mono font-medium text-metal-600" data-head="a">{name(A.id)}</th>
+        <th scope="col" class="label-mono font-medium text-metal-600" data-head="b">{name(B.id)}</th>
+        <th scope="col" class="label-mono diff-col font-medium text-metal-600">Δ</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        specKeys.map((key) => (
+          <tr data-row={key}>
+            <th scope="row" class="text-[15px] font-medium text-metal-700">{label[key]}</th>
+            {(['a', 'b'] as const).map((slot) => {
+              const f = slot === 'a' ? A : B;
+              return (
+                <td>
+                  <span class="val tabular-nums" data-val={slot}>
+                    {specText(f, key, locale, words)}
+                  </span>
+                  <span class="track" aria-hidden="true">
+                    <span class:list={['fill', slot]} data-bar={slot} style={`width:${bar(key, f)}%`} />
+                  </span>
+                </td>
+              );
+            })}
+            <td class="diff-col">
+              <span class="diff tabular-nums" data-diff>
+                {diff(key)}
+              </span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<style>
+  .swatch {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    border-radius: 3px;
+  }
+  .swatch.a {
+    background: #0b0b0c;
+  }
+  .swatch.b {
+    background: #ffc342;
+    box-shadow: inset 0 0 0 1px #0f2340;
+  }
+  .select-wrap {
+    position: relative;
+    display: block;
+  }
+  select {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 44px 0 16px;
+    border: 1px solid #8b949e;
+    border-radius: 10px;
+    background: #fff;
+    color: #0b0b0c;
+    font-size: 17px;
+    font-weight: 600;
+    appearance: none;
+    cursor: pointer;
+  }
+  select:hover {
+    border-color: #0b0b0c;
+  }
+  .select-wrap :global(.chev) {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    translate: 0 -50%;
+    rotate: 90deg;
+    pointer-events: none;
+  }
+  .swap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    width: 52px;
+    height: 52px;
+    border: 0;
+    border-radius: 50%;
+    background: #0b0b0c;
+    color: #fff;
+    cursor: pointer;
+    transition: rotate 0.4s var(--ease-out), background-color 0.25s var(--ease-out);
+  }
+  .swap:hover {
+    background: #3F4650;
+  }
+  .swap.spun {
+    rotate: 180deg;
+  }
+  @media (min-width: 1024px) {
+    .sil {
+      top: calc(var(--header-h) + 24px);
+    }
+  }
+  .sil-row {
+    display: grid;
+    gap: 6px;
+  }
+  .sil-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0b0b0c;
+  }
+  .sil svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .ruler text {
+    fill: #5e6670;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 15px;
+  }
+  .rows th,
+  .rows td {
+    padding: 14px 12px 14px 0;
+    border-top: 1px solid rgba(15, 35, 64, 0.1);
+    vertical-align: top;
+  }
+  .rows thead th {
+    border-top: 0;
+    padding-bottom: 10px;
+  }
+  .rows tbody th {
+    width: 30%;
+  }
+  .val {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0b0b0c;
+  }
+  .track {
+    display: block;
+    height: 6px;
+    margin-top: 8px;
+    border-radius: 3px;
+    background: rgba(15, 35, 64, 0.07);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s var(--ease-out);
+  }
+  .fill.a {
+    background: #0b0b0c;
+  }
+  .fill.b {
+    background: #ffc342;
+  }
+  .diff {
+    display: inline-block;
+    min-width: 3ch;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: #eef0f2;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .diff:empty {
+    display: none;
+  }
+  @media (max-width: 639px) {
+    .rows tbody th {
+      width: 34%;
+      font-size: 14px;
+    }
+    .val {
+      font-size: 14.5px;
+    }
+    .diff-col {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { byId, sideView, specKeys, specText, specValue, type SpecKey } from '../../lib/containers';
+
+  const root = document.querySelector<HTMLElement>('[data-compare]');
+  if (root) {
+    const data = JSON.parse(root.dataset.cmp!) as { locale: string; words: { none: string; open: string; to: string }; names: Record<string, string>; scale: number };
+    const sel = { a: root.querySelector<HTMLSelectElement>('[data-select="a"]')!, b: root.querySelector<HTMLSelectElement>('[data-select="b"]')! };
+    const swapBtn = root.querySelector<HTMLButtonElement>('[data-swap]')!;
+    const nf = (v: number, d: number) => new Intl.NumberFormat(data.locale, { minimumFractionDigits: d, maximumFractionDigits: d }).format(v);
+
+    function render() {
+      const A = byId(sel.a.value);
+      const B = byId(sel.b.value);
+      for (const [slot, f] of [['a', A], ['b', B]] as const) {
+        root!.querySelector(`[data-sil="${slot}"]`)!.innerHTML = sideView(f, data.scale);
+        const ground = root!.querySelector(`[data-sil="${slot}"]`)!.parentElement!.querySelector('[data-ground]')!;
+        const gy = String(Math.round(f.ext[2] * data.scale) + 1);
+        ground.setAttribute('y1', gy);
+        ground.setAttribute('y2', gy);
+        const nameEl = root!.querySelector(`[data-sil-name="${slot}"]`)!;
+        nameEl.lastChild!.textContent = data.names[f.id];
+        root!.querySelector(`[data-head="${slot}"]`)!.textContent = data.names[f.id];
+      }
+      for (const key of specKeys as SpecKey[]) {
+        const row = root!.querySelector<HTMLElement>(`[data-row="${key}"]`)!;
+        const a = specValue(A, key);
+        const b = specValue(B, key);
+        const max = Math.max(a ?? 0, b ?? 0);
+        for (const [slot, f, v] of [['a', A, a], ['b', B, b]] as const) {
+          row.querySelector(`[data-val="${slot}"]`)!.textContent = specText(f, key, data.locale, data.words);
+          (row.querySelector(`[data-bar="${slot}"]`) as HTMLElement).style.width = `${v && max ? (v / max) * 100 : 0}%`;
+        }
+        const diffEl = row.querySelector<HTMLElement>('[data-diff]')!;
+        if (a === null || b === null) diffEl.textContent = '';
+        else {
+          const d = b - a;
+          const digits = key === 'volume' ? 1 : key === 'length' || key === 'width' || key === 'height' ? 2 : 0;
+          diffEl.textContent = Math.abs(d) < 1e-9 ? '=' : `${d > 0 ? '+' : '−'}${nf(Math.abs(d), digits)}`;
+        }
+      }
+    }
+
+    sel.a.addEventListener('change', render);
+    sel.b.addEventListener('change', render);
+    swapBtn.addEventListener('click', () => {
+      [sel.a.value, sel.b.value] = [sel.b.value, sel.a.value];
+      swapBtn.classList.toggle('spun');
+      render();
+    });
+  }
+</script>

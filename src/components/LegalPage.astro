@@ -1,0 +1,144 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { colon, routes, useTranslations, type Lang } from '../i18n/utils';
+import photoCredits from '../content/photo-credits.json';
+
+type LegalKey = 'notice' | 'privacy' | 'cookies';
+
+interface Props {
+  lang: Lang;
+  page: LegalKey;
+}
+
+const { lang, page } = Astro.props;
+const t = useTranslations(lang);
+const entry = await getEntry('legal', `${lang}/${page}`);
+if (!entry) throw new Error(`Page légale introuvable : src/content/legal/${lang}/${page}.md`);
+const { Content } = await render(entry);
+// Crédits photos (licences libres), affichés en fin de mentions légales.
+const credits = page === 'notice' ? Object.entries(photoCredits).filter(([key]) => !key.startsWith('_')).map(([, value]) => value as { title: string; author: string; license: string; licenseUrl: string; source: string; note?: string }) : [];
+const updated = new Intl.DateTimeFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { dateStyle: 'long' }).format(entry.data.updated);
+---
+
+<BaseLayout lang={lang} title={`${entry.data.title} | AFRIEXPORT CONSULTING`} description={entry.data.description} alternates={routes[page]}>
+  <article class="on-light bg-white px-[max(16px,5%)] pb-24 pt-[calc(var(--header-h)+64px)] sm:pt-[calc(var(--header-h)+80px)]">
+    <div class="mx-auto flex max-w-[760px] flex-col gap-8">
+      <a href={routes.home[lang]} class="link-u self-start text-[15px] font-semibold text-ink">
+        <span aria-hidden="true">← </span>{t.legal.back}
+      </a>
+      <header class="flex flex-col gap-3 border-b border-metal-200 pb-8">
+        <h1 class="m-0 text-h2-lg">{entry.data.title}</h1>
+        <p class="m-0 text-sm text-metal-600">{t.legal.updated}{colon(lang)}<time datetime={entry.data.updated.toISOString().slice(0, 10)}>{updated}</time></p>
+      </header>
+      <div class="legal-prose">
+        <Content />
+        {
+          credits.length > 0 && (
+            <>
+              <h2 id="credits-photos">{t.pages.credits.title}</h2>
+              <p>{t.pages.credits.intro}</p>
+              <ul>
+                {credits.map((credit) => (
+                  <li>
+                    <cite>{credit.title.replace(/\.(jpe?g|png)$/i, '').replace(/_/g, ' ')}</cite> {t.pages.credits.by} {credit.author}, {t.pages.credits.license}{' '}
+                    {credit.licenseUrl ? (
+                      <a href={credit.licenseUrl} rel="noopener license" target="_blank">
+                        {credit.license}
+                        <span class="sr-only"> {t.a11y.newWindow}</span>
+                      </a>
+                    ) : (
+                      credit.license
+                    )}
+                    {credit.note && <>, {t.pages.credits.cropped}</>} (
+                    <a href={credit.source} rel="noopener" target="_blank">
+                      {t.pages.credits.source}
+                      <span class="sr-only"> {t.a11y.newWindow}</span>
+                    </a>
+                    )
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-prose {
+    max-width: 68ch;
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: #3F4650;
+  }
+  .legal-prose :global(h2) {
+    margin: 2.2em 0 0.6em;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: #0b0b0c;
+  }
+  .legal-prose :global(h3) {
+    margin: 1.6em 0 0.5em;
+    font-size: 1.15rem;
+    color: #0b0b0c;
+  }
+  .legal-prose :global(p),
+  .legal-prose :global(ul),
+  .legal-prose :global(table) {
+    margin: 0 0 1em;
+  }
+  .legal-prose :global(ul) {
+    padding-left: 1.25em;
+    list-style: disc;
+  }
+  .legal-prose :global(li) {
+    margin-bottom: 0.35em;
+  }
+  .legal-prose :global(a) {
+    color: #0b0b0c;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .legal-prose :global(strong) {
+    color: #0b0b0c;
+  }
+  .legal-prose :global(blockquote) {
+    margin: 0 0 2em;
+    padding: 14px 18px;
+    border-left: 4px solid #ffc342;
+    background: #eef0f2;
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+  }
+  .legal-prose :global(blockquote p) {
+    margin: 0;
+  }
+  .legal-prose :global(table) {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .legal-prose :global(th),
+  .legal-prose :global(td) {
+    padding: 10px 14px;
+    border: 1px solid #dde1e6;
+    text-align: left;
+    vertical-align: top;
+  }
+  .legal-prose :global(th) {
+    background: #eef0f2;
+    color: #0b0b0c;
+  }
+  .legal-prose :global(code) {
+    font-size: 0.9em;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: #eef0f2;
+  }
+</style>

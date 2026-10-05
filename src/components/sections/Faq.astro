@@ -1,0 +1,83 @@
+---
+/** Questions fréquentes en accordéon (details/summary) + données structurées FAQPage. */
+import Icon from '../ui/Icon.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  items: { q: string; a: string }[];
+  id?: string;
+  class?: string;
+}
+
+const { lang, items, id = 'questions', class: className = 'bg-metal-100' } = Astro.props;
+const t = useTranslations(lang).pages;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<section id={id} class:list={['on-light px-[max(16px,5%)] py-20 sm:py-28', className]} aria-labelledby={`${id}-title`}>
+  <div class="mx-auto grid max-w-page gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)] lg:gap-16">
+    <div class="flex flex-col gap-4">
+      <h2 id={`${id}-title`} class="reveal m-0 text-h2-lg">{t.faqTitle}</h2>
+    </div>
+    <div class="border-b border-navy/15">
+      {
+        items.map((item, i) => (
+          <details class="faq reveal border-t border-navy/15" style={`--i:${i % 3}`}>
+            <summary>
+              <h3 class="m-0 text-[clamp(1.0625rem,1rem+0.3vw,1.25rem)] font-medium leading-snug tracking-[-0.01em]">{item.q}</h3>
+              <span class="toggle" aria-hidden="true">
+                <Icon name="plus" size={18} stroke={2} />
+              </span>
+            </summary>
+            <p class="m-0 max-w-[62ch] pb-6 pr-12 text-[16px] leading-[1.65] text-metal-600">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+<style>
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 64px;
+    padding: 18px 0;
+    list-style: none;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .toggle {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.2);
+    transition: rotate 0.3s var(--ease-out), background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  }
+  summary:hover .toggle {
+    background: #fff;
+  }
+  details[open] .toggle {
+    rotate: 45deg;
+    background: #ffc342;
+    box-shadow: none;
+  }
+</style>

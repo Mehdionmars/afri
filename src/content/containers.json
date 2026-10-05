@@ -1,0 +1,16 @@
+{
+  "_lisezmoi": "Catalogue du guide des conteneurs (page Conteneurs : comparateur, tableau, calculateur). Valeurs INDICATIVES en mètres (extérieur ext, intérieur int, porte door : largeur × hauteur), m³ et kg. Elles varient selon le fabricant et la compagnie. Les noms sont traduits dans fr.json et en.json (containersPage.formats). Les trois conteneurs de l'accueil (site.json) reprennent les mêmes valeurs.",
+  "formats": [
+    { "id": "20dc", "family": "dry", "ft": 20, "ext": [6.058, 2.438, 2.591], "int": [5.898, 2.352, 2.393], "door": [2.34, 2.28], "volume": 33.2, "tare": 2280, "maxGross": 30480, "payload": 28200, "pallets": 11 },
+    { "id": "40dc", "family": "dry", "ft": 40, "ext": [12.192, 2.438, 2.591], "int": [12.032, 2.352, 2.393], "door": [2.34, 2.28], "volume": 67.7, "tare": 3780, "maxGross": 30480, "payload": 26700, "pallets": 24 },
+    { "id": "40hc", "family": "dry", "ft": 40, "ext": [12.192, 2.438, 2.896], "int": [12.032, 2.352, 2.698], "door": [2.34, 2.585], "volume": 76.4, "tare": 3980, "maxGross": 30480, "payload": 26500, "pallets": 24 },
+    { "id": "45hc", "family": "dry", "ft": 45, "ext": [13.716, 2.438, 2.896], "int": [13.556, 2.352, 2.698], "door": [2.34, 2.585], "volume": 86, "tare": 4800, "maxGross": 32500, "payload": 27700, "pallets": 27 },
+    { "id": "20rf", "family": "reefer", "ft": 20, "ext": [6.058, 2.438, 2.591], "int": [5.444, 2.294, 2.276], "door": [2.29, 2.26], "volume": 28.4, "tare": 3050, "maxGross": 30480, "payload": 27430, "pallets": 10, "temp": [-30, 30] },
+    { "id": "40rh", "family": "reefer", "ft": 40, "ext": [12.192, 2.438, 2.896], "int": [11.583, 2.294, 2.554], "door": [2.29, 2.569], "volume": 67.9, "tare": 4480, "maxGross": 34000, "payload": 29520, "pallets": 23, "temp": [-30, 30] },
+    { "id": "20ot", "family": "openTop", "ft": 20, "ext": [6.058, 2.438, 2.591], "int": [5.894, 2.35, 2.355], "door": [2.338, 2.28], "volume": 32.6, "tare": 2350, "maxGross": 30480, "payload": 28130, "pallets": 11 },
+    { "id": "40ot", "family": "openTop", "ft": 40, "ext": [12.192, 2.438, 2.591], "int": [12.029, 2.35, 2.355], "door": [2.338, 2.28], "volume": 66.5, "tare": 3850, "maxGross": 30480, "payload": 26630, "pallets": 24 },
+    { "id": "20fr", "family": "flatRack", "ft": 20, "ext": [6.058, 2.438, 2.591], "int": [5.698, 2.23, 2.255], "door": null, "volume": null, "tare": 2750, "maxGross": 34000, "payload": 31250, "pallets": null },
+    { "id": "40fr", "family": "flatRack", "ft": 40, "ext": [12.192, 2.438, 2.591], "int": [11.66, 2.2, 1.955], "door": null, "volume": null, "tare": 5700, "maxGross": 45000, "payload": 39300, "pallets": null },
+    { "id": "20tk", "family": "tank", "ft": 20, "ext": [6.058, 2.438, 2.591], "int": null, "door": null, "volume": null, "capacityL": 25000, "tare": 3600, "maxGross": 36000, "payload": 32400, "pallets": null }
+  ]
+}

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, useTranslations } from '../i18n/utils';
+
+const fr = useTranslations('fr').notFound;
+const en = useTranslations('en').notFound;
+---
+
+<BaseLayout lang="fr" title={`${fr.title} | AFRIEXPORT CONSULTING`} description={fr.text} alternates={routes.home} noindex>
+  <section class="on-dark flex min-h-[70vh] items-center bg-navy px-[max(16px,5%)] pb-24 pt-[calc(var(--header-h)+96px)]">
+    <div class="mx-auto flex w-full max-w-page flex-col gap-10">
+      <span class="text-stat font-normal text-yellow" aria-hidden="true">404</span>
+      <div class="grid gap-10 md:grid-cols-2">
+        <div class="flex flex-col gap-4">
+          <h1 class="m-0 text-h2-lg text-white">{fr.title}</h1>
+          <p class="m-0 text-lead text-metal-200">{fr.text}</p>
+          <a href={routes.home.fr} class="btn self-start bg-yellow px-7 py-4 text-base text-ink">{fr.cta}</a>
+        </div>
+        <div class="flex flex-col gap-4" lang="en">
+          <p class="m-0 text-h2-lg font-medium text-white">{en.title}</p>
+          <p class="m-0 text-lead text-metal-200">{en.text}</p>
+          <a href={routes.home.en} class="btn self-start border border-metal-600 px-7 py-4 text-base text-white">{en.cta}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

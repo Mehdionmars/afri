@@ -1,0 +1,176 @@
+---
+/**
+ * États des conteneurs : neuf / usé en photos, les quatre catégories détaillées,
+ * leur comparaison en tableau et la check-list avant achat ou location.
+ */
+import Icon from '../ui/Icon.astro';
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).containersPage;
+const L = t.stateLabels;
+const states = t.states;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+const first = states[0];
+const last = states[states.length - 1];
+const Price = (level: number) => Array.from({ length: 4 }, (_, i) => i < level);
+---
+
+<div class="flex flex-col gap-14">
+  <div class="grid gap-4 sm:grid-cols-2">
+    {
+      [
+        { photo: 'etat-neuf', alt: first.photoAlt ?? '', state: first },
+        { photo: 'etat-occasion', alt: last.photoAlt ?? '', state: last },
+      ].map((item) => (
+        <figure class="reveal relative m-0 aspect-[16/10] overflow-hidden rounded-panel bg-metal-200">
+          <PhotoSlot
+            photo={item.photo}
+            alt={item.alt}
+            placeholder={`[${item.alt}]`}
+            sizes="(min-width: 1240px) 610px, (min-width: 640px) 48vw, 100vw"
+            imgClass="absolute inset-0 size-full object-cover"
+            placeholderClass="placeholder-photo absolute inset-0 text-[15px] text-metal-700"
+          />
+        </figure>
+      ))
+    }
+  </div>
+
+  <ul class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 xl:grid-cols-4" role="list">
+    {
+      states.map((state, i) => (
+        <li class:list={['state reveal lift flex flex-col gap-4 rounded-panel p-6', state.export ? 'bg-white' : 'bg-metal-100']} style={`--i:${i}`}>
+          <h3 class="m-0 text-[21px] font-medium leading-tight tracking-[-0.01em]">{state.title}</h3>
+          <p class="m-0 text-[15.5px] leading-[1.6] text-metal-600">{state.text}</p>
+          <dl class="m-0 mt-auto grid gap-3 border-t border-navy/10 pt-4 text-[14.5px]">
+            <div class="flex justify-between gap-3">
+              <dt class="text-metal-600">{L.age}</dt>
+              <dd class="m-0 text-right font-semibold">{state.age}</dd>
+            </div>
+            <div class="flex justify-between gap-3">
+              <dt class="text-metal-600">{L.export}</dt>
+              <dd class:list={['m-0 flex items-center gap-1.5 font-semibold', state.export ? 'text-navy' : 'text-metal-700']}>
+                <Icon name={state.export ? 'check' : 'close'} size={15} stroke={2.6} />
+                {state.export ? L.yes : L.no}
+              </dd>
+            </div>
+            <div class="flex justify-between gap-3">
+              <dt class="text-metal-600">{L.price}</dt>
+              <dd class="m-0 flex gap-0.5 font-semibold">
+                <span class="sr-only">{state.price} / 4</span>
+                {Price(state.price).map((on) => (
+                  <span class:list={[on ? 'text-ink' : 'text-metal-200']} aria-hidden="true">
+                    €
+                  </span>
+                ))}
+              </dd>
+            </div>
+            <div class="flex flex-col gap-1">
+              <dt class="text-metal-600">{L.use}</dt>
+              <dd class="m-0 font-semibold leading-snug">{state.use}</dd>
+            </div>
+          </dl>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="flex flex-col gap-5">
+    <h3 class="m-0 text-h3-lg">{t.statesCompareTitle}</h3>
+    <div class="overflow-x-auto rounded-card bg-white" tabindex="0" role="region" aria-label={t.statesCompareTitle}>
+      <table class="cmp-states w-full min-w-[720px] border-collapse text-left text-[15px]">
+        <thead>
+          <tr>
+            <td></td>
+            {states.map((state) => <th scope="col">{state.title}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{L.age}</th>
+            {states.map((state) => <td>{state.age}</td>)}
+          </tr>
+          <tr>
+            <th scope="row">{L.export}</th>
+            {states.map((state) => (
+              <td class:list={['font-semibold', state.export ? 'text-navy' : 'text-metal-700']}>{state.export ? L.yes : L.no}</td>
+            ))}
+          </tr>
+          <tr>
+            <th scope="row">{L.use}</th>
+            {states.map((state) => <td>{state.use}</td>)}
+          </tr>
+          <tr>
+            <th scope="row">{L.price}</th>
+            {states.map((state) => (
+              <td class="font-semibold">
+                <span class="sr-only">{state.price} / 4</span>
+                <span aria-hidden="true">{'€'.repeat(state.price)}</span>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-16">
+    <div class="flex flex-col gap-3">
+      <h3 class="m-0 text-h3-lg">{t.checklistTitle}</h3>
+      <p class="m-0 max-w-[36ch] text-[16px] leading-[1.6] text-metal-600">{t.checklistLead}</p>
+    </div>
+    <ol class="m-0 grid list-none gap-x-8 gap-y-6 p-0 sm:grid-cols-2" role="list">
+      {
+        t.checklist.map((item, i) => (
+          <li class="reveal flex items-start gap-4" style={`--i:${i % 2}`}>
+            <span class="check-num label-mono">{num(i)}</span>
+            <span class="flex flex-col gap-1">
+              <span class="text-[17px] font-semibold">{item.title}</span>
+              <span class="text-[15px] leading-[1.55] text-metal-600">{item.text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</div>
+
+<style>
+  .state {
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.1);
+  }
+  .cmp-states th,
+  .cmp-states td {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(15, 35, 64, 0.08);
+    vertical-align: top;
+  }
+  .cmp-states thead th,
+  .cmp-states thead td {
+    border-top: 0;
+    background: #eef0f2;
+    font-weight: 600;
+  }
+  .cmp-states tbody th {
+    color: #5e6670;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .check-num {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffc342;
+    color: #0b0b0c;
+  }
+</style>

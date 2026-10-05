@@ -1,0 +1,122 @@
+---
+/** Tableau de tous les formats, filtrable par famille (boutons à bascule). */
+import { families, formats, specText, type SpecKey } from '../../lib/containers';
+import { formatNumber, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).containersPage;
+const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
+const words = { none: t.spec.none, open: t.spec.open, to: lang === 'fr' ? 'à' : 'to' };
+const cols: { key: SpecKey | 'internal'; label: string }[] = [
+  { key: 'internal', label: t.spec.internal },
+  { key: 'door', label: t.spec.door },
+  { key: 'volume', label: t.spec.volume },
+  { key: 'payload', label: t.spec.payload },
+  { key: 'tare', label: t.spec.tare },
+  { key: 'pallets', label: t.spec.pallets },
+  { key: 'temp', label: t.spec.temp },
+];
+const internal = (f: (typeof formats)[number]) =>
+  f.int ? f.int.map((v) => formatNumber(lang, v, 2)).join(' × ') + ' m' : t.spec.none;
+---
+
+<div class="flex flex-col gap-5" data-table>
+  <div class="flex flex-wrap items-center gap-2" role="group" aria-label={t.filterLabel}>
+    <button type="button" class="filter" aria-pressed="true" data-filter="all">{t.filterAll}</button>
+    {families.map((family) => <button type="button" class="filter" aria-pressed="false" data-filter={family}>{t.families[family].name}</button>)}
+  </div>
+  <div class="scroller overflow-x-auto rounded-card bg-white" tabindex="0" role="region" aria-label={t.tableTitle}>
+    <table class="w-full min-w-[880px] border-collapse text-left text-[14.5px]">
+      <thead>
+        <tr>
+          <th scope="col" class="label-mono font-medium text-metal-600">{useTranslations(lang).containers.format}</th>
+          {cols.map((col) => <th scope="col" class="label-mono font-medium text-metal-600">{col.label}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          formats.map((f) => (
+            <tr data-family={f.family}>
+              <th scope="row" class="font-semibold text-ink">
+                {t.formats[f.id as keyof typeof t.formats]}
+                <span class="block text-[13px] font-normal text-metal-600">{t.families[f.family].name}</span>
+              </th>
+              {cols.map((col) => (
+                <td class="tabular-nums">{col.key === 'internal' ? internal(f) : specText(f, col.key, locale, words)}</td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .filter {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.16);
+    color: #0b0b0c;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  }
+  .filter:hover {
+    background: #ffd677;
+  }
+  .filter[aria-pressed='true'] {
+    background: #0b0b0c;
+    color: #fff;
+    box-shadow: none;
+  }
+  .scroller {
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.1);
+  }
+  th,
+  td {
+    padding: 14px 12px;
+    border-top: 1px solid rgba(15, 35, 64, 0.08);
+    vertical-align: top;
+    white-space: nowrap;
+  }
+  thead th {
+    border-top: 0;
+    background: #eef0f2;
+    white-space: normal;
+    line-height: 1.4;
+    vertical-align: bottom;
+  }
+  th:first-child {
+    padding-left: 18px;
+  }
+  tbody tr:hover {
+    background: #f5f6f8;
+  }
+  tr[hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-table]');
+  if (root) {
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const rows = [...root.querySelectorAll<HTMLElement>('tbody tr')];
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const family = button.dataset.filter;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        rows.forEach((row) => (row.hidden = family !== 'all' && row.dataset.family !== family));
+      }),
+    );
+  }
+</script>

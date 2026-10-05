@@ -1,0 +1,303 @@
+---
+/**
+ * Page d'un service : ce que nous faisons, pour qui, déroulé de la mission,
+ * livrables (en étiquettes de fret), questions fréquentes, autres services, contact.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteRail from '../layout/RouteRail.astro';
+import PageHero from '../sections/PageHero.astro';
+import Faq from '../sections/Faq.astro';
+import Contact from '../sections/Contact.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { colon, routes, serviceIds, serviceRoute, useTranslations, type Lang, type ServiceId } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  id: ServiceId;
+}
+
+const { lang, id } = Astro.props;
+const t = useTranslations(lang);
+const labels = t.serviceLabels;
+const index = serviceIds.indexOf(id);
+const item = t.services.items[index];
+const d = t.serviceDetails[id];
+const num = (i: number) => String(i + 1).padStart(2, '0');
+const others = serviceIds
+  .map((other, i) => ({ id: other, i, item: t.services.items[i], href: serviceRoute(other)[lang] }))
+  .filter((other) => other.id !== id);
+
+const origin = new URL('/', Astro.site).href;
+const serviceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: d.h1,
+  description: d.meta.description,
+  url: new URL(serviceRoute(id)[lang], Astro.site).href,
+  serviceType: item.title,
+  provider: { '@id': `${origin}#organization` },
+  areaServed: [
+    { '@type': 'Country', name: 'Morocco' },
+    { '@type': 'Place', name: 'Africa' },
+    { '@type': 'Place', name: 'Worldwide' },
+  ],
+};
+---
+
+<BaseLayout lang={lang} title={d.meta.title} description={d.meta.description} alternates={serviceRoute(id)} current="services" hasContact>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(serviceLd)} />
+  <RouteRail
+    lang={lang}
+    stops={[
+      { id: 'intro', label: item.title },
+      { id: 'ce-que-nous-faisons', label: labels.what },
+      { id: 'deroule', label: labels.steps },
+      { id: 'livrables', label: labels.deliverables },
+      { id: 'questions', label: t.pages.faqTitle },
+      { id: 'contact', label: t.nav.contact },
+    ]}
+  />
+  <PageHero
+    lang={lang}
+    title={d.h1}
+    lead={d.lead}
+    photo={`services-${id}`}
+    photoAlt={d.photoAlt}
+  />
+
+  <section id="ce-que-nous-faisons" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="what-title">
+    <div class="mx-auto grid max-w-page items-start gap-12 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:gap-16">
+      <div class="flex flex-col gap-10">
+        <div class="flex flex-col gap-4">
+          <h2 id="what-title" class="reveal m-0 text-h2-xl">{labels.what}</h2>
+        </div>
+        <ol class="m-0 list-none border-b border-navy/15 p-0" role="list">
+          {
+            d.what.map((row, i) => (
+              <li class="what-row reveal border-t border-navy/15" style={`--i:${i % 3}`}>
+                <span class="label-mono text-navy">{num(i)}</span>
+                <span class="flex flex-col gap-1.5">
+                  <h3 class="m-0 text-[clamp(1.25rem,1.1rem+0.5vw,1.5rem)] font-medium tracking-[-0.015em]">{row.title}</h3>
+                  <span class="text-[16px] leading-[1.6] text-metal-600">{row.text}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <aside class="for-who reveal flex flex-col gap-6 rounded-panel bg-metal-100 p-7 sm:p-9 lg:sticky" aria-labelledby="for-who-title">
+        <h3 id="for-who-title" class="m-0 text-h3-lg">{labels.forWho}</h3>
+        <ul class="m-0 flex list-none flex-col gap-4 p-0" role="list">
+          {
+            d.forWho.map((line) => (
+              <li class="flex items-start gap-3.5 text-[16px] leading-[1.55] text-metal-700">
+                <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-yellow text-ink">
+                  <Icon name="check" size={13} stroke={3} />
+                </span>
+                {line}
+              </li>
+            ))
+          }
+        </ul>
+        <Button href="#contact" variant="dark" class="self-start">
+          {labels.cta}
+          <Icon name="arrow" size={18} stroke={2.2} />
+        </Button>
+      </aside>
+    </div>
+  </section>
+
+  <section id="deroule" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="deroule-title">
+    <div class="mx-auto flex max-w-page flex-col gap-14 lg:gap-20">
+      <div class="flex flex-col gap-4">
+        <h2 id="deroule-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{labels.steps}</h2>
+      </div>
+      <ol class="route-steps m-0 grid list-none gap-10 p-0 pl-12 lg:grid-cols-4 lg:gap-8 lg:pl-0 lg:pt-16" role="list">
+        {
+          d.steps.map((step, i) => (
+            <li class="step reveal relative flex flex-col gap-3" style={`--i:${i}`}>
+              <span class="node" aria-hidden="true">
+                <span />
+              </span>
+              <span class="label-mono text-navy">
+                {t.method.stepLabel} {num(i)}
+              </span>
+              <h3 class="m-0 text-h3">
+                <span class="sr-only">
+                  {t.method.stepLabel} {i + 1}
+                  {colon(lang)}
+                </span>
+                {step.title}
+              </h3>
+              <p class="m-0 max-w-[30ch] text-[16.5px] leading-[1.55] text-metal-600">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="livrables" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="livrables-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="flex flex-col gap-4">
+        <h2 id="livrables-title" class="reveal m-0 text-h2-xl">{labels.deliverables}</h2>
+      </div>
+      <ul class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {
+          d.deliverables.map((deliverable, i) => (
+            <li class="label-card reveal lift flex flex-col" style={`--i:${i}`}>
+              <span class="flex flex-1 flex-col gap-2 px-5 pb-5 pt-5">
+                <h3 class="m-0 text-[20px] font-medium leading-tight tracking-[-0.01em]">{deliverable.title}</h3>
+                <span class="text-[15.5px] leading-[1.55] text-metal-600">{deliverable.text}</span>
+              </span>
+              <span class="barcode" aria-hidden="true" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Faq lang={lang} items={d.faq} />
+
+  <section id="autres-services" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-24" aria-labelledby="autres-title">
+    <div class="mx-auto flex max-w-page flex-col gap-10">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <h2 id="autres-title" class="reveal m-0 text-h2-lg">{labels.related}</h2>
+        <a href={routes.services[lang]} class="link-u text-base font-semibold text-ink">
+          {labels.all} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <ul class="m-0 grid list-none grid-cols-2 gap-x-4 gap-y-6 p-0 sm:grid-cols-3 lg:grid-cols-5" role="list">
+        {
+          others.map((other, i) => (
+            <li class="reveal" style={`--i:${i % 5}`}>
+              <a href={other.href} class="mini group flex h-full flex-col gap-3 text-ink no-underline">
+                <span class="relative block aspect-[4/3] overflow-hidden rounded-tile bg-metal-200">
+                  <PhotoSlot
+                    photo={`services-${other.id}`}
+                    alt=""
+                    placeholder={other.item.photo}
+                    sizes="(min-width: 1024px) 230px, (min-width: 640px) 31vw, 46vw"
+                    widths={[320, 480, 640]}
+                    imgClass="mini-img absolute inset-0 size-full object-cover"
+                    placeholderClass="placeholder-photo absolute inset-0 text-[13px] text-metal-700"
+                  />
+                </span>
+                <span class="text-[clamp(1rem,0.95rem+0.3vw,1.125rem)] font-medium leading-snug tracking-[-0.01em]">{other.item.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Contact lang={lang} />
+</BaseLayout>
+
+<style>
+  .what-row {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 16px;
+    padding: 26px 4px;
+  }
+  @media (min-width: 1024px) {
+    .for-who {
+      top: calc(var(--header-h) + 32px);
+    }
+  }
+
+  /* Déroulé : la même route que la section Méthode de l'accueil. */
+  .node {
+    position: absolute;
+    z-index: 2;
+    left: -48px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 2px #0b0b0c;
+  }
+  .node span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffc342;
+  }
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: -36px;
+    top: 26px;
+    width: 2px;
+    height: calc(100% + 40px - 26px);
+    background: repeating-linear-gradient(to bottom, #0b0b0c 0 6px, transparent 6px 11px);
+    transform-origin: top;
+  }
+  @media (min-width: 1024px) {
+    .node {
+      left: 0;
+      top: -64px;
+    }
+    .step:not(:last-child)::after {
+      left: 26px;
+      top: -52px;
+      width: calc(100% + 32px - 26px);
+      height: 2px;
+      background: repeating-linear-gradient(to right, #0b0b0c 0 6px, transparent 6px 11px);
+      transform-origin: left;
+    }
+  }
+  @supports (animation-timeline: view()) {
+    .step:not(:last-child)::after {
+      animation-name: afDrawY;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 50%;
+    }
+    @media (min-width: 1024px) {
+      .step:not(:last-child)::after {
+        animation-name: afDrawX;
+      }
+    }
+  }
+
+  /* Livrables : étiquettes de fret (en-tête mono, code, code-barres). */
+  .label-card {
+    overflow: hidden;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(15, 35, 64, 0.14),
+      0 18px 40px -30px rgba(0, 0, 0, 0.4);
+  }
+  .barcode {
+    height: 30px;
+    margin: 0 20px 18px;
+    background: repeating-linear-gradient(90deg, #0b0b0c 0 2px, transparent 2px 4px, #0b0b0c 4px 5px, transparent 5px 9px, #0b0b0c 9px 12px, transparent 12px 14px);
+    opacity: 0.85;
+  }
+
+  .mini :global(.mini-img) {
+    transition: scale 0.8s var(--ease-out);
+  }
+  .mini:hover :global(.mini-img) {
+    scale: 1.06;
+  }
+  .mini:hover span:last-child {
+    text-decoration: underline;
+    text-decoration-color: #ffc342;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+/**
+ * Emplacement photo. Si src/assets/photos/<photo>.(jpg|png|webp|avif) existe,
+ * l'image est servie en AVIF/WebP responsive. Sinon, le texte d'espace
+ * réservé de la maquette reste visible.
+ */
+import { Picture } from 'astro:assets';
+import { getPhoto } from '../../lib/photos';
+
+interface Props {
+  photo: string;
+  alt: string;
+  placeholder: string;
+  sizes: string;
+  widths?: number[];
+  /** Classes de l'image (positionnement, object-fit…). */
+  imgClass?: string;
+  /** Classes du texte de remplacement. */
+  placeholderClass?: string;
+  loading?: 'lazy' | 'eager';
+  /** 'high' pour la grande photo d'en-tête d'une page (image principale, LCP). */
+  fetchpriority?: 'high' | 'low' | 'auto';
+  /** Qualité de compression (1 à 100). Plus basse pour une photo de fond sous un voile. */
+  quality?: number;
+}
+
+const {
+  photo,
+  alt,
+  placeholder,
+  sizes,
+  widths = [480, 800, 1200, 1600],
+  imgClass,
+  placeholderClass,
+  loading = 'lazy',
+  fetchpriority,
+  quality,
+} = Astro.props;
+
+const image = getPhoto(photo);
+const usableWidths = image ? widths.filter((w) => w <= image.width) : [];
+if (image && !usableWidths.length) usableWidths.push(image.width);
+---
+
+{
+  image ? (
+    <Picture
+      src={image}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={usableWidths}
+      sizes={sizes}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      quality={quality}
+      decoding="async"
+      class={imgClass}
+    />
+  ) : (
+    <span class={placeholderClass} data-placeholder={photo}>
+      {placeholder}
+    </span>
+  )
+}

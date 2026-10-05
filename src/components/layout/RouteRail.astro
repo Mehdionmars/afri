@@ -1,0 +1,352 @@
+---
+/**
+ * Signe distinctif : la route maritime sur le bord droit, centrée en hauteur (≥ 1280 px).
+ * Chaque escale est une section ; le petit conteneur jaune glisse pendant la lecture.
+ * À la souris, elle sert aussi de barre de défilement : on attrape le conteneur pour
+ * parcourir la page, on clique sur la ligne pour y aller, on survole une escale pour son nom.
+ */
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Escales de la page (identifiants de sections). Par défaut : les sections de l'accueil. */
+  stops?: { id: string; label: string }[];
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const stops = Astro.props.stops ?? [
+  { id: 'accueil', label: t.route.home },
+  { id: 'services', label: t.nav.services },
+  { id: 'methode', label: t.nav.method },
+  { id: 'pourquoi', label: t.nav.why },
+  { id: 'conteneurs', label: t.nav.containers },
+  { id: 'resultats', label: t.nav.results },
+  { id: 'contact', label: t.nav.contact },
+];
+---
+
+<nav class="route" aria-label={t.route.label} data-route>
+  <div class="track" aria-hidden="true">
+    <span class="track-fill" data-route-fill></span>
+  </div>
+  <ol role="list">
+    {
+      stops.map((stop) => (
+        <li>
+          <a href={`#${stop.id}`} data-stop={stop.id} data-label={stop.label} draggable="false">
+            <span class="dot" aria-hidden="true" />
+            <span class="tip" aria-hidden="true">
+              {stop.label}
+            </span>
+            <span class="sr-only">{stop.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+  <svg class="ship" viewBox="0 0 22 12" aria-hidden="true" focusable="false" data-route-ship>
+    <rect x="0.5" y="0.5" width="21" height="11" rx="1.5" fill="#FFC342" stroke="#0F2340"></rect>
+    <path d="M5 2.5v7M9 2.5v7M13 2.5v7M17 2.5v7" stroke="#0F2340" stroke-width="1"></path>
+  </svg>
+  <span class="tip ship-tip" aria-hidden="true" data-route-tip></span>
+</nav>
+
+<style>
+  .route {
+    display: none;
+  }
+  @media (min-width: 1280px) {
+    /* Bord droit, centrée en hauteur, environ la moitié de l'écran : elle ne touche ni le texte,
+       ni la barre de navigation, ni le bouton WhatsApp en bas à droite. */
+    .route {
+      display: block;
+      position: fixed;
+      z-index: 30;
+      right: 18px;
+      top: 50%;
+      height: min(52vh, 480px);
+      translate: 0 -50%;
+      width: 36px;
+      padding: 18px 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 0 1px rgba(15, 35, 64, 0.08);
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      transition: box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+    }
+    .route:hover,
+    .route.is-dragging {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 0 0 1px rgba(15, 35, 64, 0.18);
+    }
+  }
+  .track {
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    translate: -1px 0;
+    background: repeating-linear-gradient(to bottom, rgba(15, 35, 64, 0.25) 0 4px, transparent 4px 9px);
+  }
+  .track-fill {
+    position: absolute;
+    inset: 0;
+    background: #0f2340;
+    transform-origin: top;
+    transform: scaleY(var(--p, 0));
+  }
+  /* Le conteneur est la poignée : marge transparente autour pour l'attraper facilement. */
+  .ship {
+    position: absolute;
+    left: 50%;
+    top: 24px;
+    width: 22px;
+    height: 12px;
+    padding: 6px;
+    box-sizing: content-box;
+    translate: -50% calc(var(--ship-y, 0px) - 50%);
+    rotate: 90deg;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+    cursor: grab;
+    transition: scale 0.2s var(--ease-out);
+  }
+  .ship:hover,
+  .route.is-dragging .ship {
+    scale: 1.2;
+  }
+  ol {
+    position: absolute;
+    inset: 24px 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  li {
+    height: 0;
+    display: flex;
+    align-items: center;
+  }
+  a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 28px;
+    text-decoration: none;
+    color: #0b0b0c;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #eef0f2;
+    box-shadow: 0 0 0 2px rgba(15, 35, 64, 0.45);
+    transition: box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out), scale 0.25s var(--ease-out);
+  }
+  a:hover .dot {
+    box-shadow: 0 0 0 2px #0b0b0c;
+    background: #ffd677;
+    scale: 1.25;
+  }
+  a[aria-current='true'] .dot {
+    background: #ffc342;
+    box-shadow: 0 0 0 2px #0f2340;
+  }
+
+  /* Nom de l'escale, à gauche de la route (côté page). */
+  .tip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: #0b0b0c;
+    color: #eef0f2;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    translate: 4px -50%;
+    transition: opacity 0.18s var(--ease-out), translate 0.18s var(--ease-out);
+  }
+  a:hover .tip,
+  a:focus-visible .tip {
+    opacity: 1;
+    translate: 0 -50%;
+  }
+  /* Pendant qu'on tient le conteneur, son étiquette le suit et dit où l'on est. */
+  .ship-tip {
+    right: calc(100% + 6px);
+    top: calc(24px + var(--ship-y, 0px));
+  }
+  .route:has(.ship:hover) .ship-tip,
+  .route.is-dragging .ship-tip {
+    opacity: 1;
+    translate: 0 -50%;
+  }
+  .route:has(.ship:hover) a .tip,
+  .route.is-dragging a .tip {
+    opacity: 0;
+  }
+  :global(html.route-drag),
+  :global(html.route-drag *) {
+    cursor: grabbing !important;
+  }
+</style>
+
+<script>
+  // Le petit conteneur suit la lecture : il atteint chaque escale quand le haut de sa section
+  // arrive sous l'en-tête, là où un clic sur l'escale amène la page. Il sert aussi de poignée.
+  const route = document.querySelector<HTMLElement>('[data-route]');
+  if (route) {
+    const links = [...route.querySelectorAll<HTMLAnchorElement>('[data-stop]')];
+    const sections = links.map((link) => document.getElementById(link.dataset.stop!)).filter(Boolean) as HTMLElement[];
+    const ship = route.querySelector<SVGElement>('[data-route-ship]')!;
+    const fill = route.querySelector<HTMLElement>('[data-route-fill]')!;
+    const tip = route.querySelector<HTMLElement>('[data-route-tip]')!;
+    const track = route.querySelector<HTMLElement>('.track')!;
+    const root = document.documentElement;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+    let lastY = -1;
+    let lastActive = -1;
+    let pending = false;
+
+    /** Position de défilement de chaque escale (bornée par le bas de la page). */
+    const stopPositions = () => {
+      const line = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      const max = root.scrollHeight - innerHeight;
+      return sections.map((s) => clamp(s.getBoundingClientRect().top + scrollY - line, 0, max));
+    };
+    const progressAt = (y: number, at: number[]) => {
+      let i = 0;
+      while (i < at.length - 1 && y >= at[i + 1] - 1) i++;
+      const frac = i >= at.length - 1 ? 0 : clamp((y - at[i]) / (at[i + 1] - at[i]), 0, 1);
+      return { i, progress: (i + frac) / (at.length - 1) };
+    };
+    const scrollFor = (progress: number, at: number[]) => {
+      const p = progress * (at.length - 1);
+      const i = Math.min(Math.floor(p), at.length - 2);
+      return at[i] + (p - i) * (at[i + 1] - at[i]);
+    };
+
+    const update = () => {
+      pending = false;
+      if (getComputedStyle(route).display === 'none' || sections.length < 2) return;
+      const { i, progress } = progressAt(scrollY, stopPositions());
+      const y = Math.round(progress * track.clientHeight * 10) / 10;
+      if (Math.abs(y - lastY) >= 0.5) {
+        lastY = y;
+        route.style.setProperty('--ship-y', `${y}px`);
+        fill.style.setProperty('--p', progress.toFixed(4));
+      }
+      if (i !== lastActive) {
+        if (lastActive >= 0) links[lastActive].removeAttribute('aria-current');
+        links[i].setAttribute('aria-current', 'true');
+        tip.textContent = links[i].dataset.label ?? '';
+        lastActive = i;
+      }
+    };
+    const schedule = () => {
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(update);
+      }
+    };
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('resize', schedule, { passive: true });
+    addEventListener('load', schedule);
+    schedule();
+
+    // ---------- À la souris : glisser le conteneur, cliquer sur la ligne ----------
+    const SNAP_PX = 12;
+    const progressFromPointer = (clientY: number) => {
+      const r = track.getBoundingClientRect();
+      return clamp((clientY - r.top) / r.height, 0, 1);
+    };
+    const goTo = (progress: number, smooth: boolean) => {
+      scrollTo({ top: scrollFor(progress, stopPositions()), behavior: smooth && !reduce.matches ? 'smooth' : 'instant' });
+    };
+    let press: { id: number; startY: number; offset: number; onStop: boolean; moved: boolean } | null = null;
+    let swallowClick = false;
+
+    const onMove = (e: PointerEvent) => {
+      if (!press || e.pointerId !== press.id) return;
+      if (!press.moved) {
+        if (Math.abs(e.clientY - press.startY) < 4) return;
+        press.moved = true;
+        route.classList.add('is-dragging');
+        root.classList.add('route-drag');
+        try {
+          route.setPointerCapture(e.pointerId);
+        } catch {}
+      }
+      goTo(progressFromPointer(e.clientY - press.offset), false);
+    };
+    const onUp = (e: PointerEvent) => {
+      if (!press || e.pointerId !== press.id) return;
+      removeEventListener('pointermove', onMove);
+      removeEventListener('pointerup', onUp);
+      removeEventListener('pointercancel', onUp);
+      route.classList.remove('is-dragging');
+      root.classList.remove('route-drag');
+      const { moved, onStop, offset } = press;
+      press = null;
+      if (e.type === 'pointercancel') return;
+      if (moved) {
+        // Lâché tout près d'une escale : il s'y aimante.
+        swallowClick = true;
+        const steps = sections.length - 1;
+        const p = progressFromPointer(e.clientY - offset) * steps;
+        const k = Math.round(p);
+        if (Math.abs(p - k) * (track.clientHeight / steps) < SNAP_PX) goTo(k / steps, true);
+      } else if (!onStop) {
+        // Simple clic sur la ligne : la page y va (un clic sur une escale suit son lien).
+        goTo(progressFromPointer(e.clientY), true);
+      }
+    };
+
+    route.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || getComputedStyle(route).display === 'none') return;
+      const target = e.target as Element;
+      const onShip = ship.contains(target);
+      const shipCenter = track.getBoundingClientRect().top + Math.max(lastY, 0);
+      swallowClick = false;
+      press = {
+        id: e.pointerId,
+        startY: e.clientY,
+        offset: onShip ? e.clientY - shipCenter : 0,
+        onStop: !onShip && !!target.closest('[data-stop]'),
+        moved: false,
+      };
+      // Pas de sélection de texte pendant le glissé.
+      if (e.pointerType === 'mouse') e.preventDefault();
+      addEventListener('pointermove', onMove);
+      addEventListener('pointerup', onUp);
+      addEventListener('pointercancel', onUp);
+    });
+    // Après un glissé, le relâchement ne doit pas suivre le lien survolé.
+    route.addEventListener(
+      'click',
+      (e) => {
+        if (!swallowClick) return;
+        swallowClick = false;
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      true,
+    );
+    route.addEventListener('dragstart', (e) => e.preventDefault());
+  }
+</script>

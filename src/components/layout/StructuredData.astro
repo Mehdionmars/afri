@@ -1,0 +1,84 @@
+---
+/** Données structurées schema.org : Organization + ProfessionalService + WebSite. */
+import { isPlaceholder, serviceIds, serviceRoute, site, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  pageUrl: string;
+}
+
+const { lang, pageUrl } = Astro.props;
+const t = useTranslations(lang);
+const origin = new URL('/', Astro.site).href;
+const { contact, social, company } = site;
+
+const real = (value: string) => (isPlaceholder(value) ? undefined : value);
+
+const address = real(contact.address)
+  ? {
+      '@type': 'PostalAddress',
+      streetAddress: contact.address,
+      postalCode: real(contact.postalCode),
+      addressLocality: real(contact.city),
+      addressCountry: contact.country,
+    }
+  : { '@type': 'PostalAddress', addressCountry: contact.country };
+
+const sameAs = Object.entries(social)
+  .filter(([key, value]) => !key.startsWith('_') && value)
+  .map(([, value]) => value);
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${origin}#organization`,
+      name: company.name,
+      legalName: real(company.legalName),
+      url: origin,
+      logo: new URL('/icon-512.png', origin).href,
+      email: real(contact.email),
+      telephone: real(contact.phone),
+      address,
+      sameAs: sameAs.length ? sameAs : undefined,
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${origin}#business`,
+      name: company.name,
+      description: t.meta.description,
+      url: pageUrl,
+      image: new URL(`/og-${lang}.jpg`, origin).href,
+      email: real(contact.email),
+      telephone: real(contact.phone),
+      address,
+      areaServed: [
+        { '@type': 'Country', name: 'Morocco' },
+        { '@type': 'Place', name: 'Africa' },
+        { '@type': 'Place', name: 'Worldwide' },
+      ],
+      knowsLanguage: ['fr', 'en'],
+      parentOrganization: { '@id': `${origin}#organization` },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: t.services.title,
+        itemListElement: t.services.items.map((item, i) => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: item.title, url: new URL(serviceRoute(serviceIds[i])[lang], origin).href },
+        })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${origin}#website`,
+      name: company.name,
+      url: origin,
+      inLanguage: ['fr', 'en'],
+      publisher: { '@id': `${origin}#organization` },
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />

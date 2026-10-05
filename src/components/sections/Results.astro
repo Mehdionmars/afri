@@ -1,0 +1,106 @@
+---
+import DottedWorldMap from '../three/DottedWorldMap.astro';
+import { formatNumber, routes, useTranslations, site, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.results;
+// Chiffres FICTIFS : à modifier dans src/content/site.json (clé "stats").
+const { stats } = site;
+const pct = lang === 'fr' ? ' %' : '%';
+
+const items = [
+  { ...t.partnerships, value: stats.partnerships, prefix: '+', suffix: '', unit: '' },
+  { ...t.faster, value: stats.fasterFilesPercent, prefix: '', suffix: pct, unit: '' },
+  { ...t.presence, value: stats.countries, prefix: '', suffix: '', unit: t.presence.unit },
+  { ...t.growth, value: stats.growthPercent, prefix: '+', suffix: pct, unit: '' },
+];
+---
+
+<section id="resultats" class="on-dark relative isolate overflow-hidden bg-navy px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="resultats-title">
+  <div class="map" aria-hidden="true" data-anim>
+    <DottedWorldMap class="size-full text-metal-700" preserveAspectRatio="xMidYMid slice" />
+  </div>
+
+  <div class="mx-auto flex max-w-page flex-col gap-14">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div class="flex flex-col gap-4">
+        <h2 id="resultats-title" class="reveal m-0 max-w-[20ch] text-h2-xl text-white">{t.title}</h2>
+      </div>
+      <a href={routes.results[lang]} class="link-u text-base font-semibold text-white">{all.pages.homeLinks.results} <span aria-hidden="true">→</span></a>
+    </div>
+
+    <ul class="m-0 grid list-none gap-px overflow-hidden rounded-card p-px sm:grid-cols-2 xl:grid-cols-4" role="list" data-counters>
+      {
+        items.map((item, i) => (
+          <li class="reveal flex flex-col gap-5 bg-navy/50 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] p-7 sm:min-h-[300px] lg:p-8" style={`--i:${i}`}>
+            <p class="m-0 flex flex-wrap items-baseline gap-x-2 text-white">
+              <span class="text-mega font-medium tabular-nums" data-count={item.value} data-prefix={item.prefix} data-suffix={item.suffix}>
+                {`${item.prefix}${formatNumber(lang, item.value)}${item.suffix}`}
+              </span>
+              {item.unit && <span class="text-h3 text-yellow">{item.unit}</span>}
+            </p>
+            <span class="h-0.5 w-10 bg-yellow" aria-hidden="true" />
+            <div class="mt-auto flex flex-col gap-2">
+              <h3 class="m-0 text-[21px] font-medium leading-tight tracking-[-0.01em] text-white">{item.title}</h3>
+              <p class="m-0 text-[15.5px] leading-normal text-metal-200">{item.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .map {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* Téléphone : la carte s'efface avant les chiffres (le Maroc en jaune ne passe pas sous le texte). */
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 12%, transparent 30%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 12%, transparent 30%);
+  }
+  @media (min-width: 1280px) {
+    .map {
+      -webkit-mask-image: radial-gradient(ellipse 85% 75% at 62% 38%, #000 40%, transparent 88%);
+      mask-image: radial-gradient(ellipse 85% 75% at 62% 38%, #000 40%, transparent 88%);
+    }
+  }
+</style>
+
+<script>
+  // Les compteurs montent jusqu'à leur valeur à l'arrivée (directement affichés avec mouvement réduit).
+  const list = document.querySelector<HTMLElement>('[data-counters]');
+  if (list && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const counters = [...list.querySelectorAll<HTMLElement>('[data-count]')];
+    const locale = document.documentElement.lang === 'fr' ? 'fr-FR' : 'en-GB';
+    const write = (el: HTMLElement, n: number) => {
+      el.textContent = `${el.dataset.prefix ?? ''}${new Intl.NumberFormat(locale).format(n)}${el.dataset.suffix ?? ''}`;
+    };
+    const below = list.getBoundingClientRect().top > innerHeight;
+    if (below) {
+      counters.forEach((el) => write(el, 0));
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          observer.disconnect();
+          const start = performance.now();
+          const step = (now: number) => {
+            const t = Math.min(1, (now - start) / 1400);
+            const eased = 1 - Math.pow(1 - t, 3);
+            counters.forEach((el) => write(el, Math.round(Number(el.dataset.count) * eased)));
+            if (t < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        },
+        { threshold: 0.35 },
+      );
+      observer.observe(list);
+    }
+  }
+</script>

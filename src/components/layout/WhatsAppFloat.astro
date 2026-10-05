@@ -1,0 +1,81 @@
+---
+/**
+ * Bouton WhatsApp flottant, en bas à droite de toutes les pages.
+ * Ouvre une conversation avec un message prérempli ; tant que le numéro n'est pas
+ * renseigné (src/content/site.json > contact.whatsapp), il mène à la section Contact.
+ */
+import { routes, useTranslations, whatsappLink, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const external = whatsappLink(lang);
+const href = external ?? `${routes.home[lang]}#contact`;
+const label = external ? `${t.contact.whatsapp} ${t.a11y.newWindow}` : t.contact.whatsapp;
+---
+
+<a
+  class="wa-float"
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  aria-label={label}
+  title={t.contact.whatsapp}
+  data-placeholder={external ? undefined : 'whatsapp'}
+>
+  <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false">
+    <path d="M16 4.5a11.5 11.5 0 0 0-9.9 17.3L4.5 27.5l5.9-1.5A11.5 11.5 0 1 0 16 4.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"></path>
+    <path d="M12.3 10.4c.3-.6.6-.6.9-.6h.7c.2 0 .5.1.6.5l1 2.3c.1.3 0 .6-.1.8l-.7.8c-.2.2-.2.4-.1.6.9 1.6 2.1 2.8 3.7 3.6.2.1.5.1.7-.1l.8-.9c.2-.3.5-.3.8-.2l2.2 1c.3.1.5.4.5.7v.6c0 .4-.1.8-.6 1.1-.7.5-1.8.8-3 .5-3-.7-6.3-4-7.1-7-.3-1.2-.1-2.3.5-3z" fill="currentColor"></path>
+  </svg>
+</a>
+
+<style>
+  .wa-float {
+    position: fixed;
+    z-index: 45;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #0f2340;
+    color: #fff;
+    box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+    transition: opacity 0.4s var(--ease-out), scale 0.4s var(--ease-out), translate 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+  }
+  .wa-float:hover {
+    translate: 0 -3px;
+    background: #1b3459;
+    box-shadow: 0 18px 34px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  }
+  .wa-float:focus-visible {
+    outline: 3px solid #0b0b0c;
+    outline-offset: 3px;
+  }
+  @media (min-width: 1024px) {
+    .wa-float {
+      right: 28px;
+      bottom: 28px;
+    }
+  }
+  /* Pendant l'écran de chargement : caché, puis il apparaît. */
+  :global(html.is-loading) .wa-float {
+    opacity: 0;
+    scale: 0.6;
+    pointer-events: none;
+  }
+  /* Téléphone : il laisse la place au bandeau cookies tant que celui-ci est ouvert. */
+  @media (max-width: 639px) {
+    :global(body:has([data-cookie-banner]:not([hidden]))) .wa-float {
+      opacity: 0;
+      scale: 0.6;
+      pointer-events: none;
+    }
+  }
+</style>

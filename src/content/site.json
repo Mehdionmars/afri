@@ -1,0 +1,76 @@
+{
+  "_lisezmoi": "Données communes au FR et à l'EN. Toute valeur entre crochets [ ] est un espace réservé, affiché tel quel sur le site jusqu'à ce que le client fournisse la vraie valeur.",
+  "company": {
+    "name": "AFRIEXPORT CONSULTING",
+    "legalName": "[Raison sociale]",
+    "foundingYear": ""
+  },
+  "contact": {
+    "address": "[Adresse du cabinet]",
+    "postalCode": "[Code postal]",
+    "city": "[Ville]",
+    "country": "MA",
+    "phone": "[+212 …]",
+    "email": "[contact@afriexport…]",
+    "_whatsapp": "Numéro au format international, chiffres uniquement, sans + ni espaces. Exemple : 212612345678",
+    "whatsapp": "[212XXXXXXXXX]"
+  },
+  "social": {
+    "_note": "Liens vers les profils officiels (LinkedIn, Facebook…). Laisser vide si aucun.",
+    "linkedin": "",
+    "facebook": "",
+    "instagram": ""
+  },
+  "stats": {
+    "_attention": "CHIFFRES FICTIFS repris de la maquette. À remplacer par les vrais chiffres du client avant la mise en ligne.",
+    "partnerships": 7,
+    "fasterFilesPercent": 18,
+    "countries": 12,
+    "growthPercent": 15
+  },
+  "containers": [
+    {
+      "id": "20dc",
+      "name": "Standard 20 DC",
+      "lengthM": 5.9,
+      "widthM": 2.35,
+      "heightM": 2.39,
+      "volumeM3": 33.2,
+      "payloadKg": 28200,
+      "color": "yellow",
+      "startAngle": -30,
+      "palletsEuro": 11
+    },
+    {
+      "id": "40dc",
+      "name": "Standard 40 DC",
+      "lengthM": 12.03,
+      "widthM": 2.35,
+      "heightM": 2.39,
+      "volumeM3": 67.7,
+      "payloadKg": 26700,
+      "color": "navy",
+      "startAngle": -60,
+      "palletsEuro": 24
+    },
+    {
+      "id": "40hc",
+      "name": "High Cube 40 HC",
+      "lengthM": 12.03,
+      "widthM": 2.35,
+      "heightM": 2.7,
+      "volumeM3": 76.4,
+      "payloadKg": 26500,
+      "color": "metal",
+      "startAngle": -90,
+      "palletsEuro": 24
+    }
+  ],
+  "heroVideo": {
+    "_lisezmoi": "Vidéo de l'accueil (défilée au scroll sur ordinateur). Fichiers dans public/hero/. Laisser src vide pour afficher la scène dessinée en CSS.",
+    "src": "",
+    "poster": "",
+    "ending": "",
+    "bytes": 0
+  }
+}

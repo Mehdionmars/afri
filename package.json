@@ -1,0 +1,32 @@
+{
+  "name": "afriexport-consulting",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "serve:dist": "node scripts/serve-dist.mjs",
+    "check": "astro check",
+    "astro": "astro",
+    "export:apercu": "astro build --mode apercu && node scripts/export-preview.mjs && astro build"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true
+  }
+}

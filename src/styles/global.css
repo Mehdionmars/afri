@@ -1,0 +1,305 @@
+@import "tailwindcss" source("../");
+@config "../../tailwind.config.ts";
+
+/* Archivo (Google Fonts, licence OFL) auto-hébergée : police de secours si
+   Helvetica Neue / Helvetica ne sont pas installées. Police variable 400 à 700. */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 700;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* IBM Plex Mono 500 (licence OFL), pour les étiquettes de fret. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/plex-mono-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Dimensions animables du conteneur 3D (sélecteur de la section Conteneurs). */
+@property --l { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --w { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --h { syntax: "<length>"; inherits: true; initial-value: 0px; }
+/* Accueil : rotation (1 = en 3D, 0 = de face), balancement et atterrissage du conteneur jaune. */
+@property --turn { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --sway { syntax: "<number>"; inherits: true; initial-value: 0; }
+@property --land { syntax: "<number>"; inherits: true; initial-value: 1; }
+
+:root {
+  --header-h: 80px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --focus: #0F2340;
+}
+
+@layer base {
+  html {
+    overflow-x: hidden;
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 8px);
+    -webkit-text-size-adjust: 100%;
+    background: #0B0B0C;
+  }
+  body {
+    overflow-x: hidden;
+    overflow-x: clip;
+    margin: 0;
+    background: #FFFFFF;
+    color: #0B0B0C;
+    font-family: "Helvetica Neue", Helvetica, Archivo, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  /* Le <main> reçoit le focus via le lien d'évitement : pas de contour sur toute la page. */
+  main:focus {
+    outline: none;
+  }
+  input, select, textarea, button {
+    font: inherit;
+  }
+  ::selection {
+    background: #FFC342;
+    color: #0B0B0C;
+  }
+}
+
+/* Couleur du focus selon le fond de la section : jaune sur fond sombre, jaune foncé sur fond clair. */
+.on-dark { --focus: #FFC342; }
+.on-light { --focus: #0F2340; }
+
+@layer components {
+  /* ---------- Boutons et liens ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), filter .25s var(--ease-out), background-color .25s var(--ease-out), border-color .25s var(--ease-out);
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -12px rgba(0, 0, 0, .45);
+    filter: brightness(1.05);
+  }
+  .btn:active {
+    transform: translateY(0) scale(.98);
+  }
+
+  .link-u {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size .35s var(--ease-out), color .25s var(--ease-out);
+  }
+  .link-u:hover,
+  .link-u:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* ---------- Cartes qui se soulèvent ---------- */
+  .lift {
+    transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out), border-color .3s var(--ease-out);
+  }
+  .lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 28px 56px -28px rgba(0, 0, 0, .45);
+  }
+
+  /* ---------- Entrées ----------
+     Les entrées animent `translate` et `opacity` ; le survol anime `transform`.
+     Les deux propriétés se cumulent sans s'écraser. */
+  .af-in {
+    animation: afUp .9s var(--ease-out) both;
+  }
+  .af-d1 { animation-delay: .05s; }
+  .af-d2 { animation-delay: .2s; }
+  .af-d3 { animation-delay: .35s; }
+  .af-d4 { animation-delay: .5s; }
+
+  /* Apparition au scroll : animation-timeline: view() si disponible… */
+  @supports (animation-timeline: view()) {
+    /* Propriétés détaillées : un raccourci `animation` serait fusionné avec
+       animation-timeline par le minifieur, ce que Chrome rejette. */
+    .reveal {
+      animation-name: afUp;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--i, 0) * 6%) entry calc(40% + var(--i, 0) * 6%);
+    }
+  }
+  /* …sinon IntersectionObserver (src/scripts/reveal.ts) ajoute .is-in. */
+  @supports not (animation-timeline: view()) {
+    html.js .reveal {
+      opacity: 0;
+      translate: 0 36px;
+      transition: opacity .9s var(--ease-out) calc(var(--i, 0) * 90ms), translate .9s var(--ease-out) calc(var(--i, 0) * 90ms);
+    }
+    html.js .reveal.lift {
+      transition: opacity .9s var(--ease-out) calc(var(--i, 0) * 90ms), translate .9s var(--ease-out) calc(var(--i, 0) * 90ms), transform .45s var(--ease-out) 0s, box-shadow .45s var(--ease-out) 0s, border-color .3s var(--ease-out) 0s;
+    }
+    html.js .reveal.is-in {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  /* ---------- Textes ---------- */
+  .eyebrow {
+    font-size: .8125rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+  /* Étiquette de fret : mono, capitales espacées. */
+  .label-mono {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .75rem;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  /* Espace réservé visible : photo, coordonnée ou chiffre à fournir par le client. */
+  .placeholder-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+}
+
+/* ---------- Images clés ---------- */
+@keyframes afUp {
+  from { opacity: 0; translate: 0 36px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes afFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes afSpin {
+  from { transform: rotateX(-22deg) rotateY(0deg); }
+  to { transform: rotateX(-22deg) rotateY(360deg); }
+}
+@keyframes afSwing {
+  0%, 100% { transform: rotateX(-14deg) rotateY(-38deg) rotateZ(-1.5deg); }
+  50% { transform: rotateX(-14deg) rotateY(-24deg) rotateZ(1.5deg); }
+}
+@keyframes afDrawX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes afDrawY {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+@keyframes afDash {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes afPulse {
+  0%, 100% { opacity: .15; }
+  50% { opacity: .6; }
+}
+/* Conteneur suspendu : --turn (1 à 0) le fait pivoter de la vue 3D à la vue de face,
+   --sway (1 à 0) amortit son balancement jusqu'à l'atterrissage. */
+@keyframes afHang {
+  0%, 100% { transform: rotateX(calc(-12deg * var(--turn))) rotateY(calc(-25deg * var(--turn) - 3deg * var(--sway))) rotateZ(calc(-0.8deg * var(--sway))); }
+  50% { transform: rotateX(calc(-12deg * var(--turn))) rotateY(calc(-25deg * var(--turn) + 3deg * var(--sway))) rotateZ(calc(0.8deg * var(--sway))); }
+}
+@keyframes afDrift {
+  from { translate: 0 0; }
+  to { translate: -60px -40px; }
+}
+/* Photo d'en-tête des pages intérieures : léger recul à l'arrivée. */
+@keyframes afSettle {
+  from { scale: 1.08; }
+  to { scale: 1; }
+}
+@keyframes afBreathe {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+
+/* ---------- Animations en pause hors écran et onglet caché (src/scripts/motion.ts) ---------- */
+[data-anim].is-off,
+[data-anim].is-off * {
+  animation-play-state: paused !important;
+}
+body.paused *,
+body.paused *::before,
+body.paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* ---------- Cibles tactiles ≥ 44 px ---------- */
+@media (pointer: coarse) {
+  .tap {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ---------- Mouvement réduit : tout s'arrête ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal,
+  html.js .reveal {
+    opacity: 1 !important;
+    translate: none !important;
+  }
+  .lift:hover,
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}

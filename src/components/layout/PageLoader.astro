@@ -1,0 +1,164 @@
+---
+/**
+ * Écran de chargement : logo, conteneur jaune qui se remplit, puis l'écran se soulève.
+ * - Une seule fois par visite (sessionStorage), jamais avec « mouvement réduit ».
+ * - Au moins 0,9 s pour être vu, au plus 2,6 s ; en dernier recours, il s'efface seul après 4 s.
+ * - À la sortie, il émet « afx:loaded » : l'accueil lance alors son animation.
+ * Décoratif : masqué aux lecteurs d'écran, la page reste accessible dessous.
+ */
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const ribs = Array.from({ length: 15 }, (_, i) => 22 + i * 12.5);
+---
+
+<div class="loader" aria-hidden="true" data-loader>
+  <div class="loader-inner">
+    <svg class="mark" viewBox="0 0 40 40" focusable="false">
+      <rect width="40" height="40" rx="10" fill="#FFC342"></rect>
+      <g transform="translate(9 9) scale(0.9167)" fill="none" stroke="#0B0B0C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18"></path>
+        <path d="M12 3a14 14 0 0 1 0 18"></path>
+        <path d="M12 3a14 14 0 0 0 0 18"></path>
+      </g>
+    </svg>
+
+    <svg class="box" viewBox="0 0 220 84" focusable="false">
+      <defs>
+        <clipPath id="loader-clip">
+          <rect x="4" y="4" width="212" height="76" rx="3"></rect>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#loader-clip)">
+        <rect x="4" y="4" width="212" height="76" fill="#DDE1E6"></rect>
+        <rect class="fill" x="4" y="4" width="212" height="76" fill="#FFC342"></rect>
+        {ribs.map((x) => <rect x={x} y="4" width="3" height="76" fill="rgba(15, 35, 64,.12)" />)}
+      </g>
+      <rect x="4" y="4" width="212" height="76" rx="3" fill="none" stroke="#0B0B0C" stroke-width="3"></rect>
+      <path d="M190 12v60M202 12v60" stroke="#0B0B0C" stroke-width="2" opacity=".55"></path>
+    </svg>
+
+    <p class="word">AFRIEXPORT<span> CONSULTING</span></p>
+    <p class="tagline label-mono">{t.loader.tagline}</p>
+  </div>
+</div>
+
+<style>
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef0f2;
+    border-bottom: 4px solid #ffc342;
+    transition: translate 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+    /* Filet de sécurité : si le script ne s'exécute pas, l'écran s'efface seul. */
+    animation: loaderFailsafe 0.4s ease 4s forwards;
+  }
+  :global(html.no-loader) .loader {
+    display: none;
+  }
+  .loader.is-done {
+    translate: 0 -101%;
+  }
+  .loader-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    transition: opacity 0.35s ease, translate 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .loader.is-done .loader-inner {
+    opacity: 0;
+    translate: 0 -40px;
+  }
+  .mark {
+    width: 44px;
+    height: 44px;
+  }
+  .box {
+    width: min(220px, 60vw);
+    height: auto;
+    overflow: visible;
+  }
+  /* Le conteneur se remplit de jaune de gauche à droite ; --p est écrit par le script. */
+  .fill {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transform: scaleX(var(--p, 0.04));
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .word {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #0b0b0c;
+  }
+  .word span {
+    color: #0f2340;
+  }
+  .tagline {
+    margin: -12px 0 0;
+    color: #5e6670;
+  }
+  @keyframes loaderFailsafe {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+</style>
+
+<script>
+  const loader = document.querySelector<HTMLElement>('[data-loader]');
+  const root = document.documentElement;
+
+  if (loader && !root.classList.contains('no-loader')) {
+    const MIN = 900;
+    const MAX = 2600;
+    const started = performance.now();
+    requestAnimationFrame(() => requestAnimationFrame(() => loader.style.setProperty('--p', '0.82')));
+
+    const pageLoaded = new Promise<void>((resolve) => {
+      if (document.readyState === 'complete') resolve();
+      else addEventListener('load', () => resolve(), { once: true });
+    });
+    const fontsReady = document.fonts ? document.fonts.ready.then(() => undefined) : Promise.resolve();
+    const timeout = new Promise<void>((resolve) => setTimeout(resolve, MAX));
+
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      const wait = Math.max(0, MIN - (performance.now() - started));
+      setTimeout(() => {
+        loader.style.setProperty('--p', '1');
+        setTimeout(() => {
+          loader.classList.add('is-done');
+          root.classList.remove('is-loading');
+          root.classList.add('hero-intro');
+          try {
+            sessionStorage.setItem('afx-seen', '1');
+          } catch {
+            // Stockage indisponible : l'écran réapparaîtra à la prochaine page, sans gravité.
+          }
+          window.dispatchEvent(new Event('afx:loaded'));
+          setTimeout(() => loader.remove(), 950);
+        }, 320);
+      }, wait);
+    };
+
+    Promise.race([Promise.all([pageLoaded, fontsReady]), timeout]).then(finish);
+  } else {
+    loader?.remove();
+  }
+</script>

@@ -1,0 +1,304 @@
+---
+/**
+ * Calculateur « quel conteneur pour ma marchandise ? » : à partir du volume, du poids
+ * ou du nombre de palettes, estime le nombre de conteneurs format par format
+ * et suggère le plus économe. Estimation indicative, calculée dans le navigateur.
+ */
+import Icon from '../ui/Icon.astro';
+import { formats } from '../../lib/containers';
+import { colon, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).containersPage;
+const c = t.calc;
+const pool = {
+  dry: formats.filter((f) => f.family === 'dry').map((f) => f.id),
+  reefer: formats.filter((f) => f.family === 'reefer').map((f) => f.id),
+};
+const payload = JSON.stringify({
+  locale: lang === 'fr' ? 'fr-FR' : 'en-GB',
+  pool,
+  names: t.formats,
+  by: c.by,
+  limitedBy: c.limitedBy,
+  usageLabel: c.usageLabel + colon(lang),
+  usageParts: c.usageParts,
+});
+const fields = [
+  // Exemple prérempli : le visiteur voit tout de suite une suggestion.
+  { name: 'volume', label: c.volume, unit: c.volumeUnit, step: '0.1', value: '45' },
+  { name: 'weight', label: c.weight, unit: c.weightUnit, step: '1', value: '12000' },
+  { name: 'pallets', label: c.pallets, unit: c.palletsUnit, step: '1', value: '' },
+];
+---
+
+<div class="calc grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10" data-calc data-conf={payload}>
+  <form class="flex flex-col gap-6 rounded-panel bg-white p-6 sm:p-8" novalidate data-calc-form>
+    <fieldset class="m-0 flex flex-col gap-2.5 border-0 p-0">
+      <legend class="sr-only">{c.type}</legend>
+      <div class="seg">
+        {
+          (['dry', 'reefer'] as const).map((type, i) => (
+            <label>
+              <input type="radio" name="type" value={type} checked={i === 0} />
+              <span>{c.types[type]}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+    {
+      fields.map((field) => (
+        <label class="flex flex-col gap-2">
+          <span class="text-[15px] font-semibold text-ink">{field.label}</span>
+          <span class="input-wrap">
+            <input type="number" name={field.name} min="0" step={field.step} inputmode="decimal" value={field.value} autocomplete="off" />
+            <span class="unit" aria-hidden="true">
+              {field.unit}
+            </span>
+          </span>
+        </label>
+      ))
+    }
+    <label class="flex flex-col gap-2">
+      <span class="flex items-baseline justify-between gap-3 text-[15px] font-semibold text-ink">
+        {c.fill}
+        <output class="tabular-nums" data-fill-out>85 %</output>
+      </span>
+      <input type="range" name="fill" min="60" max="100" step="5" value="85" aria-describedby="fill-hint" />
+      <span id="fill-hint" class="text-[13.5px] leading-snug text-metal-600">{c.fillHint}</span>
+    </label>
+  </form>
+
+  <div class="result flex flex-col gap-5 rounded-panel bg-navy p-6 text-white sm:p-8" aria-live="polite" data-calc-result>
+    <div class="flex flex-col gap-2" data-best>
+      <p class="sr-only">{c.best}</p>
+      <p class="best-line m-0 text-h3-lg font-medium" data-best-line>{c.empty}</p>
+      <p class="m-0 text-[15px] text-metal-300" data-best-why></p>
+    </div>
+    <div class="flex flex-col gap-3 border-t border-white/10 pt-5" data-list hidden>
+      <p class="sr-only">{c.perFormat}</p>
+      <ul class="m-0 flex list-none flex-col gap-3 p-0" role="list" data-rows></ul>
+    </div>
+    <p class="m-0 mt-auto text-[13.5px] leading-snug text-metal-300">{c.note}</p>
+    <a href="#contact" class="btn self-start bg-yellow px-5 py-3 text-[15px] text-ink">
+      {c.cta}
+      <Icon name="arrow" size={18} stroke={2.2} />
+    </a>
+  </div>
+</div>
+
+<style>
+  /* Sans JavaScript, le calcul ne peut pas se faire : le tableau des formats suffit. */
+  :global(html:not(.js)) .calc {
+    display: none;
+  }
+  .seg {
+    display: inline-flex;
+    align-self: flex-start;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #eef0f2;
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.12);
+  }
+  .seg label {
+    position: relative;
+  }
+  .seg input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  .seg span {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #3F4650;
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+  }
+  .seg input:checked + span {
+    background: #0b0b0c;
+    color: #fff;
+  }
+  .seg input:focus-visible + span {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .input-wrap {
+    position: relative;
+    display: block;
+  }
+  .input-wrap input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 96px 0 16px;
+    border: 1px solid #8b949e;
+    border-radius: 10px;
+    background: #fff;
+    color: #0b0b0c;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .input-wrap input:hover {
+    border-color: #0b0b0c;
+  }
+  .unit {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    translate: 0 -50%;
+    color: #5e6670;
+    font-size: 15px;
+    pointer-events: none;
+  }
+  input[type='range'] {
+    width: 100%;
+    min-height: 32px;
+    accent-color: #0b0b0c;
+  }
+  .result :global(.row) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 12px;
+    align-items: baseline;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .result :global(.row.is-best) {
+    background: #1b3459;
+    box-shadow: inset 0 0 0 2px #ffc342;
+  }
+  .result :global(.row-name) {
+    font-size: 15.5px;
+    font-weight: 600;
+  }
+  .result :global(.row-n) {
+    font-size: 15.5px;
+    font-weight: 700;
+    color: #ffc342;
+    font-variant-numeric: tabular-nums;
+  }
+  .result :global(.row-bar) {
+    grid-column: 1 / -1;
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+  .result :global(.row-bar span) {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: #ffc342;
+    transition: width 0.5s var(--ease-out);
+  }
+  .result :global(.row-usage) {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    color: #b8c0c9;
+  }
+</style>
+
+<script>
+  import { byId } from '../../lib/containers';
+
+  const root = document.querySelector<HTMLElement>('[data-calc]');
+  if (root) {
+    const conf = JSON.parse(root.dataset.conf!) as {
+      locale: string;
+      pool: Record<'dry' | 'reefer', string[]>;
+      names: Record<string, string>;
+      by: Record<'volume' | 'weight' | 'pallets', string>;
+      limitedBy: string;
+      usageLabel: string;
+      usageParts: Record<'volume' | 'weight' | 'pallets', string>;
+    };
+    const form = root.querySelector<HTMLFormElement>('[data-calc-form]')!;
+    const fillOut = root.querySelector<HTMLOutputElement>('[data-fill-out]')!;
+    const bestLine = root.querySelector<HTMLElement>('[data-best-line]')!;
+    const bestWhy = root.querySelector<HTMLElement>('[data-best-why]')!;
+    const list = root.querySelector<HTMLElement>('[data-list]')!;
+    const rows = root.querySelector<HTMLElement>('[data-rows]')!;
+    const empty = bestLine.textContent ?? '';
+    const pct = new Intl.NumberFormat(conf.locale, { style: 'percent', maximumFractionDigits: 0 });
+    const num = (v: FormDataEntryValue | null) => {
+      const n = Number(String(v ?? '').replace(',', '.'));
+      return Number.isFinite(n) && n > 0 ? n : 0;
+    };
+    const esc = (s: string) => s.replace(/[&<>"]/g, (ch) => `&#${ch.charCodeAt(0)};`);
+
+    function update() {
+      const fd = new FormData(form);
+      const type = (fd.get('type') as 'dry' | 'reefer') ?? 'dry';
+      const vol = num(fd.get('volume'));
+      const weight = num(fd.get('weight'));
+      const pallets = num(fd.get('pallets'));
+      const fill = Number(fd.get('fill') ?? 85) / 100;
+      fillOut.textContent = pct.format(fill);
+      if (!vol && !weight && !pallets) {
+        bestLine.textContent = empty;
+        bestWhy.textContent = '';
+        list.hidden = true;
+        return;
+      }
+      const results = conf.pool[type].map((id) => {
+        const f = byId(id);
+        // Besoin en nombre de conteneurs (fractionnaire) selon chaque contrainte.
+        const need = {
+          volume: vol / ((f.volume ?? 1) * fill),
+          weight: weight / f.payload,
+          pallets: pallets / (f.pallets ?? 1),
+        };
+        const n = Math.max(1, ...Object.values(need).map((x) => Math.ceil(x - 1e-9)));
+        // La contrainte la plus forte est celle qui limite le chargement.
+        const by = (Object.keys(need) as (keyof typeof need)[]).reduce((a, b) => (need[b] > need[a] ? b : a));
+        return {
+          id,
+          n,
+          by,
+          capacity: n * (f.volume ?? 0),
+          // Taux de remplissage réels, pour les seuls critères renseignés.
+          fill: {
+            volume: vol ? vol / (n * (f.volume ?? 1)) : null,
+            weight: weight ? weight / (n * f.payload) : null,
+            pallets: pallets ? pallets / (n * (f.pallets ?? 1)) : null,
+          },
+        };
+      });
+      const best = [...results].sort((a, b) => a.n - b.n || a.capacity - b.capacity)[0];
+      const usage = (r: (typeof results)[number]) =>
+        conf.usageLabel +
+        (Object.keys(r.fill) as (keyof typeof r.fill)[])
+          .filter((key) => r.fill[key] !== null)
+          .map((key) => conf.usageParts[key].replace('{p}', pct.format(r.fill[key]!)))
+          .join(', ');
+      const peak = (r: (typeof results)[number]) => Math.max(0, ...Object.values(r.fill).map((x) => x ?? 0));
+      bestLine.textContent = `${best.n} × ${conf.names[best.id]}`;
+      bestWhy.textContent = `${conf.limitedBy.replace('{what}', conf.by[best.by])} · ${usage(best)}`;
+      rows.innerHTML = results
+        .map(
+          (r) =>
+            `<li class="row${r === best ? ' is-best' : ''}"><span class="row-name">${esc(conf.names[r.id])}</span><span class="row-n">${r.n} ×</span><span class="row-bar" aria-hidden="true"><span style="width:${Math.min(100, peak(r) * 100).toFixed(1)}%"></span></span><span class="row-usage">${esc(usage(r))}</span></li>`,
+        )
+        .join('');
+      list.hidden = false;
+    }
+
+    form.addEventListener('input', update);
+    form.addEventListener('submit', (event) => event.preventDefault());
+    update();
+  }
+</script>

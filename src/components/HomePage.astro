@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorldMapSprite from './three/WorldMapSprite.astro';
+import RouteRail from './layout/RouteRail.astro';
+import Hero from './sections/Hero.astro';
+import Services from './sections/Services.astro';
+import Method from './sections/Method.astro';
+import Why from './sections/Why.astro';
+import Containers from './sections/Containers.astro';
+import Results from './sections/Results.astro';
+import Contact from './sections/Contact.astro';
+import { routes, useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t.meta.title} description={t.meta.description} alternates={routes.home} isHome>
+  <WorldMapSprite />
+  <RouteRail lang={lang} />
+  <Hero lang={lang} />
+  <Services lang={lang} />
+  <Method lang={lang} />
+  <Why lang={lang} />
+  <Containers lang={lang} />
+  <Results lang={lang} />
+  <Contact lang={lang} />
+</BaseLayout>

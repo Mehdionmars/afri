@@ -1,0 +1,1475 @@
+{
+  "meta": {
+    "title": "AFRIEXPORT CONSULTING | Import-export consulting in Morocco",
+    "description": "Morocco-based import-export consulting firm: market research, partner sourcing, customs and international logistics across Africa and the world.",
+    "ogImageAlt": "AFRIEXPORT CONSULTING, import-export consulting between Morocco, Africa and the world",
+    "locale": "en_US"
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "home": ", back to home",
+    "mainNav": "Main navigation",
+    "footerNav": "Footer navigation",
+    "legalNav": "Legal information",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "langGroup": "Language",
+    "newWindow": "(opens in a new window)"
+  },
+  "loader": {
+    "tagline": "Morocco · Africa · World"
+  },
+  "nav": {
+    "services": "Services",
+    "method": "Our method",
+    "why": "Why us",
+    "containers": "Containers",
+    "results": "Results",
+    "contact": "Contact",
+    "cta": "Book a meeting"
+  },
+  "route": {
+    "label": "Page outline",
+    "home": "Home"
+  },
+  "hero": {
+    "eyebrow": "Import-export consulting · Morocco",
+    "bands": [
+      "Exporting once is a test.",
+      "Exporting every month is a business."
+    ],
+    "title": "Grow your trade between Morocco, Africa and the world",
+    "lead": "AFRIEXPORT CONSULTING supports companies in their import and export operations: market research, partner sourcing, customs regulations and international logistics.",
+    "ctaPrimary": "Talk to a consultant",
+    "ctaSecondary": "Explore our services"
+  },
+  "services": {
+    "title": "Our services",
+    "subtitle": "Six skills, one point of contact.",
+    "cta": "Book a meeting",
+    "items": [
+      {
+        "id": "etude-de-marche",
+        "title": "Market research",
+        "tag": "Markets & prices",
+        "photo": "[Photo: market analysis]",
+        "alt": "Export market analysis"
+      },
+      {
+        "id": "partenaires",
+        "title": "Partner sourcing",
+        "tag": "Buyers & suppliers",
+        "photo": "[Photo: handshake]",
+        "alt": "Handshake between business partners"
+      },
+      {
+        "id": "douane",
+        "title": "Customs & regulations",
+        "tag": "Compliant files",
+        "photo": "[Photo: customs inspection]",
+        "alt": "Customs inspection of goods"
+      },
+      {
+        "id": "logistique",
+        "title": "International logistics",
+        "tag": "Sea · air · road",
+        "photo": "[Photo: container ship]",
+        "alt": "Container ship at sea"
+      },
+      {
+        "id": "contrats",
+        "title": "Contracts & payments",
+        "tag": "Secure payments",
+        "photo": "[Photo: contract signing]",
+        "alt": "Signing a trade contract"
+      },
+      {
+        "id": "formation",
+        "title": "Export training",
+        "tag": "Trained teams",
+        "photo": "[Photo: training]",
+        "alt": "Team export training session"
+      }
+    ]
+  },
+  "method": {
+    "eyebrow": "Our method",
+    "title": "Four steps to secure your operations",
+    "subtitle": "At every step, you know what is done, by whom, and when.",
+    "stepLabel": "Step",
+    "steps": [
+      {
+        "title": "Diagnostic",
+        "text": "We assess your product, capacity and international goals."
+      },
+      {
+        "title": "Strategy",
+        "text": "We choose the markets, partners and an action plan that fits your budget."
+      },
+      {
+        "title": "Execution",
+        "text": "Customs, contracts, transport: we coordinate every party involved."
+      },
+      {
+        "title": "Follow-up",
+        "text": "We stay with you to grow and sustain your trade flows."
+      }
+    ]
+  },
+  "why": {
+    "eyebrow": "Why AFRIEXPORT",
+    "title": "A partner who knows African markets first-hand",
+    "photo": "[Photo: port, containers or AFRIEXPORT team]",
+    "photoAlt": "The AFRIEXPORT CONSULTING team at a container terminal",
+    "reasons": [
+      {
+        "title": "Morocco – Africa expertise",
+        "text": "Hands-on knowledge of African markets and trade corridors from Morocco."
+      },
+      {
+        "title": "Tailored support",
+        "text": "A single point of contact who adapts the work to your company's size and goals."
+      },
+      {
+        "title": "Partner network",
+        "text": "Freight forwarders, carriers, certification bodies: we bring in the right people."
+      },
+      {
+        "title": "Transparency",
+        "text": "Clear steps, stated timelines and regular updates on your file."
+      }
+    ],
+    "stat": {
+      "value": 73,
+      "text": "of Moroccan SMEs export. Only a third do it regularly.",
+      "source": "EIB survey of 150 exporting SMEs, 2025",
+      "follow": "We help the others make the leap."
+    }
+  },
+  "containers": {
+    "eyebrow": "Shipping containers · Dimensions",
+    "title": "The right container from the start",
+    "lead": "The most common container sizes for your shipments, so you pick the right volume from the start.",
+    "picker": "Choose a format",
+    "format": "Format",
+    "length": "Length",
+    "width": "Width",
+    "height": "Height",
+    "volume": "Usable volume",
+    "payload": "Max. payload",
+    "pallets": "Euro pallets on the floor",
+    "detailsNote": "Indicative values, they vary by manufacturer.",
+    "compare": "Compare the three formats",
+    "types": {
+      "20dc": "Dry container · 20 ft",
+      "40dc": "Dry container · 40 ft",
+      "40hc": "High dry container · 40 ft"
+    },
+    "conditionsTitle": "Container conditions",
+    "conditions": [
+      {
+        "title": "New (One Trip)",
+        "text": "Fresh from the factory, used for a single voyage."
+      },
+      {
+        "title": "Cargo Worthy (CW)",
+        "text": "Repaired to IICL standards and recertified for international ocean shipping."
+      },
+      {
+        "title": "Wind and Watertight (WWT)",
+        "text": "Watertight, but for storage only: not for ocean shipping."
+      },
+      {
+        "title": "As Is",
+        "text": "Sold without warranty, inspect before you buy."
+      }
+    ]
+  },
+  "results": {
+    "eyebrow": "Results",
+    "title": "What we bring to our clients",
+    "partnerships": {
+      "title": "New strategic partnerships",
+      "text": "Through targeted introductions to buyers and suppliers"
+    },
+    "faster": {
+      "title": "Faster file processing",
+      "text": "Customs procedures and documents prepared in advance",
+      "photo": "[Photo: team at the container terminal]",
+      "photoAlt": "Team at a container terminal"
+    },
+    "presence": {
+      "title": "International presence",
+      "text": "Your products visible in new markets",
+      "unit": "countries"
+    },
+    "growth": {
+      "title": "Growth of your trade",
+      "text": "A monitored action plan and growing trade flows"
+    }
+  },
+  "pages": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "faqTitle": "Frequently asked questions",
+    "photo": "Photo",
+    "indicative": "Indicative values",
+    "routeLabel": "Page outline",
+    "homeLinks": {
+      "services": "All services in detail",
+      "method": "Our method in detail",
+      "why": "Discover the firm",
+      "containers": "The complete container guide",
+      "results": "Our results in detail",
+      "service": "See the service"
+    },
+    "footerServices": "Services",
+    "footerFirm": "The firm",
+    "credits": {
+      "title": "Photo credits",
+      "intro": "The photos on this site are published under open licences. Thanks to their authors.",
+      "by": "by",
+      "license": "licence",
+      "source": "source",
+      "cropped": "cropped"
+    }
+  },
+  "serviceSummaries": {
+    "etude-de-marche": "Find the countries where your product fits, the prices that apply and the market entry rules.",
+    "partenaires": "Find and vet reliable buyers, distributors or suppliers abroad.",
+    "douane": "Classify your products, gather the right documents and clear customs without delays.",
+    "logistique": "Choose the right transport mode, Incoterm and forwarder for every shipment.",
+    "contrats": "Secure your sales contracts and international payments.",
+    "formation": "Make your teams confident with export and import procedures."
+  },
+  "servicesPage": {
+    "meta": {
+      "title": "Import-export services in Morocco | AFRIEXPORT CONSULTING",
+      "description": "Market research, partner sourcing, customs, international logistics, contracts and training: six services to export and import from Morocco."
+    },
+    "eyebrow": "Services · 06",
+    "title": "Six skills, one point of contact for your international trade",
+    "lead": "From the first market study to delivery at your customer's door, we handle the steps that hold you back. Pick a single service, or the full assignment.",
+    "photoAlt": "A wall of shipping containers in every colour",
+    "photoCaption": "Containers waiting to be loaded",
+    "listTitle": "Choose what you need",
+    "listLead": "Each service can be ordered on its own. Together, they cover the whole chain of an export or import operation.",
+    "bundleTitle": "A complete assignment, led by one person",
+    "bundleText": "Most of our clients combine several services. A single consultant then coordinates the research, the partners, customs and transport: you have just one point of contact.",
+    "bundleCta": "See our method"
+  },
+  "serviceLabels": {
+    "what": "What we do",
+    "forWho": "Who is it for?",
+    "steps": "How the assignment works",
+    "deliverables": "What you receive",
+    "cta": "Discuss my project",
+    "related": "Other services",
+    "all": "All services"
+  },
+  "serviceDetails": {
+    "etude-de-marche": {
+      "meta": {
+        "title": "Export market research in Morocco | AFRIEXPORT CONSULTING",
+        "description": "Pick the right countries before you export: demand, prices, competition, market entry rules and distribution channels. Tailored export market research."
+      },
+      "h1": "Export market research",
+      "lead": "Before you invest in a trade fair, stock or shipping, find out where your product really fits. We compare the possible markets and tell you which ones are worth the effort.",
+      "photoAlt": "Market data on a tablet during a meeting",
+      "photoCaption": "Comparing markets, with figures to back it up",
+      "what": [
+        {
+          "title": "Country shortlist",
+          "text": "We cross-check demand, import flows and logistics distance to keep the most promising markets."
+        },
+        {
+          "title": "Prices and competition",
+          "text": "Retail prices, distribution margins and competitors already in place, so you know whether your price holds up."
+        },
+        {
+          "title": "Market entry rules",
+          "text": "Duties, standards, certifications, labelling: everything the country requires before your product can enter."
+        },
+        {
+          "title": "Distribution channels",
+          "text": "Importer, wholesaler, buying group or direct sales: the most realistic channel for your volume."
+        },
+        {
+          "title": "Trade agreements",
+          "text": "We check whether a free trade agreement (European Union, Agadir Agreement, AfCFTA…) lowers your duties."
+        }
+      ],
+      "forWho": [
+        "Companies exporting for the first time that want to pick the right country.",
+        "Exporters looking for a new market after a first success.",
+        "Importers comparing several supplier countries.",
+        "Project owners who need to convince a bank or an investor."
+      ],
+      "steps": [
+        {
+          "title": "Scoping",
+          "text": "An interview to understand your product, your production capacity and your goals."
+        },
+        {
+          "title": "Research",
+          "text": "Analysis of trade statistics, regulations and prices in the selected markets."
+        },
+        {
+          "title": "Field check",
+          "text": "Conversations with importers, distributors and our network to confirm the figures."
+        },
+        {
+          "title": "Debrief",
+          "text": "Presentation of the findings and a concrete entry plan, market by market."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Market report",
+          "text": "A clear document with the key figures and their sources."
+        },
+        {
+          "title": "Country ranking",
+          "text": "Markets scored by potential and difficulty of access."
+        },
+        {
+          "title": "Country access sheet",
+          "text": "Duties, standards, documents and lead times to plan for."
+        },
+        {
+          "title": "Entry plan",
+          "text": "The first actions to take, with an indicative budget."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How long does market research take?",
+          "a": "It depends on the number of countries and the depth you need. We give you a precise schedule at the end of the scoping interview."
+        },
+        {
+          "q": "Do I need a product that is ready to export?",
+          "a": "No. The research is precisely there to check whether your product needs adapting (packaging, labelling, standards) before you start."
+        },
+        {
+          "q": "Do you only work on Africa?",
+          "a": "Africa is our home ground, but we also study Europe, the Middle East and the Americas depending on your product."
+        },
+        {
+          "q": "What happens after the research?",
+          "a": "You can follow the entry plan on your own, or ask us to handle partner sourcing and logistics."
+        }
+      ]
+    },
+    "partenaires": {
+      "meta": {
+        "title": "International buyer and supplier sourcing | AFRIEXPORT CONSULTING",
+        "description": "We find, vet and introduce reliable buyers, distributors and suppliers in Morocco, Africa and worldwide."
+      },
+      "h1": "International partner sourcing",
+      "lead": "A good partner is worth more than a big market. We find the buyers, distributors or suppliers that match your offer, vet them, then set up the meeting.",
+      "photoAlt": "Handshake between two business partners",
+      "photoCaption": "A first meeting that closes the deal",
+      "what": [
+        {
+          "title": "Ideal partner profile",
+          "text": "Together we define the partner you need: size, channel, volumes, requirements."
+        },
+        {
+          "title": "Search",
+          "text": "Business databases, industry directories, trade fairs and our own network."
+        },
+        {
+          "title": "Vetting",
+          "text": "Legal existence, soundness, references, reputation: we weed out doubtful contacts."
+        },
+        {
+          "title": "First contact",
+          "text": "We present your offer, handle the first exchanges and send samples if needed."
+        },
+        {
+          "title": "Business meetings",
+          "text": "Video calls or on-site meetings, with our support if you wish."
+        }
+      ],
+      "forWho": [
+        "Producers looking for an importer or distributor abroad.",
+        "Companies that want to diversify their suppliers.",
+        "Foreign companies looking for a partner in Morocco.",
+        "Exporters who have just lost a major customer."
+      ],
+      "steps": [
+        {
+          "title": "Brief",
+          "text": "Your offer, your commercial terms and the profile you are looking for."
+        },
+        {
+          "title": "Long list",
+          "text": "A broad selection of possible partners in the selected countries."
+        },
+        {
+          "title": "Qualification",
+          "text": "Contact, vetting and sorting: only the most serious remain."
+        },
+        {
+          "title": "Introduction",
+          "text": "Meetings arranged and followed up until the first orders."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Qualified list",
+          "text": "The partners selected, with their contact details and our opinion."
+        },
+        {
+          "title": "Vetting sheets",
+          "text": "What we checked for each company."
+        },
+        {
+          "title": "Meeting schedule",
+          "text": "The meetings planned and the points to cover."
+        },
+        {
+          "title": "Meeting notes",
+          "text": "A summary of every exchange and the next steps."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Do you guarantee an order?",
+          "a": "No one can guarantee an order. We guarantee vetted, serious contacts who are interested in your offer."
+        },
+        {
+          "q": "How do you vet a partner?",
+          "a": "Company registry, track record, customer references, available business information and direct conversations with the company."
+        },
+        {
+          "q": "Can you join me at meetings?",
+          "a": "Yes, by video call or on site, especially at trade fairs."
+        },
+        {
+          "q": "Do you also look for suppliers?",
+          "a": "Yes. For imports, we find and compare suppliers, and we can arrange a pre-shipment inspection of the goods."
+        }
+      ]
+    },
+    "douane": {
+      "meta": {
+        "title": "Customs and import-export compliance in Morocco | AFRIEXPORT CONSULTING",
+        "description": "Tariff classification, origin, certificates, licences and documents: we prepare your customs files so your goods clear without delays."
+      },
+      "h1": "Customs and compliance",
+      "lead": "A wrong customs code or a missing certificate can hold a container for days. We prepare your files ahead of time so your goods go through without surprises.",
+      "photoAlt": "Yellow security seal on a container door",
+      "photoCaption": "Security seal on a container ready to leave",
+      "what": [
+        {
+          "title": "Tariff classification",
+          "text": "We find the right Harmonized System code for each product: it sets the duties and the checks."
+        },
+        {
+          "title": "Origin of goods",
+          "text": "We check the rules of origin and prepare proofs of origin (EUR.1, certificates of origin) so you benefit from trade agreements."
+        },
+        {
+          "title": "Licences and inspections",
+          "text": "Licences, health or phytosanitary certificates, compliance with standards: we list and obtain what is required."
+        },
+        {
+          "title": "Document set",
+          "text": "Commercial invoice, packing list, transport documents: complete documents that match each other."
+        },
+        {
+          "title": "Work with your forwarder",
+          "text": "We work with your forwarder or customs broker so the declaration goes out complete."
+        }
+      ],
+      "forWho": [
+        "Companies new to export or import formalities.",
+        "Those that have already faced a customs hold or reassessment.",
+        "Exporters of regulated goods: food, cosmetics, industrial products.",
+        "Importers who want to know the real landed cost in Morocco."
+      ],
+      "steps": [
+        {
+          "title": "Flow audit",
+          "text": "Your products, your countries and your current documents."
+        },
+        {
+          "title": "Regulatory analysis",
+          "text": "Applicable codes, duties, agreements and checks."
+        },
+        {
+          "title": "File preparation",
+          "text": "Documents and certificates prepared and checked."
+        },
+        {
+          "title": "Clearance follow-up",
+          "text": "We stay reachable until the goods are released."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Customs sheet per product",
+          "text": "Code, duties, taxes and checks for each product."
+        },
+        {
+          "title": "Document checklist",
+          "text": "The documents to gather, shipment by shipment."
+        },
+        {
+          "title": "Landed cost calculation",
+          "text": "Estimated duties and taxes so you can set the right price."
+        },
+        {
+          "title": "Written procedure",
+          "text": "The steps to follow for your next shipments."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What is an HS code?",
+          "a": "It is the Harmonized System code, the worldwide classification of goods. It determines the duties, taxes and checks that apply to your product."
+        },
+        {
+          "q": "How do I benefit from a free trade agreement?",
+          "a": "Your product must meet the agreement's rules of origin, and you must provide the required proof of origin, for example a EUR.1 certificate for the European Union."
+        },
+        {
+          "q": "Which documents do I need to export?",
+          "a": "At least a commercial invoice, a packing list and a transport document. Depending on the product and the country, you may also need a certificate of origin, a health certificate or a certificate of conformity."
+        },
+        {
+          "q": "Can you help with goods held at customs?",
+          "a": "Yes, contact us: we analyse the reason for the hold and the missing documents to resolve the situation as quickly as possible."
+        }
+      ]
+    },
+    "logistique": {
+      "meta": {
+        "title": "International logistics and sea freight | AFRIEXPORT CONSULTING",
+        "description": "Sea, air or road, Incoterms, container and forwarder selection: we organise your shipments to and from Morocco."
+      },
+      "h1": "International logistics",
+      "lead": "Transport weighs heavily in the landed price. Together we choose the right mode, Incoterm and forwarder, then we follow every shipment until delivery.",
+      "photoAlt": "Loaded container ship at the quay under the cranes of the port of Casablanca",
+      "photoCaption": "Container ship in the port of Casablanca",
+      "what": [
+        {
+          "title": "Choice of transport mode",
+          "text": "Sea, air, road or combined: depending on lead time, volume and budget."
+        },
+        {
+          "title": "Incoterms",
+          "text": "We help you choose the Incoterm® 2020 rule that clearly splits costs and risks with your customer or supplier."
+        },
+        {
+          "title": "Container and loading",
+          "text": "The right format (20', 40', High Cube, reefer…) and a loading plan so you don't pay to ship empty space."
+        },
+        {
+          "title": "Tendering",
+          "text": "We put forwarders and carriers in competition and compare quotes like for like."
+        },
+        {
+          "title": "Shipment tracking",
+          "text": "Booking, documents, vessel or truck tracking, and alerts in case of delay."
+        }
+      ],
+      "forWho": [
+        "Companies that ship regularly and want to cut costs.",
+        "Those preparing their first container shipment.",
+        "Importers who want to control supply lead times.",
+        "Exporters to sub-Saharan Africa, by sea or by road."
+      ],
+      "steps": [
+        {
+          "title": "Flow analysis",
+          "text": "Volumes, frequency, destinations and constraints of your goods."
+        },
+        {
+          "title": "Transport plan",
+          "text": "The recommended mode, Incoterm, port and container format."
+        },
+        {
+          "title": "Provider selection",
+          "text": "Quotes compared and forwarder chosen."
+        },
+        {
+          "title": "Shipment management",
+          "text": "Every shipment followed until delivery."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Logistics plan",
+          "text": "The recommended route, from the production site to the customer."
+        },
+        {
+          "title": "Quote comparison",
+          "text": "Carrier offers, compared line by line."
+        },
+        {
+          "title": "Loading plan",
+          "text": "The best way to fill the container or truck."
+        },
+        {
+          "title": "Tracking dashboard",
+          "text": "The status of every shipment, shared with you."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Which Incoterm should I choose for a first export?",
+          "a": "Often an Incoterm where your responsibility ends early, such as FCA or FOB, to limit risk. The right choice also depends on what your customer can organise: we discuss it with you."
+        },
+        {
+          "q": "Groupage or full container?",
+          "a": "For small volumes, groupage (LCL) shares a container among several shippers. Above roughly fifteen cubic metres, a full container (FCL) often becomes the better deal."
+        },
+        {
+          "q": "Can goods go to West Africa by road?",
+          "a": "Yes, road freight is a real option from Morocco to West Africa. We compare it with sea freight based on your goods, lead times and budget."
+        },
+        {
+          "q": "How do I avoid demurrage charges?",
+          "a": "By preparing the documents before the container arrives and planning its collection. Free days are limited: beyond them, every extra day is charged."
+        }
+      ]
+    },
+    "contrats": {
+      "meta": {
+        "title": "International sales contracts and secure payments | AFRIEXPORT CONSULTING",
+        "description": "Sales contract, Incoterms, letter of credit, documentary collection, credit insurance: secure your international operations and receivables."
+      },
+      "h1": "International contracts and payments",
+      "lead": "Selling abroad also means making sure you get paid. We help you set clear terms and choose the payment method that matches the level of risk.",
+      "photoAlt": "Signing a business contract with a pen",
+      "photoCaption": "Clear terms before you ship",
+      "what": [
+        {
+          "title": "International sales contract",
+          "text": "Price, quantities, lead times, Incoterm, penalties, governing law: we structure the commercial clauses that protect you."
+        },
+        {
+          "title": "Choice of payment method",
+          "text": "Bank transfer, documentary collection, letter of credit, standby letter of credit: the right option for the country and the customer."
+        },
+        {
+          "title": "Letters of credit",
+          "text": "We check the credit terms to avoid discrepancies that delay payment."
+        },
+        {
+          "title": "Risk cover",
+          "text": "Credit insurance, bank guarantees, cargo insurance: what to cover, and how."
+        },
+        {
+          "title": "Export terms and conditions",
+          "text": "Terms of sale designed for international trade, to attach to your offers and invoices."
+        }
+      ],
+      "forWho": [
+        "Companies selling to a new foreign customer.",
+        "Those that have already suffered a non-payment or a dispute.",
+        "Exporters to countries with a high payment risk.",
+        "Importers paying a deposit to a distant supplier."
+      ],
+      "steps": [
+        {
+          "title": "Risk assessment",
+          "text": "The customer, the country, the amount and the credit period."
+        },
+        {
+          "title": "Choice of safeguards",
+          "text": "The payment method and guarantees that match that risk."
+        },
+        {
+          "title": "Drafting",
+          "text": "The contract clauses and the payment terms."
+        },
+        {
+          "title": "Document check",
+          "text": "The documents required by the bank, checked before shipment."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Risk analysis",
+          "text": "The customer and country risk, explained simply."
+        },
+        {
+          "title": "Commercial clauses",
+          "text": "The key clauses of your contract, ready to negotiate."
+        },
+        {
+          "title": "Payment recommendation",
+          "text": "The recommended payment method and its cost."
+        },
+        {
+          "title": "Bank checklist",
+          "text": "The documents to present to get paid on time."
+        }
+      ],
+      "faq": [
+        {
+          "q": "What is a letter of credit?",
+          "a": "It is a commitment by the buyer's bank to pay the seller, provided the seller presents compliant documents on time. It protects both parties."
+        },
+        {
+          "q": "Documentary collection or letter of credit?",
+          "a": "A documentary collection costs less but does not commit the bank: the buyer can refuse the documents. A letter of credit is safer for the seller, and more expensive."
+        },
+        {
+          "q": "Should I always ask for a deposit?",
+          "a": "It is not mandatory, but a deposit on order reduces the risk, especially with a new customer."
+        },
+        {
+          "q": "Do you replace a lawyer?",
+          "a": "No. We prepare the commercial and financial side; for complex legal questions, we refer you to a specialist lawyer."
+        }
+      ]
+    },
+    "formation": {
+      "meta": {
+        "title": "Export and import training for your teams | AFRIEXPORT CONSULTING",
+        "description": "Practical international trade training: Incoterms, customs, payments, logistics. On site or remote, tailored to your products and markets."
+      },
+      "h1": "Export and import training",
+      "lead": "Trained teams make fewer mistakes and save time on every shipment. Our training starts from your own files, so it is useful the very next day.",
+      "photoAlt": "Working session around a table with notebooks and a tablet",
+      "photoCaption": "Hands-on workshop on the company's own files",
+      "what": [
+        {
+          "title": "International trade basics",
+          "text": "How an operation unfolds, who is involved and which documents are needed, explained simply."
+        },
+        {
+          "title": "Incoterms® 2020",
+          "text": "Choosing and applying the right Incoterm, with real cases."
+        },
+        {
+          "title": "Customs and origin",
+          "text": "Tariff classification, rules of origin and customs documents."
+        },
+        {
+          "title": "Payments and risk",
+          "text": "Letters of credit, documentary collections and preventing non-payment."
+        },
+        {
+          "title": "Logistics and containers",
+          "text": "Transport modes, choosing a container and hidden costs."
+        }
+      ],
+      "forWho": [
+        "Export and import assistants and managers.",
+        "Sales people negotiating with foreign customers.",
+        "Administrative, accounting and logistics teams.",
+        "SME owners who want to understand the risks."
+      ],
+      "steps": [
+        {
+          "title": "Needs assessment",
+          "text": "The team's level and the difficulties they face."
+        },
+        {
+          "title": "Tailored programme",
+          "text": "Modules chosen for your products and markets."
+        },
+        {
+          "title": "Hands-on sessions",
+          "text": "On site or remote, using your own documents."
+        },
+        {
+          "title": "Follow-up",
+          "text": "Answers to your questions after the training."
+        }
+      ],
+      "deliverables": [
+        {
+          "title": "Tailored programme",
+          "text": "The modules, duration and goals of each session."
+        },
+        {
+          "title": "Training material",
+          "text": "Practical sheets to keep at hand."
+        },
+        {
+          "title": "Exercises on your files",
+          "text": "Cases taken from your real operations."
+        },
+        {
+          "title": "Certificate",
+          "text": "A certificate of attendance for each participant."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Where does the training take place?",
+          "a": "At your premises, in a room of your choice, or remotely by video call."
+        },
+        {
+          "q": "How many participants per session?",
+          "a": "We prefer small groups so everyone works on real cases. The exact number is agreed with you."
+        },
+        {
+          "q": "Is prior knowledge required?",
+          "a": "No. We adapt the level to your team, from beginners to experienced staff."
+        },
+        {
+          "q": "Can you train on a single topic?",
+          "a": "Yes, a short module can cover a single topic: Incoterms, letters of credit, origin of goods…"
+        }
+      ]
+    }
+  },
+  "methodPage": {
+    "meta": {
+      "title": "Our four-step method | AFRIEXPORT CONSULTING",
+      "description": "Diagnostic, strategy, execution, follow-up: AFRIEXPORT CONSULTING's method to secure your import and export operations, step by step."
+    },
+    "eyebrow": "Our method",
+    "title": "Four steps to secure your operations",
+    "lead": "Every assignment follows the same path, from the first interview to the follow-up of your trade flows. At every step, you know what is done, by whom, and what you receive.",
+    "photoAlt": "The port of Tanger Med at the foot of the hills",
+    "photoCaption": "Port of Tanger Med, Morocco",
+    "labels": {
+      "weDo": "What we do",
+      "youBring": "What you bring",
+      "deliverable": "What you receive",
+      "duration": "Indicative duration"
+    },
+    "steps": [
+      {
+        "intro": "It all starts with a good understanding of your company. We look at your product, your production capacity, your prices and your ambitions, without jargon.",
+        "weDo": [
+          "Interviews with management and the teams involved",
+          "Analysis of the product, cost prices and capacity",
+          "Identification of strengths and risks"
+        ],
+        "youBring": [
+          "Product sheets and cost prices",
+          "Your past international experience",
+          "Your one-year and three-year goals"
+        ],
+        "deliverable": "A written diagnostic: your strengths, the points to watch and the priorities.",
+        "duration": "[1 to 2 weeks, to be confirmed]",
+        "photoAlt": "Figures noted in a notebook: costs, rates and a chart"
+      },
+      {
+        "intro": "Based on the diagnostic, we build a realistic plan: which markets, which partners, what budget, and in what order.",
+        "weDo": [
+          "Choice of priority markets",
+          "Definition of the partners you need",
+          "Costed action plan and schedule"
+        ],
+        "youBring": [
+          "Your budget and available resources",
+          "Your production and cash-flow constraints",
+          "Your approval of the priorities"
+        ],
+        "deliverable": "A clear roadmap: the actions, the people in charge and the budget.",
+        "duration": "[2 to 4 weeks, to be confirmed]",
+        "photoAlt": "Planning a route on a map next to a laptop"
+      },
+      {
+        "intro": "We take action with you. Customs, contracts, transport: we coordinate every party so the first operation goes smoothly.",
+        "weDo": [
+          "Finding and meeting partners",
+          "Preparing customs documents and contracts",
+          "Organising transport and the container"
+        ],
+        "youBring": [
+          "The final commercial decisions",
+          "Samples and product information",
+          "Signing the contracts"
+        ],
+        "deliverable": "A first operation completed, with complete and checked files.",
+        "duration": "[Depends on the operation, to be confirmed]",
+        "photoAlt": "Gantry cranes above the containers in the port of Tanger Med"
+      },
+      {
+        "intro": "A first sale is only the beginning. We stay with you to make your flows regular, fix what needs fixing and open new markets.",
+        "weDo": [
+          "Review of every operation",
+          "Lower costs and shorter lead times",
+          "Development of new markets and partners"
+        ],
+        "youBring": [
+          "Customer feedback and sales figures",
+          "Your new ambitions",
+          "A regular check-in with your consultant"
+        ],
+        "deliverable": "A shared tracking dashboard and a regular review of your results.",
+        "duration": "[Ongoing, depending on the package]",
+        "photoAlt": "Truck carrying two containers out of a terminal"
+      }
+    ],
+    "commitmentsTitle": "Our commitments, at every step",
+    "commitments": [
+      {
+        "title": "One point of contact",
+        "text": "The same consultant follows your file from start to finish."
+      },
+      {
+        "title": "Stated timelines",
+        "text": "Every step has a delivery date known in advance."
+      },
+      {
+        "title": "Clear quotes",
+        "text": "You approve the budget for each step before it starts."
+      },
+      {
+        "title": "Confidentiality",
+        "text": "Your business information stays between you and us."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Can we start directly with execution?",
+        "a": "Yes, if you already have a customer or a market. We then run a short diagnostic focused on the operation at hand."
+      },
+      {
+        "q": "Do we have to commit to all four steps?",
+        "a": "No. Each step is quoted separately: you can stop after the diagnostic or the strategy."
+      },
+      {
+        "q": "How does the day-to-day follow-up work?",
+        "a": "Regular check-ins with your consultant, a shared tracking dashboard, and availability by phone, email or WhatsApp."
+      },
+      {
+        "q": "Do you work with foreign companies?",
+        "a": "Yes. We also support foreign companies that want to buy or sell in Morocco and Africa."
+      }
+    ]
+  },
+  "whyPage": {
+    "meta": {
+      "title": "Why choose AFRIEXPORT CONSULTING | Import-export consulting in Morocco",
+      "description": "Morocco-Africa expertise, tailored support, a network of partners and transparency: what sets AFRIEXPORT CONSULTING apart."
+    },
+    "eyebrow": "Why AFRIEXPORT",
+    "title": "A partner who knows African markets first-hand",
+    "lead": "Exporting from Morocco opens the door to Europe, Africa and beyond. You still need to know the rules, the players and the habits of each market: that is our job.",
+    "photoAlt": "Cranes and a container ship in the port of Tanger Med",
+    "photoCaption": "Port of Tanger Med, Morocco",
+    "reasonsTitle": "What sets us apart",
+    "reasonPoints": [
+      [
+        "Sea and road corridors from Morocco",
+        "African and European trade agreements",
+        "The business habits of each market"
+      ],
+      [
+        "An assignment sized to your company and budget",
+        "A dedicated consultant from start to finish",
+        "Single services or a complete assignment"
+      ],
+      [
+        "Freight forwarders and carriers",
+        "Certification and inspection bodies",
+        "Banks and insurers"
+      ],
+      [
+        "Steps and timelines stated from the start",
+        "Detailed quotes, no hidden fees",
+        "Regular progress updates"
+      ]
+    ],
+    "statTitle": "Why it matters",
+    "networkTitle": "A network working for you",
+    "networkLead": "An export operation involves around ten different players. We know who to call, and when.",
+    "network": [
+      {
+        "title": "Freight forwarders",
+        "text": "To book transport and clear customs."
+      },
+      {
+        "title": "Shipping lines and carriers",
+        "text": "To move goods by sea, air or road."
+      },
+      {
+        "title": "Inspection bodies",
+        "text": "For health, phytosanitary and conformity certificates."
+      },
+      {
+        "title": "Banks",
+        "text": "For letters of credit and guarantees."
+      },
+      {
+        "title": "Insurers",
+        "text": "For cargo insurance and credit insurance."
+      },
+      {
+        "title": "Chambers of commerce",
+        "text": "For certificates of origin and local contacts."
+      },
+      {
+        "title": "Lawyers",
+        "text": "For contracts and complex disputes."
+      },
+      {
+        "title": "Trade fairs and business networks",
+        "text": "To meet buyers and suppliers."
+      }
+    ],
+    "zonesTitle": "From Morocco to the world",
+    "zonesLead": "Morocco is a crossroads between Europe, Africa and the Atlantic. We support your trade flows in all these directions.",
+    "zones": [
+      {
+        "name": "West Africa",
+        "text": "Senegal, Côte d'Ivoire, Mauritania, Mali…"
+      },
+      {
+        "name": "Central Africa",
+        "text": "Cameroon, Gabon, Democratic Republic of the Congo…"
+      },
+      {
+        "name": "Europe",
+        "text": "France, Spain, Italy, Belgium…"
+      },
+      {
+        "name": "Middle East",
+        "text": "United Arab Emirates, Saudi Arabia, Qatar…"
+      },
+      {
+        "name": "The Americas",
+        "text": "United States, Canada, Brazil…"
+      }
+    ],
+    "zonesNote": "[Regions and countries to be confirmed by the firm]",
+    "teamTitle": "The team",
+    "teamText": "[Team introduction: backgrounds, specialities, languages spoken]",
+    "teamPhoto": "[Team photo to be provided]"
+  },
+  "containersPage": {
+    "meta": {
+      "title": "Shipping container guide: dimensions, types and conditions | AFRIEXPORT CONSULTING",
+      "description": "Dimensions of 20', 40', High Cube, reefer, open top, flat rack and tank containers. Comparison tool, volume calculator and condition guide (new, CW, WWT)."
+    },
+    "eyebrow": "Container guide",
+    "title": "Everything you need to pick the right container",
+    "lead": "Formats, dimensions, families and conditions: compare shipping containers and estimate in seconds what your goods need.",
+    "photoAlt": "Stacks of yellow and red shipping containers under a blue sky",
+    "photoCaption": "Container yard",
+    "nav": {
+      "picker": "In 3D",
+      "families": "Families",
+      "compare": "Compare",
+      "calculator": "Calculator",
+      "states": "Conditions",
+      "faq": "Questions"
+    },
+    "pickerTitle": "Dry containers, in 3D",
+    "pickerLead": "Dry containers carry the vast majority of goods. Choose a format to see its internal dimensions.",
+    "familiesTitle": "Five container families",
+    "familiesLead": "Each family suits a type of cargo. The right choice avoids extra costs and refusals at loading.",
+    "familyLabels": {
+      "uses": "Best for",
+      "watch": "Good to know",
+      "formats": "Formats"
+    },
+    "families": {
+      "dry": {
+        "name": "Dry",
+        "text": "The standard container, closed and watertight, for goods with no temperature requirement.",
+        "uses": "Cartons, pallets, bags, manufactured goods, textiles, materials.",
+        "watch": "The High Cube version adds 30 cm of height, useful for light, bulky goods."
+      },
+      "reefer": {
+        "name": "Reefer",
+        "text": "Insulated and fitted with a cooling unit, it keeps a set temperature for the whole voyage.",
+        "uses": "Fruit and vegetables, seafood, meat, dairy products, medicines.",
+        "watch": "It must be plugged in at the terminal and on board. Goods must be loaded already at the right temperature."
+      },
+      "openTop": {
+        "name": "Open Top",
+        "text": "With no rigid roof, it is loaded from above by crane and covered with a tarpaulin.",
+        "uses": "Machinery, marble and stone, timber, goods too tall for the doors.",
+        "watch": "Goods that stick out above the top are \"out of gauge\": freight is then charged extra."
+      },
+      "flatRack": {
+        "name": "Flat Rack",
+        "text": "A reinforced floor with two end walls, no sides and no roof.",
+        "uses": "Machinery, vehicles, coils, steel structures, heavy loads.",
+        "watch": "Lashing must be done by professionals, and the cargo protected from the weather."
+      },
+      "tank": {
+        "name": "Tank",
+        "text": "A stainless steel tank held in a frame with the dimensions of a 20-foot container.",
+        "uses": "Food-grade liquids, oils, chemicals, hazardous goods.",
+        "watch": "The tank is usually filled to between 80 and 95% to limit liquid movement in transit."
+      }
+    },
+    "formats": {
+      "20dc": "20' Dry",
+      "40dc": "40' Dry",
+      "40hc": "40' High Cube",
+      "45hc": "45' High Cube",
+      "20rf": "20' Reefer",
+      "40rh": "40' Reefer High Cube",
+      "20ot": "20' Open Top",
+      "40ot": "40' Open Top",
+      "20fr": "20' Flat Rack",
+      "40fr": "40' Flat Rack",
+      "20tk": "20' Tank"
+    },
+    "spec": {
+      "family": "Family",
+      "internal": "Internal dimensions",
+      "length": "Internal length",
+      "width": "Internal width",
+      "height": "Internal height",
+      "door": "Door opening",
+      "volume": "Usable volume",
+      "capacity": "Tank capacity",
+      "tare": "Tare (empty weight)",
+      "maxGross": "Max. gross weight",
+      "payload": "Max. payload",
+      "pallets": "Euro pallets",
+      "temp": "Temperature",
+      "none": "Not applicable",
+      "open": "Open"
+    },
+    "compareTitle": "Container comparison",
+    "compareLead": "Choose two formats: their silhouettes are drawn to the same scale and the differences appear line by line.",
+    "compareA": "First format",
+    "compareB": "Second format",
+    "swap": "Swap the two formats",
+    "scaleNote": "Silhouettes to scale, side view",
+    "tableTitle": "Every format in one table",
+    "filterLabel": "Filter by family",
+    "filterAll": "All",
+    "note": "Indicative values: they vary by manufacturer and shipping line. Always check with the carrier before loading.",
+    "calcTitle": "Which container for my goods?",
+    "calcLead": "Enter the volume, the weight or the number of pallets: we estimate how many containers you need, format by format.",
+    "calc": {
+      "type": "Goods",
+      "types": {
+        "dry": "Dry",
+        "reefer": "Refrigerated"
+      },
+      "volume": "Total volume",
+      "volumeUnit": "m³",
+      "weight": "Total gross weight",
+      "weightUnit": "kg",
+      "pallets": "Euro pallets",
+      "palletsUnit": "pallets",
+      "fill": "Target fill rate",
+      "fillHint": "A container is rarely filled to 100%: 85% is a prudent assumption.",
+      "best": "Our suggestion",
+      "perFormat": "Format by format",
+      "limitedBy": "Limited by {what}",
+      "by": {
+        "volume": "volume",
+        "weight": "weight",
+        "pallets": "pallets"
+      },
+      "usageLabel": "Average fill",
+      "usageParts": {
+        "volume": "{p} of the volume",
+        "weight": "{p} of the payload",
+        "pallets": "{p} of the pallet spaces"
+      },
+      "empty": "Fill in at least one field to see the estimate.",
+      "note": "Indicative estimate. Actual loading depends on packaging, stackability and weight distribution.",
+      "cta": "Ask for a loading plan"
+    },
+    "statesTitle": "Container conditions: new or used?",
+    "statesLead": "When you buy or lease a container, its condition matters as much as its size. Here are the four grades used in the trade.",
+    "stateLabels": {
+      "age": "Typical age",
+      "export": "Ocean shipping",
+      "use": "Recommended use",
+      "price": "Relative price",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "states": [
+      {
+        "code": "1 TRIP",
+        "title": "New (One Trip)",
+        "text": "Fresh from the factory, it has made a single voyage, usually from Asia, to be delivered. Flawless look and watertightness.",
+        "age": "Under one year",
+        "export": true,
+        "use": "Regular exports, storing valuable goods, conversions",
+        "price": 4,
+        "photoAlt": "Doors of recent containers with intact paint"
+      },
+      {
+        "code": "CW",
+        "title": "Cargo Worthy (CW)",
+        "text": "Used, inspected and repaired to IICL standards, it is fit for international ocean shipping, with a valid CSC plate.",
+        "age": "8 to 12 years",
+        "export": true,
+        "use": "One-off exports, lower-cost shipping",
+        "price": 3
+      },
+      {
+        "code": "WWT",
+        "title": "Wind and Watertight (WWT)",
+        "text": "Wind and watertight, but not certified for sea transport. It often has dents and surface rust.",
+        "age": "10 to 15 years",
+        "export": false,
+        "use": "On-site storage, extra warehouse space",
+        "price": 2
+      },
+      {
+        "code": "AS IS",
+        "title": "As Is",
+        "text": "Sold without warranty: it may have holes, stiff doors or a damaged floor. Inspect before you buy.",
+        "age": "Over 15 years",
+        "export": false,
+        "use": "Spare parts, conversion, non-critical uses",
+        "price": 1,
+        "photoAlt": "Doors of old containers marked by rust"
+      }
+    ],
+    "statesCompareTitle": "The four grades compared",
+    "checklistTitle": "Checklist before you buy or lease",
+    "checklistLead": "Eight points to check on site, or to have checked by an inspector.",
+    "checklist": [
+      {
+        "title": "CSC plate",
+        "text": "Present, readable and up to date: without it, no ocean shipping."
+      },
+      {
+        "title": "Container number",
+        "text": "Four letters, six digits and a check digit, identical on every side."
+      },
+      {
+        "title": "Doors and seals",
+        "text": "The doors close without force, the gaskets are supple and continuous."
+      },
+      {
+        "title": "Light test",
+        "text": "With the doors closed, no light should get in: otherwise, water will too."
+      },
+      {
+        "title": "Floor",
+        "text": "No broken, soft or oil- or chemical-stained boards."
+      },
+      {
+        "title": "Rust and dents",
+        "text": "Surface rust is normal; rust that goes through is not."
+      },
+      {
+        "title": "Smell and cleanliness",
+        "text": "Essential for food: no smell and no trace of previous cargo."
+      },
+      {
+        "title": "Documents",
+        "text": "Invoice, inspection report and, for export, proof of Cargo Worthy condition."
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is the difference between a 40' Dry and a 40' High Cube?",
+        "a": "Same length and width, but the High Cube is about 30 cm taller. It offers nearly 9 m³ more space, often for similar freight rates."
+      },
+      {
+        "q": "Should I buy or lease a container to export?",
+        "a": "To ship goods, you usually use the shipping line's container, included in the freight. Buying makes sense for long-term storage or regular shipments to poorly served destinations."
+      },
+      {
+        "q": "What is the CSC plate?",
+        "a": "It is the safety approval plate required by the International Convention for Safe Containers. It certifies that the container can be handled and stacked safely. Without a valid plate, it cannot travel by sea."
+      },
+      {
+        "q": "What is the VGM?",
+        "a": "The Verified Gross Mass. Since 2016, the SOLAS convention requires the actual weight of the loaded container to be declared before loading. Without a VGM, the container is not loaded."
+      },
+      {
+        "q": "Can I exceed the stated payload?",
+        "a": "No. The payload is a technical maximum. You must also respect the road weight limits of every country crossed, which are often lower."
+      }
+    ]
+  },
+  "resultsPage": {
+    "meta": {
+      "title": "Our results and typical assignments | AFRIEXPORT CONSULTING",
+      "description": "Partnerships signed, faster files, new markets: what AFRIEXPORT CONSULTING brings to its clients, with examples of assignments."
+    },
+    "eyebrow": "Results",
+    "title": "What we bring to our clients",
+    "lead": "Figures, and above all what lies behind them: how we measure them, and what an assignment looks like, from starting point to result.",
+    "photoAlt": "Aerial view of a container terminal",
+    "photoCaption": "A container terminal from above",
+    "figuresTitle": "Our figures, explained",
+    "figuresLead": "Four indicators we track for every client we support.",
+    "howLabel": "How we measure it",
+    "period": "[Measurement period and scope to be specified]",
+    "figures": [
+      {
+        "detail": "Agreements signed between our clients and buyers, distributors or suppliers we introduced to them.",
+        "how": "Contracts or first orders confirmed by the client."
+      },
+      {
+        "detail": "Average time saved on preparing and clearing files, compared with the situation before we stepped in.",
+        "how": "Time between order and customs release, before and after the assignment."
+      },
+      {
+        "detail": "Countries where our clients made at least one sale or purchase thanks to our support.",
+        "how": "Destination or origin countries of the operations completed."
+      },
+      {
+        "detail": "Average growth in international revenue for the clients we support over time.",
+        "how": "Export revenue or imported volume, year on year."
+      }
+    ],
+    "missionsTitle": "Three typical assignments",
+    "missionsLead": "Representative examples of our work. They illustrate how we operate and do not describe named clients.",
+    "missionLabels": {
+      "tag": "Typical assignment",
+      "situation": "Starting point",
+      "action": "What we did",
+      "outcome": "What changes"
+    },
+    "missions": [
+      {
+        "sector": "Food and agriculture",
+        "title": "A citrus grower selling to West Africa",
+        "situation": "A farm that sells in Europe wants to diversify its outlets, without knowing which country to target or how to ship fresh produce.",
+        "action": [
+          "Study of three West African markets",
+          "Search for and vetting of importers",
+          "Choice of reefer container and forwarder"
+        ],
+        "outcome": "A new outlet, health certificates ready for every shipment and a proven logistics route.",
+        "photoAlt": "Orange trees laden with fruit in an orchard"
+      },
+      {
+        "sector": "Crafts and home decor",
+        "title": "A ceramics workshop selling to North America",
+        "situation": "A workshop receives requests from foreign buyers but has never exported, and fears non-payment and breakage.",
+        "action": [
+          "Terms of sale and secure payment",
+          "Suitable packaging and cargo insurance",
+          "Sea groupage for small volumes"
+        ],
+        "outcome": "Export sales paid on time, and goods that arrive intact.",
+        "photoAlt": "Display of colourful ceramics in Safi"
+      },
+      {
+        "sector": "Industry",
+        "title": "An SME importing its equipment",
+        "situation": "An industrial company imports machines and parts from several countries, with poorly controlled costs and lead times.",
+        "action": [
+          "Supplier comparison and pre-shipment inspection",
+          "Tariff classification and landed cost calculation",
+          "Consolidated shipments and tracking"
+        ],
+        "outcome": "Import costs known in advance and more regular supplies.",
+        "photoAlt": "Industrial workshop with machines and workstations"
+      }
+    ],
+    "testimonialsTitle": "What our clients say",
+    "testimonials": [
+      {
+        "quote": "[Client testimonial to be provided: two or three sentences about the assignment and its result.]",
+        "name": "[Name and job title]",
+        "company": "[Company, sector]"
+      },
+      {
+        "quote": "[Client testimonial to be provided: two or three sentences about the assignment and its result.]",
+        "name": "[Name and job title]",
+        "company": "[Company, sector]"
+      }
+    ],
+    "sectorsTitle": "Sectors we support",
+    "sectorsNote": "[List of sectors to be confirmed by the firm]",
+    "sectors": [
+      "Food and agriculture",
+      "Seafood",
+      "Textiles and leather",
+      "Crafts and home decor",
+      "Cosmetics and argan",
+      "Building materials",
+      "Automotive parts",
+      "Industrial equipment"
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk about your international project",
+    "lead": "Tell us what you need: a consultant will get back to you for a first call.",
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "placeholders": {
+      "address": "[Office address]",
+      "phone": "[+212 …]",
+      "email": "[contact@afriexport…]"
+    },
+    "whatsapp": "Message us on WhatsApp",
+    "whatsappMessage": "Hello AFRIEXPORT CONSULTING, I would like to talk about my project.",
+    "form": {
+      "title": "Contact form",
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "company": "Company",
+      "companyPlaceholder": "Company name",
+      "optional": "optional",
+      "email": "Email",
+      "emailPlaceholder": "you@company.com",
+      "need": "Your need",
+      "needs": [
+        "Export my products",
+        "Import / find suppliers",
+        "Customs & regulations",
+        "Other"
+      ],
+      "message": "Message",
+      "messagePlaceholder": "Describe your project: product, target countries, volumes…",
+      "consent": "I agree that my data will be used to handle my request, in line with the",
+      "consentLink": "privacy policy",
+      "honeypot": "Leave this field empty.",
+      "required": "required",
+      "submit": "Send my request",
+      "sending": "Sending…",
+      "subject": "New request from the AFRIEXPORT CONSULTING website",
+      "success": "Thank you, your request has been sent. A consultant will get back to you for a first call.",
+      "error": "Your request could not be sent. Please try again in a moment, or reach us on WhatsApp or by email.",
+      "summary": "Please check the highlighted fields.",
+      "errors": {
+        "required": "This field is required.",
+        "email": "Enter a valid email address, for example name@company.com.",
+        "messageShort": "Add a few words about your project (20 characters minimum).",
+        "consent": "Tick this box so we can handle your request."
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Import-export consulting and international development.",
+    "method": "Method",
+    "rights": "All rights reserved.",
+    "cookieSettings": "Cookie settings"
+  },
+  "cookies": {
+    "dialogLabel": "Cookie settings",
+    "title": "We use cookies",
+    "text": "They keep the site working and, with your consent, measure traffic. You can change your mind at any time.",
+    "policyLink": "Cookie policy",
+    "acceptAll": "Accept all",
+    "rejectAll": "Reject all",
+    "customise": "Customise",
+    "save": "Save my choices",
+    "necessary": "Necessary",
+    "necessaryHint": "Always on",
+    "analytics": "Analytics",
+    "analyticsHint": "Anonymous visit statistics",
+    "marketing": "Marketing",
+    "marketingHint": "Personalised ads",
+    "saved": "Your choices have been saved."
+  },
+  "legal": {
+    "notice": "Legal notice",
+    "privacy": "Privacy policy",
+    "cookies": "Cookie policy",
+    "back": "Back to home",
+    "updated": "Last updated"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or has moved.",
+    "cta": "Back to home"
+  }
+}

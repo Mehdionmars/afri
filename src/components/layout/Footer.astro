@@ -1,0 +1,63 @@
+---
+import { routes, serviceIds, serviceRoute, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** '#contact' quand la page a son formulaire, sinon le formulaire de l'accueil. */
+  contactHref: string;
+}
+
+const { lang, contactHref } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+
+const services = t.services.items.map((item, i) => ({ label: item.title, href: serviceRoute(serviceIds[i])[lang] }));
+const firm = [
+  { label: t.footer.method, href: routes.method[lang] },
+  { label: t.nav.why, href: routes.why[lang] },
+  { label: t.nav.containers, href: routes.containers[lang] },
+  { label: t.nav.results, href: routes.results[lang] },
+  { label: t.nav.contact, href: contactHref },
+];
+const linkClass = 'link-u tap inline-flex items-center py-1 text-sm text-metal-200 hover:text-white';
+---
+
+<footer class="on-dark bg-ink px-[max(16px,5%)] pb-8 pt-14">
+  <div class="mx-auto flex max-w-page flex-col gap-10">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,2fr)]">
+      <div class="flex max-w-[360px] flex-col gap-2.5">
+        <a href={routes.home[lang]} class="text-lg font-bold text-white no-underline">AFRIEXPORT<span class="text-yellow"> CONSULTING</span></a>
+        <span class="text-sm leading-relaxed text-metal-300">{t.footer.tagline}</span>
+      </div>
+      <nav aria-label={t.a11y.footerNav} class="grid gap-10 sm:grid-cols-2">
+        <div class="flex flex-col gap-3">
+          <p class="label-mono m-0 text-yellow">{t.pages.footerServices}</p>
+          <ul class="m-0 flex list-none flex-col p-0" role="list">
+            {services.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </div>
+        <div class="flex flex-col gap-3">
+          <p class="label-mono m-0 text-yellow">{t.pages.footerFirm}</p>
+          <ul class="m-0 flex list-none flex-col p-0" role="list">
+            {firm.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="flex flex-wrap justify-between gap-4 border-t border-metal-700 pt-6 text-[13px] text-metal-300">
+      <span>© {year} AFRIEXPORT CONSULTING. {t.footer.rights}</span>
+      <nav aria-label={t.a11y.legalNav}>
+        <ul class="flex flex-wrap gap-x-4 gap-y-1" role="list">
+          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.notice[lang]}>{t.legal.notice}</a></li>
+          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.privacy[lang]}>{t.legal.privacy}</a></li>
+          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.cookies[lang]}>{t.legal.cookies}</a></li>
+          <li>
+            <button type="button" class="tap inline-flex cursor-pointer items-center bg-transparent p-0 text-metal-300 underline underline-offset-4 hover:text-white" data-cookie-settings>
+              {t.footer.cookieSettings}
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>

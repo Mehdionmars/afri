@@ -1,0 +1,172 @@
+---
+/**
+ * Page « Méthode » : les quatre étapes, une section et une photo chacune (alternées),
+ * avec ce que nous faisons, ce que vous apportez, le livrable et la durée indicative.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteRail from '../layout/RouteRail.astro';
+import PageHero from '../sections/PageHero.astro';
+import Faq from '../sections/Faq.astro';
+import Contact from '../sections/Contact.astro';
+import Icon, { type IconName } from '../ui/Icon.astro';
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { colon, routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.methodPage;
+const photos = ['methode-diagnostic', 'methode-strategie', 'methode-mise-en-oeuvre', 'methode-suivi'];
+const ids = lang === 'fr' ? ['diagnostic', 'strategie', 'mise-en-oeuvre', 'suivi'] : ['diagnostic', 'strategy', 'execution', 'follow-up'];
+const steps = t.method.steps.map((step, i) => ({ ...step, ...p.steps[i], photo: photos[i], id: ids[i] }));
+const commitmentIcons: IconName[] = ['users', 'clock', 'doc', 'shield'];
+---
+
+<BaseLayout lang={lang} title={p.meta.title} description={p.meta.description} alternates={routes.method} current="method" hasContact>
+  <RouteRail
+    lang={lang}
+    stops={[
+      { id: 'intro', label: t.nav.method },
+      ...steps.map((step) => ({ id: step.id, label: step.title })),
+      { id: 'engagements', label: p.commitmentsTitle },
+      { id: 'contact', label: t.nav.contact },
+    ]}
+  />
+  <PageHero
+    lang={lang}
+    title={p.title}
+    lead={p.lead}
+    photo="page-methode"
+    photoAlt={p.photoAlt}
+   />
+
+  {
+    steps.map((step, i) => (
+      <section id={step.id} class:list={['step-block on-light px-[max(16px,5%)] py-20 sm:py-28', i % 2 === 0 ? 'bg-white' : 'bg-metal-100']} aria-labelledby={`${step.id}-title`}>
+        <div class:list={['mx-auto grid max-w-page items-center gap-10 lg:grid-cols-2 lg:gap-16', i % 2 === 1 && 'flip']}>
+          <figure class="reveal relative m-0 aspect-[4/3] overflow-hidden rounded-panel bg-metal-200">
+            <PhotoSlot
+              photo={step.photo}
+              alt={step.photoAlt}
+              placeholder={`[${t.pages.photo} : ${step.photoAlt}]`}
+              sizes="(min-width: 1240px) 590px, (min-width: 1024px) 46vw, 100vw"
+              imgClass="absolute inset-0 size-full object-cover"
+              placeholderClass="placeholder-photo absolute inset-0 text-[15px] text-metal-700"
+            />
+          </figure>
+
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-4">
+              <h2 id={`${step.id}-title`} class="reveal m-0 text-h2-xl">
+                <span class="sr-only">
+                  {t.method.stepLabel} {i + 1}
+                  {colon(lang)}
+                </span>
+                {step.title}
+              </h2>
+              <p class="m-0 max-w-[52ch] text-lead text-metal-600">{step.intro}</p>
+            </div>
+
+            <div class="grid gap-6 border-t border-navy/12 pt-6 sm:grid-cols-2">
+              <div class="flex flex-col gap-3">
+                <h3 class="label-mono m-0 text-metal-600">{p.labels.weDo}</h3>
+                <ul class="m-0 flex list-none flex-col gap-2.5 p-0" role="list">
+                  {step.weDo.map((line) => (
+                    <li class="flex items-start gap-3 text-[15.5px] leading-[1.5] text-metal-700">
+                      <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-navy text-white">
+                        <Icon name="check" size={11} stroke={3} />
+                      </span>
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="flex flex-col gap-3">
+                <h3 class="label-mono m-0 text-metal-600">{p.labels.youBring}</h3>
+                <ul class="m-0 flex list-none flex-col gap-2.5 p-0" role="list">
+                  {step.youBring.map((line) => (
+                    <li class="flex items-start gap-3 text-[15.5px] leading-[1.5] text-metal-700">
+                      <span class="mt-2 h-0.5 w-3 shrink-0 bg-navy" aria-hidden="true" />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="deliverable flex flex-col gap-3 rounded-card p-5 sm:flex-row sm:items-center sm:justify-between">
+              <p class="m-0 flex items-start gap-3">
+                <Icon name="doc" size={22} stroke={1.8} class="mt-0.5 shrink-0" />
+                <span class="flex flex-col gap-1">
+                  <span class="sr-only">
+                    {p.labels.deliverable}
+                    {colon(lang)}
+                  </span>
+                  <span class="text-[16px] font-medium leading-snug text-ink">{step.deliverable}</span>
+                </span>
+              </p>
+              <p class="duration m-0 flex shrink-0 items-center gap-2 text-[14px] text-ink">
+                <Icon name="clock" size={16} stroke={2} />
+                <span>
+                  <span class="sr-only">
+                    {p.labels.duration}
+                    {colon(lang)}
+                  </span>
+                  {step.duration}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section id="engagements" class="on-dark bg-navy px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="engagements-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="flex flex-col gap-4">
+        <h2 id="engagements-title" class="reveal m-0 max-w-[18ch] text-h2-xl text-white">{p.commitmentsTitle}</h2>
+      </div>
+      <ul class="m-0 grid list-none gap-px overflow-hidden rounded-card p-px sm:grid-cols-2 lg:grid-cols-4" role="list">
+        {
+          p.commitments.map((item, i) => (
+            <li class="reveal flex flex-col gap-4 bg-navy/50 shadow-[0_0_0_1px_rgba(255,255,255,0.1)] p-7" style={`--i:${i}`}>
+              <span class="flex size-12 items-center justify-center rounded-tile bg-yellow text-ink">
+                <Icon name={commitmentIcons[i]} size={24} stroke={1.8} />
+              </span>
+              <h3 class="m-0 text-[21px] font-medium tracking-[-0.01em] text-white">{item.title}</h3>
+              <p class="m-0 text-[15.5px] leading-[1.6] text-metal-200">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Faq lang={lang} items={p.faq} />
+  <Contact lang={lang} />
+</BaseLayout>
+
+<style>
+  @media (min-width: 1024px) {
+    .flip > figure {
+      order: 2;
+    }
+  }
+  .deliverable {
+    background: #eef0f2;
+  }
+  /* Sur les étapes à fond gris, le bloc passe en blanc pour rester visible. */
+  .bg-metal-100 .deliverable {
+    background: #fff;
+  }
+  .duration {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 0 0 1px rgba(15, 35, 64, 0.25);
+  }
+</style>

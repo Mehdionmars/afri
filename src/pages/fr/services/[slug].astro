@@ -1,0 +1,12 @@
+---
+import ServicePage from '../../../components/pages/ServicePage.astro';
+import { serviceIds, serviceRoute, type ServiceId } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return serviceIds.map((id) => ({ params: { slug: serviceRoute(id).fr.split('/').at(-2) }, props: { id } }));
+}
+
+const { id } = Astro.props as { id: ServiceId };
+---
+
+<ServicePage lang="fr" id={id} />

@@ -1,0 +1,125 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import CookieBanner from '../components/layout/CookieBanner.astro';
+import PageLoader from '../components/layout/PageLoader.astro';
+import WhatsAppFloat from '../components/layout/WhatsAppFloat.astro';
+import StructuredData from '../components/layout/StructuredData.astro';
+import { langs, routes, useTranslations, type Lang, type RouteKey } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Chemin de cette page dans chaque langue (balises hreflang et sélecteur FR | EN). */
+  alternates: Record<Lang, string>;
+  /** true sur l'accueil : le logo ramène en haut de la page. */
+  isHome?: boolean;
+  /** Rubrique du menu à marquer comme page courante. */
+  current?: RouteKey;
+  /** La page se termine par le formulaire de contact : les boutons « Contact » y mènent directement. */
+  hasContact?: boolean;
+  noindex?: boolean;
+}
+
+const { lang, title, description, alternates, isHome = false, current, hasContact = isHome, noindex = false } = Astro.props;
+// Aperçu client (PUBLIC_PREVIEW=1) : contenus provisoires, rien ne doit être indexé.
+const isPreview = import.meta.env.PUBLIC_PREVIEW === '1';
+const t = useTranslations(lang);
+const site = Astro.site!;
+const canonical = new URL(alternates[lang], site).href;
+const ogImage = new URL(`/og-${lang}.jpg`, site).href;
+const otherLocale = lang === 'fr' ? 'en_US' : 'fr_FR';
+const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Avant le premier affichage : écran de chargement (1re page de la visite) ou entrée directe de l'accueil.
+      (function () {
+        var c = document.documentElement.classList;
+        c.add('js');
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var seen = false;
+        try { seen = !!sessionStorage.getItem('afx-seen'); } catch (e) {}
+        if (reduce || seen) {
+          c.add('no-loader');
+          if (!reduce) c.add('hero-intro');
+        } else {
+          c.add('is-loading');
+        }
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {(noindex || isPreview) && <meta name="robots" content={isPreview ? 'noindex, nofollow' : 'noindex'} />}
+    <link rel="canonical" href={canonical} />
+    {langs.map((code) => <link rel="alternate" hreflang={code} href={new URL(alternates[code], site).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(alternates.fr, site).href} />
+
+    <meta name="theme-color" content="#0B0B0C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AFRIEXPORT CONSULTING" />
+    <meta property="og:locale" content={t.meta.locale} />
+    <meta property="og:locale:alternate" content={otherLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <StructuredData lang={lang} pageUrl={canonical} />
+    <slot name="head" />
+  </head>
+  <body>
+    <PageLoader lang={lang} />
+    <a href="#main" class="skip-link">{t.a11y.skip}</a>
+    <Header lang={lang} alternates={alternates} isHome={isHome} current={current} contactHref={contactHref} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} contactHref={contactHref} />
+    <WhatsAppFloat lang={lang} />
+    <CookieBanner lang={lang} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    left: 16px;
+    top: 12px;
+    z-index: 100;
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: #ffc342;
+    color: #0b0b0c;
+    font-weight: 700;
+    text-decoration: none;
+    translate: 0 -200%;
+    transition: translate 0.2s var(--ease-out);
+  }
+  .skip-link:focus {
+    translate: 0 0;
+    outline: 3px solid #0b0b0c;
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  import '../scripts/reveal';
+  import '../scripts/motion';
+</script>

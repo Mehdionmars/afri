@@ -1,0 +1,18 @@
+---
+// La racine redirige vers /fr/ (langue par défaut). Les hébergeurs reçoivent aussi
+// une vraie redirection 301 (netlify.toml, vercel.json, public/.htaccess).
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>AFRIEXPORT CONSULTING</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="0; url=/fr/" />
+    <link rel="canonical" href={new URL('/fr/', Astro.site).href} />
+  </head>
+  <body>
+    <a href="/fr/">AFRIEXPORT CONSULTING</a>
+  </body>
+</html>

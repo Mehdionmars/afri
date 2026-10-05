@@ -1,0 +1,79 @@
+---
+import ContactForm from './ContactForm.astro';
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { colon, isPlaceholder, site, useTranslations, whatsappLink, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).contact;
+const { contact } = site;
+
+// Tant que le client n'a pas fourni une valeur, l'espace réservé de la maquette reste affiché.
+const address = isPlaceholder(contact.address)
+  ? t.placeholders.address
+  : [contact.address, [contact.postalCode, contact.city].filter((v) => !isPlaceholder(v)).join(' ')].filter(Boolean).join(', ');
+const phone = isPlaceholder(contact.phone) ? null : contact.phone;
+const email = isPlaceholder(contact.email) ? null : contact.email;
+const whatsappHref = whatsappLink(lang);
+
+const line = 'flex items-center gap-3.5 text-base text-ink';
+---
+
+<section id="contact" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="contact-title">
+  <div class="mx-auto grid max-w-page items-stretch gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+    <div class="contact-panel flex flex-col gap-6 py-2 lg:py-10 lg:pr-10">
+      <SectionHeading title={t.title} id="contact-title" class="gap-6" titleClass="text-h2-lg text-ink">
+        <p class="m-0 text-[17px] leading-[1.65] text-metal-700">{t.lead}</p>
+      </SectionHeading>
+
+      <ul class="m-0 mt-2 flex list-none flex-col gap-4 p-0" role="list">
+        <li class={line}>
+          <Icon name="pin" size={22} class="shrink-0 text-ink" />
+          <span><span class="sr-only">{t.addressLabel}{colon(lang)}</span>{address}</span>
+        </li>
+        <li class={line}>
+          <Icon name="phone" size={22} class="shrink-0 text-ink" />
+          {
+            phone ? (
+              <a class="link-u tap inline-flex items-center text-ink" href={`tel:${phone.replace(/[^\d+]/g, '')}`}>
+                <span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{phone}
+              </a>
+            ) : (
+              <span><span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{t.placeholders.phone}</span>
+            )
+          }
+        </li>
+        <li class={line}>
+          <Icon name="mail" size={22} class="shrink-0 text-ink" />
+          {
+            email ? (
+              <a class="link-u tap inline-flex items-center text-ink" href={`mailto:${email}`}>
+                <span class="sr-only">{t.emailLabel}{colon(lang)}</span>{email}
+              </a>
+            ) : (
+              <span><span class="sr-only">{t.emailLabel}{colon(lang)}</span>{t.placeholders.email}</span>
+            )
+          }
+        </li>
+      </ul>
+
+      <a
+        class="btn mt-auto self-start bg-navy px-[22px] py-3.5 text-[15px] text-white"
+        href={whatsappHref ?? '#contact'}
+        target={whatsappHref ? '_blank' : undefined}
+        rel={whatsappHref ? 'noopener noreferrer' : undefined}
+        data-placeholder={whatsappHref ? undefined : 'whatsapp'}
+      >
+        <Icon name="whatsapp" size={20} />
+        {t.whatsapp}
+        {whatsappHref && <span class="sr-only">{useTranslations(lang).a11y.newWindow}</span>}
+      </a>
+    </div>
+
+    <ContactForm lang={lang} />
+  </div>
+</section>

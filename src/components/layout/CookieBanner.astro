@@ -1,0 +1,87 @@
+---
+import Icon from '../ui/Icon.astro';
+import { routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const c = t.cookies;
+const id = (name: string) => `ck-${name}-${lang}`;
+---
+
+<div
+  class="cookie-banner on-dark fixed bottom-4 left-4 right-4 z-50 flex max-w-[520px] flex-col gap-4 rounded-2xl border border-metal-600 bg-navy p-6 shadow-pop sm:bottom-6 sm:left-6 sm:right-auto sm:w-[calc(100%-48px)]"
+  role="dialog"
+  aria-labelledby="cookie-title"
+  aria-describedby="cookie-text"
+  tabindex="-1"
+  hidden
+  data-cookie-banner
+>
+  <div class="flex items-start gap-3.5">
+    <span class="flex size-10 shrink-0 items-center justify-center rounded-[10px] bg-yellow text-ink">
+      <Icon name="cookie" size={22} />
+    </span>
+    <div class="flex flex-col gap-1.5">
+      <p id="cookie-title" class="m-0 text-[17px] font-bold text-white">{c.title}</p>
+      <p id="cookie-text" class="m-0 text-sm leading-normal text-metal-200">
+        {c.text}{' '}
+        <a class="text-yellow underline underline-offset-2" href={routes.cookies[lang]}>{c.policyLink}</a>
+      </p>
+    </div>
+  </div>
+
+  <fieldset class="m-0 flex flex-col border-0 p-0" hidden data-cookie-prefs>
+    <legend class="sr-only">{c.customise}</legend>
+    <label for={id('nec')} class="flex cursor-not-allowed items-center justify-between gap-4 border-t border-metal-700 py-3">
+      <span class="flex flex-col gap-0.5">
+        <span class="text-sm font-bold text-white">{c.necessary}</span>
+        <span class="text-[13px] text-metal-300">{c.necessaryHint}</span>
+      </span>
+      <input id={id('nec')} type="checkbox" checked disabled class="size-[22px] shrink-0 accent-yellow" />
+    </label>
+    <label for={id('aud')} class="flex cursor-pointer items-center justify-between gap-4 border-t border-metal-700 py-3">
+      <span class="flex flex-col gap-0.5">
+        <span class="text-sm font-bold text-white">{c.analytics}</span>
+        <span class="text-[13px] text-metal-300">{c.analyticsHint}</span>
+      </span>
+      <input id={id('aud')} type="checkbox" class="size-[22px] shrink-0 cursor-pointer accent-yellow" data-consent="analytics" />
+    </label>
+    <label for={id('mkt')} class="flex cursor-pointer items-center justify-between gap-4 border-t border-metal-700 py-3">
+      <span class="flex flex-col gap-0.5">
+        <span class="text-sm font-bold text-white">{c.marketing}</span>
+        <span class="text-[13px] text-metal-300">{c.marketingHint}</span>
+      </span>
+      <input id={id('mkt')} type="checkbox" class="size-[22px] shrink-0 cursor-pointer accent-yellow" data-consent="marketing" />
+    </label>
+  </fieldset>
+
+  <div class="flex flex-wrap gap-2.5">
+    <button type="button" class="btn grow rounded-full bg-yellow px-5 py-3 text-[15px] text-ink" data-cookie-accept>{c.acceptAll}</button>
+    <button type="button" class="btn grow rounded-full border border-metal-300 bg-transparent px-5 py-3 text-[15px] font-semibold text-white" data-cookie-reject>{c.rejectAll}</button>
+    <button type="button" class="tap cursor-pointer bg-transparent px-2 py-3 text-[15px] font-semibold text-metal-200 underline underline-offset-4 hover:text-white" aria-expanded="false" data-cookie-customise>{c.customise}</button>
+    <button type="button" class="btn w-full rounded-full border border-yellow bg-transparent px-5 py-3 text-[15px] text-yellow" hidden data-cookie-save>{c.save}</button>
+  </div>
+</div>
+
+<p class="sr-only" role="status" aria-live="polite" data-cookie-status data-saved={c.saved}></p>
+
+<style>
+  .cookie-banner:not([hidden]) {
+    animation: afUp 0.7s var(--ease-out) 0.6s both;
+  }
+  .cookie-banner.no-delay:not([hidden]) {
+    animation-delay: 0s;
+  }
+  .cookie-banner:focus {
+    outline: none;
+  }
+</style>
+
+<script>
+  import { initConsent } from '../../scripts/consent';
+  initConsent();
+</script>

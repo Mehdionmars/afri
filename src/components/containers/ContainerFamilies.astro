@@ -1,0 +1,84 @@
+---
+/** Les cinq familles de conteneurs : silhouette, usage, point de vigilance. */
+import { families, formats, sideView, type Family } from '../../lib/containers';
+import { colon, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang).containersPage;
+const S = 30; // px par mètre : toutes les cartes à la même échelle (20 pieds)
+const cards = families.map((family) => {
+  const members = formats.filter((f) => f.family === family);
+  const sample = members[0];
+  const w = Math.round(sample.ext[0] * S);
+  const h = Math.round(sample.ext[2] * S);
+  return { family, svg: sideView(sample, S), w, h, words: t.families[family as Family] };
+});
+---
+
+<ul class="m-0 grid list-none gap-5 p-0 md:grid-cols-2 xl:grid-cols-3" role="list">
+  {
+    cards.map((card, i) => (
+      <li class="family reveal lift flex flex-col overflow-hidden rounded-panel bg-metal-100" style={`--i:${i % 3}`}>
+        <div class="drawing" aria-hidden="true">
+          <svg viewBox={`-14 -22 ${card.w + 28} ${card.h + 34}`} focusable="false">
+            <line x1="-14" x2={card.w + 14} y1={card.h + 1} y2={card.h + 1} stroke="rgba(15, 35, 64,.25)" stroke-width="1.5" />
+            <g set:html={card.svg} />
+          </svg>
+        </div>
+        <div class="flex flex-1 flex-col gap-4 p-6 sm:p-7">
+          <h3 class="m-0 text-h3-lg">{card.words.name}</h3>
+          <p class="m-0 text-[16px] leading-[1.6] text-metal-600">{card.words.text}</p>
+          <div class="mt-auto flex flex-col gap-3 border-t border-navy/10 pt-4 text-[15px] leading-[1.5] text-metal-700">
+            <p class="m-0">
+              <strong class="font-semibold text-ink">
+                {t.familyLabels.uses}
+                {colon(lang)}
+              </strong>
+              {card.words.uses}
+            </p>
+            <p class="m-0">
+              <strong class="font-semibold text-ink">
+                {t.familyLabels.watch}
+                {colon(lang)}
+              </strong>
+              {card.words.watch}
+            </p>
+          </div>
+        </div>
+      </li>
+    ))
+  }
+  <li class="family-cta reveal flex flex-col justify-between gap-6 rounded-panel bg-navy p-7 text-white" style="--i:2">
+    <p class="m-0 text-[clamp(1.25rem,1.1rem+0.5vw,1.5rem)] font-medium leading-snug">{t.compareLead}</p>
+    <span class="flex flex-wrap gap-3">
+      <a href="#comparateur" class="btn bg-yellow px-5 py-3 text-[15px] text-ink">{t.compareTitle}</a>
+      <a href="#calculateur" class="btn border border-metal-600 px-5 py-3 text-[15px] font-medium text-white hover:border-metal-300">{t.calcTitle}</a>
+    </span>
+  </li>
+</ul>
+
+<style>
+  .drawing {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 34px 28px 18px;
+    background:
+      linear-gradient(180deg, #f5f6f8 0%, #eef0f2 100%);
+    border-bottom: 1px solid rgba(15, 35, 64, 0.08);
+  }
+  .drawing svg {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    overflow: visible;
+    transition: translate 0.45s var(--ease-out);
+  }
+  .family:hover .drawing svg {
+    translate: 0 -4px;
+  }
+</style>

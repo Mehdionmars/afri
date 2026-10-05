@@ -1,0 +1,101 @@
+---
+/**
+ * En-tête des pages intérieures : la photo de la page en fond, sur toute la largeur,
+ * sous un voile noir et bleu marine côté texte ; H1, introduction et boutons en blanc.
+ * La photo est l'image principale de la page : chargée en priorité.
+ */
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  lead: string;
+  photo: string;
+  photoAlt: string;
+  /** Bouton secondaire (facultatif). */
+  secondary?: { label: string; href: string };
+}
+
+const { lang, title, lead, photo, photoAlt, secondary } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="intro" class="page-hero on-dark relative isolate flex overflow-hidden bg-navy px-[max(16px,5%)]" aria-labelledby="page-title">
+  {/* Photo de fond sous un voile sombre : une version légère suffit. Sur un écran en hauteur,
+      elle couvre surtout la hauteur, d'où une largeur demandée en vh. */}
+  <div class="backdrop">
+    <PhotoSlot
+      photo={photo}
+      alt={photoAlt}
+      placeholder=""
+      sizes="(orientation: portrait) 85vh, 100vw"
+      widths={[640, 960, 1280, 1600, 2000]}
+      quality={50}
+      loading="eager"
+      fetchpriority="high"
+      imgClass="hero-img absolute inset-0 size-full object-cover"
+    />
+  </div>
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="relative mx-auto flex w-full max-w-page items-end lg:items-center">
+    <div class="flex max-w-[640px] flex-col gap-6">
+      <h1 id="page-title" class="af-in af-d1 m-0 text-display text-white">{title}</h1>
+      <p class="af-in af-d2 m-0 max-w-[54ch] text-lead text-metal-200">{lead}</p>
+      <div class="af-in af-d3 flex flex-wrap items-center gap-3">
+        <Button href="#contact" size="lg">
+          {t.hero.ctaPrimary}
+          <Icon name="arrow" size={18} stroke={2.2} />
+        </Button>
+        {
+          secondary && (
+            <Button href={secondary.href} variant="outline" size="lg" class="border-white/60 hover:border-white">
+              {secondary.label}
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    min-height: max(560px, min(88svh, 860px));
+    padding-top: calc(var(--header-h) + 64px);
+    padding-bottom: 72px;
+  }
+  @media (min-width: 1024px) {
+    .page-hero {
+      padding-bottom: 96px;
+    }
+  }
+  .backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .backdrop :global(.hero-img) {
+    animation: afSettle 1.8s var(--ease-out) both;
+  }
+  /* Voile dans la charte (noir et bleu marine) : plus dense sous le texte (en bas sur téléphone,
+     à gauche sur ordinateur), et un peu en haut pour la barre de navigation. */
+  .veil {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(11, 11, 12, 0.72) 0%, rgba(11, 11, 12, 0.4) 90px, rgba(11, 11, 12, 0) 220px),
+      linear-gradient(0deg, rgba(11, 11, 12, 0.88) 0%, rgba(15, 35, 64, 0.72) 45%, rgba(15, 35, 64, 0.35) 100%);
+  }
+  @media (min-width: 1024px) {
+    .veil {
+      background:
+        linear-gradient(180deg, rgba(11, 11, 12, 0.65) 0%, rgba(11, 11, 12, 0.35) 90px, rgba(11, 11, 12, 0) 220px),
+        linear-gradient(90deg, rgba(11, 11, 12, 0.86) 0%, rgba(15, 35, 64, 0.74) 38%, rgba(15, 35, 64, 0.28) 68%, rgba(15, 35, 64, 0.08) 100%);
+    }
+  }
+</style>

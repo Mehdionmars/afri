@@ -1,0 +1,127 @@
+---
+/**
+ * Page « Conteneurs » : le guide complet. Conteneurs secs en 3D, cinq familles,
+ * comparateur et tableau, calculateur, états (neuf, CW, WWT, en l'état), questions.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteRail from '../layout/RouteRail.astro';
+import PageHero from '../sections/PageHero.astro';
+import Faq from '../sections/Faq.astro';
+import Contact from '../sections/Contact.astro';
+import ContainerPicker from '../containers/ContainerPicker.astro';
+import ContainerFamilies from '../containers/ContainerFamilies.astro';
+import ContainerCompare from '../containers/ContainerCompare.astro';
+import ContainerTable from '../containers/ContainerTable.astro';
+import ContainerCalculator from '../containers/ContainerCalculator.astro';
+import ContainerStates from '../containers/ContainerStates.astro';
+import { formats } from '../../lib/containers';
+import { routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.containersPage;
+const short: Record<string, string> = { '20dc': "20' DC", '40dc': "40' DC", '40hc': "40' HC", '45hc': "45' HC" };
+const specs = formats
+  .filter((f) => f.family === 'dry')
+  .map((f) => ({
+    id: f.id,
+    label: short[f.id],
+    name: p.formats[f.id as keyof typeof p.formats],
+    type: `${p.families.dry.name} · ${f.ft} ${lang === 'fr' ? 'pieds' : 'ft'}`,
+    lengthM: f.int![0],
+    widthM: f.int![1],
+    heightM: f.int![2],
+    volumeM3: f.volume!,
+    payloadKg: f.payload,
+    palletsEuro: f.pallets!,
+  }));
+const nav = [
+  { id: 'en-3d', label: p.nav.picker },
+  { id: 'familles', label: p.nav.families },
+  { id: 'comparateur', label: p.nav.compare },
+  { id: 'calculateur', label: p.nav.calculator },
+  { id: 'etats', label: p.nav.states },
+  { id: 'questions', label: p.nav.faq },
+];
+---
+
+<BaseLayout lang={lang} title={p.meta.title} description={p.meta.description} alternates={routes.containers} current="containers" hasContact>
+  <RouteRail lang={lang} stops={[{ id: 'intro', label: t.nav.containers }, ...nav, { id: 'contact', label: t.nav.contact }]} />
+  <PageHero lang={lang} title={p.title} lead={p.lead} photo="page-conteneurs" photoAlt={p.photoAlt} />
+
+  <section id="en-3d" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="en-3d-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="en-3d-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{p.pickerTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.pickerLead}</p>
+      </div>
+      <ContainerPicker lang={lang} specs={specs} />
+    </div>
+  </section>
+
+  <section id="familles" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="familles-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="familles-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{p.familiesTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.familiesLead}</p>
+      </div>
+      <ContainerFamilies lang={lang} />
+    </div>
+  </section>
+
+  <section id="comparateur" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="comparateur-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="comparateur-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{p.compareTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.compareLead}</p>
+      </div>
+      <ContainerCompare lang={lang} />
+      <div class="flex flex-col gap-5 border-t border-navy/10 pt-12">
+        <h3 class="m-0 text-h3-lg">{p.tableTitle}</h3>
+        <ContainerTable lang={lang} />
+        <p class="m-0 flex items-start gap-2 text-[14px] text-metal-600">
+          <span class="label-mono mt-0.5 rounded bg-metal-100 px-1.5 py-0.5 text-metal-600">i</span>
+          {p.note}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculateur" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="calculateur-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="calculateur-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{p.calcTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.calcLead}</p>
+      </div>
+      <ContainerCalculator lang={lang} />
+    </div>
+  </section>
+
+  <section id="etats" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="etats-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="etats-title" class="reveal m-0 max-w-[20ch] text-h2-xl">{p.statesTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[42ch] text-lead text-metal-600 lg:justify-self-end">{p.statesLead}</p>
+      </div>
+      <ContainerStates lang={lang} />
+    </div>
+  </section>
+
+  <Faq lang={lang} items={p.faq} />
+  <Contact lang={lang} />
+</BaseLayout>
+

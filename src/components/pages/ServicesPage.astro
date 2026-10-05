@@ -1,0 +1,135 @@
+---
+/** Page « Services » : les six services en cartes photo, chacune mène à sa page. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteRail from '../layout/RouteRail.astro';
+import PageHero from '../sections/PageHero.astro';
+import Contact from '../sections/Contact.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { routes, serviceIds, serviceRoute, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const p = t.servicesPage;
+const services = t.services.items.map((item, i) => {
+  const id = serviceIds[i];
+  return { ...item, href: serviceRoute(id)[lang], summary: t.serviceSummaries[id], alt: t.serviceDetails[id].photoAlt };
+});
+---
+
+<BaseLayout lang={lang} title={p.meta.title} description={p.meta.description} alternates={routes.services} current="services" hasContact>
+  <RouteRail
+    lang={lang}
+    stops={[
+      { id: 'intro', label: t.nav.services },
+      { id: 'liste', label: p.listTitle },
+      { id: 'mission-complete', label: p.bundleTitle },
+      { id: 'contact', label: t.nav.contact },
+    ]}
+  />
+  <PageHero
+    lang={lang}
+    title={p.title}
+    lead={p.lead}
+    photo="page-services"
+    photoAlt={p.photoAlt}
+    secondary={{ label: t.serviceLabels.all, href: '#liste' }}
+  />
+
+  <section id="liste" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="liste-title">
+    <div class="mx-auto flex max-w-page flex-col gap-12">
+      <div class="grid items-end gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h2 id="liste-title" class="reveal m-0 text-h2-xl">{p.listTitle}</h2>
+        </div>
+        <p class="m-0 max-w-[44ch] text-lead text-metal-600 lg:justify-self-end">{p.listLead}</p>
+      </div>
+
+      <ul class="m-0 grid list-none gap-x-6 gap-y-12 p-0 sm:grid-cols-2 lg:grid-cols-3" role="list">
+        {
+          services.map((service, i) => (
+            <li class="reveal" style={`--i:${i % 3}`}>
+              <a href={service.href} class="card group flex h-full flex-col gap-5 text-ink no-underline">
+                <span class="photo relative block aspect-[4/3] overflow-hidden rounded-card bg-metal-200">
+                  <PhotoSlot
+                    photo={`services-${service.id}`}
+                    alt=""
+                    placeholder={service.photo}
+                    sizes="(min-width: 1240px) 400px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 100vw"
+                    widths={[400, 640, 800, 1200]}
+                    imgClass="card-img absolute inset-0 size-full object-cover"
+                    placeholderClass="placeholder-photo absolute inset-0 text-[14px] text-metal-700"
+                  />
+                </span>
+                <span class="flex flex-1 flex-col gap-2">
+                  <h3 class="m-0 text-h3-lg">{service.title}</h3>
+                  <span class="text-[16px] leading-[1.6] text-metal-600">{service.summary}</span>
+                  <span class="more mt-auto inline-flex items-center gap-2 pt-3 text-[15px] font-semibold">
+                    {t.pages.homeLinks.service}
+                    <Icon name="arrow" size={18} stroke={2} />
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="mission-complete" class="on-dark relative isolate overflow-hidden bg-navy px-[max(16px,5%)] py-20 sm:py-24" aria-labelledby="mission-complete-title">
+    <div class="mx-auto grid max-w-page items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+      <div class="flex flex-col gap-5">
+        <h2 id="mission-complete-title" class="reveal m-0 max-w-[20ch] text-h2-lg text-white">{p.bundleTitle}</h2>
+        <p class="m-0 max-w-[54ch] text-lead text-metal-200">{p.bundleText}</p>
+        <div>
+          <Button href={routes.method[lang]} size="lg">
+            {p.bundleCta}
+            <Icon name="arrow" size={18} stroke={2.2} />
+          </Button>
+        </div>
+      </div>
+      <ol class="steps m-0 grid list-none gap-3 p-0" role="list">
+        {
+          t.method.steps.map((step, i) => (
+            <li class="reveal flex items-center gap-4 rounded-tile bg-white/5 px-5 py-4" style={`--i:${i}`}>
+              <span class="text-[18px] font-medium text-white">{step.title}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Contact lang={lang} />
+</BaseLayout>
+
+<style>
+  .card :global(.card-img) {
+    transition: scale 0.8s var(--ease-out);
+  }
+  .card:hover :global(.card-img),
+  .card:focus-visible :global(.card-img) {
+    scale: 1.05;
+  }
+  .more :global(svg) {
+    transition: translate 0.3s var(--ease-out);
+  }
+  .card:hover .more :global(svg) {
+    translate: 4px 0;
+  }
+  .card:hover h3 {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+    text-decoration-color: #ffc342;
+  }
+  .steps li {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+</style>

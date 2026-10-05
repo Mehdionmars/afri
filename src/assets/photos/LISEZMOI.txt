@@ -1,0 +1,31 @@
+Photos du site. Le nom du fichier décide de l'emplacement :
+
+  services-etude-de-marche.jpg   Service « Étude de marché » (accueil, page Services, page du service)
+  services-partenaires.jpg       Service « Recherche de partenaires »
+  services-douane.jpg            Service « Douane et réglementation »
+  services-logistique.jpg        Service « Logistique internationale »
+  services-contrats.jpg          Service « Contrats et paiements »
+  services-formation.jpg         Service « Formation export »
+  methode-diagnostic.jpg         Étape 1 de la méthode (accueil et page Méthode)
+  methode-strategie.jpg          Étape 2
+  methode-mise-en-oeuvre.jpg     Étape 3
+  methode-suivi.jpg              Étape 4
+  pourquoi.jpg                   Section « Pourquoi nous » et en-tête de sa page
+  page-services.jpg              En-tête de la page Services
+  page-methode.jpg               En-tête de la page Méthode
+  page-conteneurs.jpg            En-tête de la page Conteneurs
+  page-resultats.jpg             En-tête de la page Résultats
+  mission-agro.jpg               Mission type 1 (page Résultats)
+  mission-artisanat.jpg          Mission type 2
+  mission-industrie.jpg          Mission type 3
+  etat-neuf.jpg                  Conteneur neuf (page Conteneurs, section États)
+  etat-occasion.jpg              Conteneur usé (page Conteneurs, section États)
+
+Les photos actuelles sont sous licence libre (CC0, CC BY, CC BY-SA). Leurs auteurs et
+licences sont dans src/content/photo-credits.json et s'affichent dans les mentions légales.
+Pour remplacer une photo : déposez votre fichier sous le même nom, puis supprimez ou
+corrigez son entrée dans photo-credits.json.
+
+Formats acceptés : jpg, jpeg, png, webp, avif. Taille conseillée : 1600 px de large ou plus.
+Astro les convertit automatiquement en AVIF et WebP, en plusieurs tailles.
+Tant qu'une photo manque, un texte « [Photo : …] » reste affiché à sa place.
