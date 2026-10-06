@@ -1,0 +1,131 @@
+---
+/**
+ * 5. Méthode : section épinglée (100vh), photo plein écran sous un voile bleu marine à 80 %.
+ * Label jaune, grand titre blanc révélé ligne par ligne, puis les quatre étapes (titre jaune,
+ * texte blanc) qui apparaissent une par une (site-motion.ts). Sous 768 px : sans épinglage.
+ */
+import PhotoSlot from '../ui/PhotoSlot.astro';
+import { routes, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.method;
+---
+
+<section id="methode" class="method on-dark" aria-labelledby="methode-title" data-method>
+  <div class="method-bg" aria-hidden="true">
+    <PhotoSlot
+      photo="page-resultats"
+      alt=""
+      placeholder=""
+      sizes="100vw"
+      widths={[800, 1280, 1920]}
+      quality={55}
+      imgClass="absolute inset-0 size-full object-cover"
+    />
+    <span class="method-veil"></span>
+  </div>
+
+  <div class="method-inner mx-auto max-w-page">
+    <p class="label" data-method-fade>{t.eyebrow}</p>
+    <h2 id="methode-title" class="method-title" data-method-title>{t.title}</h2>
+    <ol class="method-cols" role="list">
+      {
+        t.steps.map((step) => (
+          <li class="method-col" data-method-col>
+            <h3 class="method-col-title">{step.title}</h3>
+            <p class="method-col-text">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <a href={routes.method[lang]} class="link-u self-start text-base font-medium text-white" data-method-fade>{all.pages.homeLinks.method} <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .method {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(96px, 14vh, 140px) max(16px, 5%);
+    color: #fff;
+  }
+  .method-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  /* Voile bleu marine à 80 % : le texte blanc reste lisible sur toute la photo. */
+  .method-veil {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 35, 64, 0.8);
+  }
+  .method-inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vh, 40px);
+  }
+  .method-title {
+    max-width: 15ch;
+    margin: 0;
+    font-size: clamp(40px, 6vw, 96px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: #fff;
+  }
+  .method-cols {
+    display: grid;
+    gap: 32px;
+    margin: clamp(8px, 2vh, 24px) 0 0;
+    padding: 0;
+  }
+  .method-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .method-col-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #ffc342;
+  }
+  .method-col-text {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #fff;
+  }
+  @media (min-width: 640px) {
+    .method-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 768px) {
+    .method {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: calc(var(--header-h) + 24px);
+    }
+    .method-inner {
+      width: 100%;
+    }
+  }
+  @media (min-width: 1024px) {
+    .method-cols {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 40px;
+    }
+  }
+</style>

@@ -29,6 +29,7 @@ Your data is only accessible to the AFRIEXPORT CONSULTING team. It passes throug
 
 - **Web3Forms**, which forwards form messages to our inbox;
 - **[hosting provider name]**, which hosts the website;
+- **cdnjs (Cloudflare)** and **jsDelivr**, which serve the website's animation libraries (GSAP, Lenis): they receive the visitor's IP address in order to deliver these files;
 - **Google (Google Analytics)**, only if you accept analytics.
 
 Some of these providers may process data outside Morocco. [To be checked: transfer formalities with the CNDP.]

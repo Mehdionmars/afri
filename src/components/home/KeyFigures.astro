@@ -1,0 +1,169 @@
+---
+/**
+ * 2. Chiffres clés : section épinglée (100vh) ; la rangée de six grands chiffres, entre deux
+ * filets bleu marine, glisse vers la gauche pendant le défilement ; deux losanges jaunes
+ * traversent en sens inverse (site-motion.ts). Sous 768 px : grille de deux colonnes, sans épinglage.
+ *
+ * Les quatre premiers chiffres viennent de src/content/site.json (« stats ») : ils sont FICTIFS
+ * et doivent être remplacés par les vrais chiffres du client. Les deux derniers décrivent le site :
+ * six services, onze formats de conteneurs dans le guide.
+ */
+import { formatNumber, routes, site, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.home.figures;
+const { stats } = site;
+const pct = lang === 'fr' ? ' %' : '%';
+const plus = '+ ';
+const values = [
+  `${plus}${formatNumber(lang, stats.partnerships)}`,
+  `${formatNumber(lang, stats.fasterFilesPercent)}${pct}`,
+  formatNumber(lang, stats.countries),
+  `${plus}${formatNumber(lang, stats.growthPercent)}${pct}`,
+  '6',
+  '11',
+];
+const items = values.map((value, i) => ({ value, caption: t.captions[i] }));
+---
+
+<section id="resultats" class="figures on-light" aria-labelledby="resultats-title" data-figures>
+  <span class="diamond figures-diamond" aria-hidden="true" data-figures-diamond></span>
+  <span class="diamond figures-diamond-2" aria-hidden="true" data-figures-diamond></span>
+
+  <div class="px-[max(16px,5%)]">
+    <div class="figures-head mx-auto max-w-page">
+      <div class="flex flex-col gap-5">
+        <p class="label reveal">{t.label}</p>
+        <h2 id="resultats-title" class="reveal m-0 max-w-[16ch] text-h2-xl">{all.results.title}</h2>
+      </div>
+      <a href={routes.results[lang]} class="link-u reveal self-start text-base font-medium lg:self-end">{all.pages.homeLinks.results} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+  <div class="figures-viewport">
+    <ul class="figures-track" role="list" data-figures-track>
+      {
+        items.map((item) => (
+          <li class="figure">
+            <span class="figure-value">{item.value}</span>
+            <span class="figure-caption">{item.caption}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .figures {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 7vh, 80px);
+    padding: clamp(80px, 12vh, 120px) 0;
+  }
+  .figures-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  /* Deux filets bleu marine, en haut et en bas de la rangée. */
+  .figures-viewport {
+    border-top: 1px solid rgba(15, 35, 64, 0.35);
+    border-bottom: 1px solid rgba(15, 35, 64, 0.35);
+  }
+
+  /* ---------- Téléphone : grille de deux colonnes ---------- */
+  .figures-track {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    padding: 0 max(16px, 5%);
+    list-style: none;
+  }
+  .figure {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 28px 0;
+  }
+  .figure:nth-child(odd) {
+    padding-right: 12px;
+  }
+  .figure:nth-child(even) {
+    padding-left: 12px;
+    border-left: 1px solid rgba(15, 35, 64, 0.15);
+  }
+  .figure:nth-child(n + 3) {
+    border-top: 1px solid rgba(15, 35, 64, 0.15);
+  }
+  .figure-value {
+    font-size: clamp(2.75rem, 13vw, 4.5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    color: #0f2340;
+  }
+  .figure-caption {
+    max-width: 18ch;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #3f4650;
+  }
+
+  /* ---------- Ordinateur : une rangée de six chiffres, ~12vw, légende alignée à droite ---------- */
+  @media (min-width: 768px) {
+    .figures {
+      justify-content: center;
+      min-height: 100vh;
+      padding: calc(var(--header-h) + 24px) 0 48px;
+    }
+    .figures-track {
+      display: flex;
+      width: max-content;
+      gap: 8vw;
+      padding: clamp(24px, 4vh, 48px) max(max(16px, 5vw), calc((100vw - 1240px) / 2));
+    }
+    .figure,
+    .figure:nth-child(odd),
+    .figure:nth-child(even),
+    .figure:nth-child(n + 3) {
+      align-items: flex-end;
+      padding: 0;
+      border: 0;
+    }
+    .figure-value {
+      font-size: min(12vw, 24vh);
+    }
+    .figure-caption {
+      max-width: 22ch;
+      font-size: 15px;
+      text-align: right;
+    }
+  }
+
+  /* Losanges jaunes qui traversent en sens inverse de la rangée. */
+  .figures-diamond {
+    z-index: -1;
+    left: -18vw;
+    top: 38%;
+    width: clamp(220px, 26vw, 420px);
+    opacity: 0.5;
+  }
+  .figures-diamond-2 {
+    z-index: -1;
+    left: -6vw;
+    top: 66%;
+    width: clamp(90px, 10vw, 160px);
+    opacity: 0.4;
+  }
+</style>

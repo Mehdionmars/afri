@@ -15,11 +15,13 @@ interface Props {
   lead: string;
   photo: string;
   photoAlt: string;
+  /** Petit label au-dessus du titre. */
+  label?: string;
   /** Bouton secondaire (facultatif). */
   secondary?: { label: string; href: string };
 }
 
-const { lang, title, lead, photo, photoAlt, secondary } = Astro.props;
+const { lang, title, lead, photo, photoAlt, label, secondary } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -43,7 +45,8 @@ const t = useTranslations(lang);
 
   <div class="relative mx-auto flex w-full max-w-page items-end lg:items-center">
     <div class="flex max-w-[640px] flex-col gap-6">
-      <h1 id="page-title" class="af-in af-d1 m-0 text-display text-white">{title}</h1>
+      {label && <p class="label af-in">{label}</p>}
+      <h1 id="page-title" class="m-0 text-display text-white" data-split-load>{title}</h1>
       <p class="af-in af-d2 m-0 max-w-[54ch] text-lead text-metal-200">{lead}</p>
       <div class="af-in af-d3 flex flex-wrap items-center gap-3">
         <Button href="#contact" size="lg">
@@ -64,7 +67,8 @@ const t = useTranslations(lang);
 
 <style>
   .page-hero {
-    min-height: max(560px, min(88svh, 860px));
+    /* La photo occupe tout l'écran à l'arrivée, sans bande blanche en dessous. */
+    min-height: max(560px, 100svh);
     padding-top: calc(var(--header-h) + 64px);
     padding-bottom: 72px;
   }

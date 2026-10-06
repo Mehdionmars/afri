@@ -60,6 +60,7 @@ const serviceLd = {
     ]}
   />
   <PageHero
+    label={t.sectionLabels.service.hero}
     lang={lang}
     title={d.h1}
     lead={d.lead}
@@ -71,6 +72,7 @@ const serviceLd = {
     <div class="mx-auto grid max-w-page items-start gap-12 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:gap-16">
       <div class="flex flex-col gap-10">
         <div class="flex flex-col gap-4">
+          <p class="label reveal">{t.sectionLabels.service.what}</p>
           <h2 id="what-title" class="reveal m-0 text-h2-xl">{labels.what}</h2>
         </div>
         <ol class="m-0 list-none border-b border-navy/15 p-0" role="list">
@@ -113,6 +115,7 @@ const serviceLd = {
   <section id="deroule" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="deroule-title">
     <div class="mx-auto flex max-w-page flex-col gap-14 lg:gap-20">
       <div class="flex flex-col gap-4">
+        <p class="label reveal">{t.sectionLabels.service.steps}</p>
         <h2 id="deroule-title" class="reveal m-0 max-w-[18ch] text-h2-xl">{labels.steps}</h2>
       </div>
       <ol class="route-steps m-0 grid list-none gap-10 p-0 pl-12 lg:grid-cols-4 lg:gap-8 lg:pl-0 lg:pt-16" role="list">
@@ -143,6 +146,7 @@ const serviceLd = {
   <section id="livrables" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="livrables-title">
     <div class="mx-auto flex max-w-page flex-col gap-12">
       <div class="flex flex-col gap-4">
+        <p class="label reveal">{t.sectionLabels.service.deliverables}</p>
         <h2 id="livrables-title" class="reveal m-0 text-h2-xl">{labels.deliverables}</h2>
       </div>
       <ul class="m-0 grid list-none gap-5 p-0 sm:grid-cols-2 lg:grid-cols-4" role="list">
@@ -166,6 +170,7 @@ const serviceLd = {
   <section id="autres-services" class="on-light bg-white px-[max(16px,5%)] py-20 sm:py-24" aria-labelledby="autres-title">
     <div class="mx-auto flex max-w-page flex-col gap-10">
       <div class="flex flex-wrap items-end justify-between gap-6">
+        <p class="label reveal">{t.sectionLabels.service.related}</p>
         <h2 id="autres-title" class="reveal m-0 text-h2-lg">{labels.related}</h2>
         <a href={routes.services[lang]} class="link-u text-base font-semibold text-ink">
           {labels.all} <span aria-hidden="true">→</span>

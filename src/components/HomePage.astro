@@ -1,13 +1,19 @@
 ---
+/**
+ * Accueil, dans l'ordre : intro, chiffres clés, pourquoi nous, bandeau des atouts, méthode,
+ * services, conteneurs (parallaxe), engagements, puis la demande de devis.
+ * Animations : src/scripts/site-motion.ts (GSAP + ScrollTrigger + Lenis).
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WorldMapSprite from './three/WorldMapSprite.astro';
 import RouteRail from './layout/RouteRail.astro';
-import Hero from './sections/Hero.astro';
-import Services from './sections/Services.astro';
-import Method from './sections/Method.astro';
-import Why from './sections/Why.astro';
-import Containers from './sections/Containers.astro';
-import Results from './sections/Results.astro';
+import Intro from './home/Intro.astro';
+import KeyFigures from './home/KeyFigures.astro';
+import People from './home/People.astro';
+import ValuesBand from './home/ValuesBand.astro';
+import MethodPinned from './home/MethodPinned.astro';
+import ServicesList from './home/ServicesList.astro';
+import ParallaxImages from './home/ParallaxImages.astro';
+import Commitments from './home/Commitments.astro';
 import Contact from './sections/Contact.astro';
 import { routes, useTranslations, type Lang } from '../i18n/utils';
 
@@ -20,13 +26,14 @@ const t = useTranslations(lang);
 ---
 
 <BaseLayout lang={lang} title={t.meta.title} description={t.meta.description} alternates={routes.home} isHome>
-  <WorldMapSprite />
   <RouteRail lang={lang} />
-  <Hero lang={lang} />
-  <Services lang={lang} />
-  <Method lang={lang} />
-  <Why lang={lang} />
-  <Containers lang={lang} />
-  <Results lang={lang} />
+  <Intro lang={lang} />
+  <KeyFigures lang={lang} />
+  <People lang={lang} />
+  <ValuesBand lang={lang} />
+  <MethodPinned lang={lang} />
+  <ServicesList lang={lang} />
+  <ParallaxImages lang={lang} />
+  <Commitments lang={lang} />
   <Contact lang={lang} />
 </BaseLayout>

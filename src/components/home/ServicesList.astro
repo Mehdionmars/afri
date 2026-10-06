@@ -1,0 +1,139 @@
+---
+/**
+ * 6. Services : à gauche, le titre épinglé pendant que la liste défile à droite (à partir de 1024 px).
+ * Six lignes séparées par des filets : un badge carré jaune avec l'icône du service, le titre,
+ * le résumé et le lien vers la page du service. À la fin, la section s'efface (site-motion.ts).
+ */
+import Icon, { type IconName } from '../ui/Icon.astro';
+import { routes, serviceIds, serviceRoute, useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.services;
+const icons: Record<string, IconName> = {
+  'etude-de-marche': 'chart',
+  partenaires: 'users',
+  douane: 'doc',
+  logistique: 'truck',
+  contrats: 'shield',
+  formation: 'cap',
+};
+const items = t.items.map((item, i) => {
+  const id = serviceIds[i];
+  return { title: item.title, summary: all.serviceSummaries[id], href: serviceRoute(id)[lang], icon: icons[id] ?? 'globe' };
+});
+---
+
+<section id="services" class="services on-light px-[max(16px,5%)]" aria-labelledby="services-title" data-services>
+  <div class="services-inner mx-auto max-w-page" data-services-inner>
+    <div class="services-left" data-services-left>
+      <p class="label reveal">{all.home.services.label}</p>
+      <h2 id="services-title" class="reveal m-0 max-w-[12ch] text-h2-xl">{t.subtitle}</h2>
+      <a href={routes.services[lang]} class="link-u reveal self-start text-base font-medium">{all.pages.homeLinks.services} <span aria-hidden="true">→</span></a>
+    </div>
+
+    <ul class="services-list" role="list">
+      {
+        items.map((item) => (
+          <li class="reveal">
+            <a href={item.href} class="service">
+              <span class="badge" aria-hidden="true">
+                <Icon name={item.icon} size={26} stroke={1.6} />
+              </span>
+              <span class="service-body">
+                <span class="service-title">{item.title}</span>
+                <span class="service-text">{item.summary}</span>
+              </span>
+              <span class="service-arrow" aria-hidden="true">
+                <Icon name="arrow" size={22} stroke={1.6} />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding-block: clamp(96px, 14vh, 160px);
+  }
+  .services-inner {
+    display: grid;
+    gap: 48px;
+  }
+  .services-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .services-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid rgba(15, 35, 64, 0.25);
+  }
+  .services-list li {
+    border-bottom: 1px solid rgba(15, 35, 64, 0.25);
+  }
+  .service {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 22px;
+    padding: 30px 0;
+    color: #0f2340;
+    text-decoration: none;
+  }
+  /* Badge carré générique : jaune dégradé, icône bleu marine. */
+  .badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    background: linear-gradient(45deg, #ffc342, #ffd677);
+    color: #0f2340;
+  }
+  .service-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .service-title {
+    font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .service-text {
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #3f4650;
+  }
+  .service-arrow {
+    align-self: center;
+    transition: translate 0.35s var(--ease-out);
+  }
+  .service:hover .service-arrow,
+  .service:focus-visible .service-arrow {
+    translate: 6px 0;
+  }
+  .service:hover .service-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+  }
+  @media (min-width: 1024px) {
+    .services-inner {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+      gap: 96px;
+    }
+  }
+</style>

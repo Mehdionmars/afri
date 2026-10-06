@@ -36,6 +36,7 @@ const commitmentIcons: IconName[] = ['users', 'clock', 'doc', 'shield'];
     ]}
   />
   <PageHero
+    label={p.eyebrow}
     lang={lang}
     title={p.title}
     lead={p.lead}
@@ -60,6 +61,7 @@ const commitmentIcons: IconName[] = ['users', 'clock', 'doc', 'shield'];
 
           <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-4">
+              <p class="label reveal" aria-hidden="true">{`${t.method.stepLabel} ${i + 1}`}</p>
               <h2 id={`${step.id}-title`} class="reveal m-0 text-h2-xl">
                 <span class="sr-only">
                   {t.method.stepLabel} {i + 1}
@@ -128,6 +130,7 @@ const commitmentIcons: IconName[] = ['users', 'clock', 'doc', 'shield'];
   <section id="engagements" class="on-dark bg-navy px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="engagements-title">
     <div class="mx-auto flex max-w-page flex-col gap-12">
       <div class="flex flex-col gap-4">
+        <p class="label reveal">{t.sectionLabels.method.commitments}</p>
         <h2 id="engagements-title" class="reveal m-0 max-w-[18ch] text-h2-xl text-white">{p.commitmentsTitle}</h2>
       </div>
       <ul class="m-0 grid list-none gap-px overflow-hidden rounded-card p-px sm:grid-cols-2 lg:grid-cols-4" role="list">

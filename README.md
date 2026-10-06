@@ -4,8 +4,8 @@ Site vitrine bilingue d'AFRIEXPORT CONSULTING, cabinet de conseil en import-expo
 Quinze pages par langue : l'accueil (une page qui défile, avec ancres), les pages Services (une par service), Méthode, Pourquoi nous, Conteneurs, Résultats, et les trois pages légales.
 
 - **Astro 7** (site 100 % statique) + **Tailwind CSS 4** + TypeScript
-- Aucun framework JavaScript côté client, seulement de petits scripts
-- Direction **cinématique et claire** (version 2, validée le 2 octobre 2026) : accueil où une vidéo avance au scroll, route maritime dans la marge, sélecteur de conteneurs interactif. Toutes les décisions sont dans le dossier de création : [docs/design-package.md](docs/design-package.md)
+- Animations : **GSAP 3 + ScrollTrigger** (cdnjs) et **Lenis** pour le défilement doux (jsDelivr), synchronisés ; aucun autre framework côté client
+- Direction **version 4** (6 octobre 2026) : fond clair, bleu marine, accent jaune, grotesque fine (Inter Tight), très grands titres, petits labels en capitales, losanges en dégradé jaune. Voir « Version 4 » plus bas et le dossier de création : [docs/design-package.md](docs/design-package.md)
 - Conteneurs 3D en CSS pur (`transform-style: preserve-3d`), sans bibliothèque
 - Maquette d'origine : `maquette/fr` et `maquette/en` (extraites de « AFRIEXPORT CONSULTING – Site web.html »)
 
@@ -29,22 +29,19 @@ Chaque page intérieure a la même structure : en-tête avec la photo de la page
 - **Page d'un service** : ce que nous faisons, pour qui, déroulé de la mission, livrables (présentés en étiquettes de fret), questions fréquentes, autres services.
 - **Méthode** : une section et une photo par étape (ce que nous faisons, ce que vous apportez, ce que vous recevez, durée indicative), nos engagements, questions.
 - **Pourquoi nous** : atouts détaillés, chiffre clé, réseau de partenaires, carte des routes depuis le Maroc, équipe (à fournir).
-- **Conteneurs** : conteneurs secs en 3D (dont le 45 pieds), cinq familles illustrées à l'échelle, **comparateur** (deux formats au choix, silhouettes à la même échelle, écarts ligne par ligne), tableau des 11 formats filtrable, **calculateur** « quel conteneur pour ma marchandise » (volume, poids ou palettes), **états** (neuf, Cargo Worthy, Wind and Watertight, en l'état) avec tableau comparatif et check-list d'achat, questions.
+- **Conteneurs** : conteneurs secs en 3D (dont le 45 pieds) sur fond blanc, **à faire tourner** au glissé (souris ou doigt, avec un peu d'élan), aux flèches du clavier ou en double-cliquant pour revenir de face ; **cinq familles avec un zoom sur chacune** : sur ordinateur, la séquence reste fixe pendant le défilement, chaque famille passe au premier plan puis le dessin zoome (net, en recadrant le SVG) sur le détail qui la distingue, avec un index pour aller à une famille ; sur téléphone, chaque dessin zoome quand on le fait défiler ; **comparateur** (deux formats au choix, silhouettes à la même échelle, écarts ligne par ligne), tableau des 11 formats filtrable, **calculateur** « quel conteneur pour ma marchandise » (volume, poids ou palettes), **états** (neuf, Cargo Worthy, Wind and Watertight, en l'état) avec tableau comparatif et check-list d'achat, questions.
 - **Résultats** : les quatre chiffres expliqués (ce qu'ils mesurent, comment), trois missions types illustrées, témoignages et secteurs (à fournir).
 
 ## Résultats mesurés
 
-Lighthouse, build de production, le 5 octobre 2026 (avec les photos) :
+Lighthouse, build de production, le 6 octobre 2026 (version 4 : GSAP, ScrollTrigger et Lenis depuis les CDN) :
 
 | Page | Performance | Accessibilité | Bonnes pratiques | SEO |
 |---|---|---|---|---|
-| `/fr/` mobile / ordinateur | 98 / 99 | 100 | 100 | 100 |
-| `/fr/conteneurs/` mobile / ordinateur | 99 / 100 | 100 | 100 | 100 |
-| `/fr/services/etude-de-marche/` mobile | 99 | 100 | 100 | 100 |
-| `/fr/methode/` mobile | 100 | 100 | 100 | 100 |
-| `/fr/pourquoi-nous/`, `/fr/resultats/`, `/en/services/` mobile | 99 | 100 | 100 | 100 |
+| `/fr/` mobile / ordinateur | 96 / 100 | 100 | 100 | 100 |
+| `/fr/methode/` mobile / ordinateur | 95 / 99 | 100 | 100 | 100 |
 
-LCP entre 1,5 et 2,1 s sur mobile simulé (0,4 s sur ordinateur), CLS 0 partout. La vidéo de l'accueil, quand elle sera branchée, n'est jamais téléchargée sur téléphone ; sur ordinateur, elle arrive en arrière-plan, derrière un anneau de chargement.
+LCP 2,5 s sur mobile simulé (0,6 s sur ordinateur), CLS inférieur à 0,005. Les trois bibliothèques (environ 135 Ko non compressés) sont en « defer » : elles ne bloquent pas l'affichage.
 
 ## Installation
 
@@ -128,32 +125,16 @@ La liste complète est aussi dans `src/assets/photos/LISEZMOI.txt`. Les textes a
 - `doorColor` : couleur des portes si elle diffère ; `x`, `y`, `z` : position dans la scène.
 - `<ContainerScene>` gère la perspective et l'animation (`spin`, `swing` ou `none`). Les animations s'arrêtent hors écran, onglet caché, et avec « mouvement réduit ».
 
-## L'accueil cinématique (vidéo au scroll)
+## Animations (GSAP + ScrollTrigger + Lenis)
 
-Tant qu'aucune vidéo n'est configurée, c'est la **scène dessinée en CSS** qui joue le film. Le conteneur jaune porte le sigle AFRIEXPORT ; il descend en 3D en se balançant, pivote pour se présenter de face et **se range dans la place vide du parc, exactement au format de ses voisins** (le parc est dessiné aux proportions réelles des 20 et 40 pieds, et le script mesure la place sur chaque écran). Le câble se détache et un peu de poussière se soulève à l'atterrissage.
+Les trois bibliothèques sont chargées dans `src/layouts/BaseLayout.astro` en scripts « defer », depuis cdnjs (GSAP 3.15.0, ScrollTrigger) et jsDelivr (Lenis 1.3.26), avec leur empreinte d'intégrité (SRI) : un fichier modifié sur le CDN serait refusé par le navigateur. Tout le mouvement du site est dans **`src/scripts/site-motion.ts`**, et **toutes les valeurs à régler sont regroupées en haut du fichier** (objet `CONFIG`) : amorti de Lenis, scrub, décalages, durées d'épinglage, vitesses de parallaxe.
 
-- Ordinateur : la descente suit le scroll.
-- Téléphone et tablette : il descend tout seul quand le parc arrive à l'écran.
-- « Mouvement réduit » ou sans JavaScript : il est directement à sa place.
-
-Quand la vidéo est branchée, elle prend le relais sur ordinateur : elle avance quand on descend et recule quand on remonte. Sur téléphone et avec « mouvement réduit », l'accueil reste fixe (scène dessinée, ou image de fin du film si elle est fournie).
-
-Le moteur (`src/scripts/hero-scrub.ts`) suit le standard du skill 10k websites : vidéo chargée entièrement en mémoire avec anneau de progression, lissage indépendant de la fréquence d'écran, une seule recherche à la fois dans la vidéo, cinq conditions d'accueil fixe identiques en CSS et en JS et réévaluées en direct, page complète même si la vidéo échoue. Il a été vérifié dans Chrome avec une vidéo de test.
-
-**Brancher la vidéo** (après validation du film) :
-
-1. Ré-encoder la vidéo validée avec une image clé toutes les 8 images (indispensable pour un défilement fluide), puis extraire l'affiche et l'image de fin :
-   ```bash
-   ffmpeg -i brut.mp4 -c:v libx264 -crf 18 -preset slow -g 8 -keyint_min 8 -pix_fmt yuv420p -movflags +faststart -an public/hero/hero-scrub.mp4
-   ffmpeg -i public/hero/hero-scrub.mp4 -frames:v 1 -q:v 2 public/hero/hero-poster.jpg
-   ffmpeg -sseof -0.1 -i public/hero/hero-scrub.mp4 -update 1 -frames:v 1 -q:v 2 public/hero/hero-ending.jpg
-   ```
-2. Renseigner `src/content/site.json` :
-   ```json
-   "heroVideo": { "src": "/hero/hero-scrub.mp4", "poster": "/hero/hero-poster.jpg", "ending": "/hero/hero-ending.jpg", "bytes": 6200000 }
-   ```
-   `bytes` est la taille réelle du fichier : elle sert à l'anneau de chargement si l'hébergeur ne l'indique pas.
-3. Régler les plages des trois bandes de texte (`data-a` / `data-b` dans `src/components/sections/Hero.astro`) et l'intensité des voiles sur les vraies images, puis vérifier la lisibilité sur l'image la plus défavorable de chaque bande.
+- **Lenis** lisse le défilement ; il est synchronisé avec ScrollTrigger (`lenis.on('scroll', ScrollTrigger.update)` et `gsap.ticker`). Les liens d'ancre passent par Lenis, avec la hauteur de l'en-tête en décalage.
+- **Sous 768 px** (`gsap.matchMedia`, l'équivalent actuel de `ScrollTrigger.matchMedia`) : ni épinglage, ni défilement horizontal ; les chiffres clés passent en grille de deux colonnes.
+- **Mouvement réduit** : ni Lenis, ni animation au scroll ; tout est visible tout de suite.
+- **Sans les CDN** (réseau bloqué) : le site reste complet et lisible, simplement sans animation.
+- Les apparitions jouent sur l'opacité (pas sur `visibility`) : liens et champs restent atteignables au clavier avant d'être apparus.
+- Pour mettre à jour une bibliothèque : changer la version dans l'URL **et** l'empreinte `integrity` (cdnjs l'affiche à côté de chaque fichier).
 
 ## Écran de chargement
 
@@ -168,7 +149,10 @@ Le moteur (`src/scripts/hero-scrub.ts`) suit le standard du skill 10k websites :
 
 Un bouton WhatsApp rond est affiché en bas à droite de toutes les pages (`src/components/layout/WhatsAppFloat.astro`). Il ouvre une conversation avec le message prérempli de `fr.json` / `en.json` (`contact.whatsappMessage`). Tant que `contact.whatsapp` n'est pas renseigné dans `src/content/site.json`, il mène à la section Contact. Il apparaît après l'écran de chargement et, sur téléphone, s'efface tant que le bandeau cookies est ouvert.
 
-## Formulaire de contact (Web3Forms)
+## Demande de devis (Web3Forms)
+
+Le formulaire de la section Contact est une demande de devis : prénom, nom, e-mail, téléphone, société, type d'opération (export, import, les deux), pays d'origine et de destination, service souhaité (les six services du site), type de conteneur (les formats du guide, plus le groupage), marchandise, volume estimé et précisions (1000 caractères, avec compteur). Les champs obligatoires portent une astérisque. Chaque champ a un libellé flottant : il occupe le champ vide, puis remonte en petit au-dessus de la saisie. Deux colonnes sur ordinateur et tablette, une seule sur téléphone.
+
 
 1. Sur [web3forms.com](https://web3forms.com), saisir l'adresse e-mail qui doit recevoir les demandes : une clé d'accès arrive par e-mail.
 2. Renseigner `PUBLIC_WEB3FORMS_KEY` dans `.env` ou chez l'hébergeur, puis rebuilder.
@@ -229,19 +213,42 @@ Importer le dépôt : `vercel.json` gère la redirection, le cache et les en-tê
 - Un seul H1, un H2 par section, H3 pour les cartes. Lien d'évitement, focus visibles, cibles tactiles ≥ 44 px, contraste AA vérifié, libellés sur tous les champs, `prefers-reduced-motion` respecté même s'il change pendant la visite.
 - Testé à 375 px, 768 px, 1280 px et 1440 px.
 
+## Version 4 (6 octobre 2026) : refonte GSAP + Lenis
+
+Tout le site est refait d'après un brief inspiré d'un site de transport (mise en page et animations), **avec les contenus d'AFRIEXPORT** et **sa charte en cinq couleurs** : le rouge du brief est remplacé par le jaune (ou le bleu marine quand le jaune ne serait pas lisible sur fond clair).
+
+- **Direction** : fond clair (#EEF0F2), texte bleu marine, accent jaune ; **Inter Tight** (auto-hébergée, `@fontsource-variable/inter-tight`), titres en 300 de `clamp(40px, 6vw, 96px)` à interlignage serré ; **petit label en capitales** (13 px) au-dessus de chaque titre, précédé d'un losange jaune ; **losanges** décoratifs (carrés tournés à 45°, dégradé jaune vers transparent) ; boutons à contour arrondi.
+- **En-tête** minimal : logo texte à gauche, menu (avec Contact), langue à droite, lien de la page courante en jaune (texte jaune sur fond sombre, soulignement jaune sur fond clair).
+- **Accueil**, dans l'ordre :
+  1. **Intro** : label, titre du client sur plusieurs lignes, texte en bas à droite. Les lignes montent de 10 px avec un fondu (déclenchement à « top 60% »), puis le contenu s'efface et remonte au scroll (scrub 0,2).
+  2. **Chiffres clés** : section épinglée, six grands chiffres entre deux filets bleu marine, la rangée glisse vers la gauche pendant le défilement ; deux losanges jaunes traversent en sens inverse. Les quatre premiers chiffres sont **fictifs** (`src/content/site.json` → `stats`), les deux derniers décrivent le site (6 services, 11 formats de conteneurs).
+  3. **Pourquoi nous** : texte, chiffre « 73 % » sur son coup de pinceau jaune, bouton à contour arrondi, photo d'équipe.
+  4. **Bandeau des atouts** : les quatre atouts du client en texte géant en contour, qui glisse avec le scroll.
+  5. **Méthode** : section épinglée, photo du terminal vue du ciel sous un voile bleu marine à 80 %, titre révélé ligne par ligne, puis les quatre étapes une par une.
+  6. **Services** : titre épinglé à gauche, les six services en liste à droite (badge carré jaune avec icône), puis la section s'efface.
+  7. **Conteneurs** : photo d'un camion et grand triangle jaune en parallaxe (deux vitesses), accès au guide.
+  8. **Engagements** : deux photos décalées en parallaxe, les quatre engagements en texte sur deux colonnes.
+  9. **Demande de devis**, puis le **pied de page bleu marine**, qui s'ouvre sur la grande bande « AFRIEXPORT » (capitales très fines blanches, globe jaune) qui défile seule vers la gauche ; pause au survol et hors de l'écran, immobile avec le mouvement réduit.
+- **Pages intérieures** : même charte, label au-dessus de chaque titre, titre d'en-tête révélé ligne par ligne.
+- **Retirés** : l'accueil vidéo et sa scène dessinée (`Hero`, `HeroScene`, `hero-scrub.ts` ; la clé `heroVideo` de `site.json` n'est plus utilisée), la galerie de services, les cartes de la méthode, la section Résultats épinglée et le bouton « Demander un rendez-vous » de l'en-tête. Ils restent dans l'historique git.
+- **Gardés** : écran de chargement (1re page), voile blanc entre les pages, route maritime du bord droit (désormais pilotée via Lenis), demande de devis, cookies, WhatsApp, guide des conteneurs et ses outils.
+
 ## Version 2 : ce qui a changé par rapport à la maquette
 
 La première version reproduisait la maquette à l'identique. Elle a été jugée trop « template », trop sombre et sans impact. La version 2 garde la charte (couleurs, typographie) et tous les contenus du client, mais refait la mise en page :
 
 - **Fond clair** (Whisper White) et une seule section sombre (Résultats), pour le rythme.
-- **Accueil cinématique** : film du conteneur jaune qui descend et se pose (à générer), avec les accroches « Exporter une fois, c'est un essai. » et « Exporter chaque mois, c'est un métier. ». En attendant, une scène dessinée en CSS.
+- **Accueil cinématique** : film du conteneur jaune qui descend et se pose (à générer), avec les accroches « Exporter une fois, c'est un essai. » et « Exporter chaque mois, c'est un métier. ». En attendant, une scène dessinée en CSS. Les textes de l'accueil sont en très grandes capitales fines (Archivo Thin) : « IMPORT » à gauche et « & EXPORT » à droite, en escalier, puis la phrase du client, l'accroche et les boutons.
+- **Bande AFRIEXPORT** en haut du pied de page : le nom en très grandes capitales fines blanches, séparé par le globe jaune du logo, qui défile seul vers la gauche. Pause au survol et hors de l'écran, immobile avec le mouvement réduit ; décorative, masquée aux lecteurs d'écran.
+- **Passage entre les pages** : un voile blanc. Au clic sur un lien vers une autre page, il monte depuis le bas en blanchissant l'écran (0,45 s) ; sur la nouvelle page, il se lève vers le haut et la dévoile de bas en haut (0,75 s). La première page de la visite garde son écran de chargement. Rien avec le mouvement réduit, ni pour les ancres de la page en cours, les liens externes, téléphone, e-mail ou nouvel onglet (`src/scripts/page-transition.ts`, voile dans `BaseLayout.astro`).
 - **Signe distinctif** : la route maritime sur le bord droit de l'écran, centrée en hauteur (à partir de 1280 px), avec un petit conteneur qui suit la lecture et des escales cliquables. Elle sert aussi de barre de défilement à la souris : on attrape le conteneur pour parcourir la page (il s'aimante aux escales), on clique sur la ligne pour y aller, et le nom de chaque escale s'affiche au survol.
 - **Services** (accueil) : galerie en accordéon adaptée du composant « Hover Expand Gallery » de 21st.dev. Six bandes avec le nom du service écrit à l'horizontale ; celle qu'on survole s'ouvre sur sa photo, avec son nom, sa description et le lien vers sa page. Accordéon vertical (ouverture au clic) sous 1280 px, utilisable au clavier.
 - **Méthode** (accueil) : adaptée du composant « How It Works » de 21st.dev. Quatre cartes épinglées avec la photo de chaque étape, inclinées en zigzag et reliées par une route en pointillés qui avance doucement, sur un fond ligné ; chaque carte mène à son étape sur la page Méthode. Cartes empilées sous 1024 px.
-- **Pourquoi nous** (accueil) : adaptée du composant « Bold Stats » de 21st.dev. Le chiffre réel « 73 % » en très grand avec sa phrase (enquête BEI 2025, à faire valider par le client), la photo du port à côté, puis un filet et les quatre arguments sur une ligne. Tout s'empile sur téléphone.
+- **Pourquoi nous** (accueil) : adaptée du composant « Bold Stats » de 21st.dev. Le chiffre réel « 73 % » en très grand, sur un coup de pinceau jaune qui se peint de gauche à droite à son arrivée à l'écran (immédiat avec le mouvement réduit), avec sa phrase (enquête BEI 2025, à faire valider par le client), la photo du port à côté, puis un filet et les quatre arguments sur une ligne. Tout s'empile sur téléphone.
 - **Conteneurs** : sélecteur interactif 20 DC / 40 DC / 40 HC (le conteneur 3D change de taille, les chiffres défilent), tableau comparatif, nouvelle donnée « palettes Europe au sol ».
-- **Résultats** : quatre grands compteurs.
-- **Contact** : coordonnées sur le fond clair de la page, formulaire blanc à côté.
+- **Résultats** : quatre grands compteurs. Sur ordinateur (à partir de 1024 px de large et 600 px de haut), la section reste fixe à l'écran pendant qu'on descend, et la rangée de chiffres glisse vers la gauche au rythme du défilement, avec la carte du monde qui glisse plus lentement derrière ; rien ne bouge sans défilement. La course est calculée sur la largeur réelle de la rangée. Téléphone, tablette et mouvement réduit gardent la grille classique.
+- **En-têtes photo des pages intérieures** : la photo occupe tout l'écran à l'arrivée.
+- **Contact** : titre à gauche, accroche, coordonnées et WhatsApp à droite, puis la demande de devis sur toute la largeur, dans un cadre blanc.
 - **Étiquettes** en IBM Plex Mono 500 (auto-hébergée, 15 Ko), comme des étiquettes de fret.
 - Titres en poids 500, contraste AA vérifié, texte des champs en 16 px (pas de zoom automatique sur iPhone), polices auto-hébergées (aucune requête vers Google avant consentement).
 
@@ -259,12 +266,12 @@ Le site n'utilise que cinq couleurs : **blanc** #FFFFFF, **noir** #0B0B0C, **ble
 
 ## Barre de navigation
 
-Fixe en haut de l'écran, toujours visible et transparente, avec un léger flou derrière (sans couleur, qui s'estompe vers le bas) pour que le texte qui passe dessous ne gêne pas le menu. Elle ne bouge pas et ne change pas de fond pendant le défilement. Logo à gauche, rubriques au centre (à partir de 1440 px de large, sinon menu « burger »), langue et « Demander un rendez-vous » à droite. Sur une section bleu marine ou noire, son texte passe en blanc pour rester lisible (`src/components/layout/Header.astro`).
+Fixe en haut de l'écran, toujours visible et transparente, avec un léger flou derrière (sans couleur, qui s'estompe vers le bas). Version 4 : logo texte à gauche, rubriques au centre dont Contact (à partir de 1180 px de large, sinon menu « burger »), langue à droite. Lien de la page courante en jaune. Sur une section bleu marine ou noire, son texte passe en blanc pour rester lisible (`src/components/layout/Header.astro`).
 
 ## Éléments que le client doit encore fournir
 
 1. **Coordonnées** : adresse complète, code postal, ville, téléphone, e-mail de contact, numéro WhatsApp.
-2. **Adresse e-mail de réception** du formulaire (pour créer la clé Web3Forms).
+2. **Adresse e-mail de réception** du formulaire (pour créer la clé Web3Forms), et validation des champs de la demande de devis (téléphone obligatoire, liste des services et des conteneurs).
 3. **Photos** : le site est complet avec des photos libres de droits. Le client peut les remplacer par les siennes (équipe, bureaux, opérations réelles), surtout pour « Pourquoi nous » et l'équipe.
 4. **Vrais chiffres** de la section Résultats : les valeurs actuelles (+7, 18 %, 12 pays, +15 %) sont **fictives**, ainsi que la période et le périmètre de mesure (affichés « [à préciser] » sur la page Résultats).
 5. **Validation des données conteneurs** : les 11 formats du guide (dimensions, volumes, tares, charges, palettes) et les âges typiques des états sont des valeurs indicatives du marché.

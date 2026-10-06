@@ -1,16 +1,20 @@
 /**
- * Formulaire de contact : validation côté client, anti-spam (honeypot),
+ * Demande de devis : validation côté client, compteur de caractères, anti-spam (honeypot),
  * envoi à Web3Forms sans backend, messages de succès et d'erreur.
+ * Les champs à vérifier sont ceux qui portent l'attribut required dans le formulaire.
  */
 
 const ENDPOINT = 'https://api.web3forms.com/submit';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const MIN_MESSAGE = 20;
+// Chiffres, espaces, +, points, tirets et parenthèses, avec au moins 8 chiffres.
+const PHONE_RE = /^\+?[\d\s().-]+$/;
+const MIN_PHONE_DIGITS = 8;
 
 interface Messages {
   required: string;
   email: string;
-  messageShort: string;
+  phone: string;
+  choice: string;
   consent: string;
   summary: string;
   success: string;
@@ -29,28 +33,22 @@ export function initContactForm() {
   const submit = form.querySelector<HTMLButtonElement>('[data-form-submit]')!;
   const success = form.querySelector<HTMLElement>('[data-form-success]')!;
   const errorBox = form.querySelector<HTMLElement>('[data-form-error]')!;
-  const field = (name: string) => form.elements.namedItem(name) as Field;
+  const fields = [...form.querySelectorAll<Field>('input[required], select[required], textarea[required]')];
 
-  const rules: Record<string, (el: Field) => string> = {
-    name: (el) => (el.value.trim() ? '' : messages.required),
-    email: (el) => {
-      const value = el.value.trim();
-      if (!value) return messages.required;
-      return EMAIL_RE.test(value) ? '' : messages.email;
-    },
-    message: (el) => {
-      const value = el.value.trim();
-      if (!value) return messages.required;
-      return value.length >= MIN_MESSAGE ? '' : messages.messageShort;
-    },
-    consent: (el) => ((el as HTMLInputElement).checked ? '' : messages.consent),
-  };
+  function validate(el: Field) {
+    const value = el.value.trim();
+    if (el instanceof HTMLInputElement && el.type === 'checkbox') return el.checked ? '' : messages.consent;
+    if (el instanceof HTMLSelectElement) return value ? '' : messages.choice;
+    if (!value) return messages.required;
+    if (el.type === 'email' && !EMAIL_RE.test(value)) return messages.email;
+    if (el.type === 'tel' && (!PHONE_RE.test(value) || value.replace(/\D/g, '').length < MIN_PHONE_DIGITS)) return messages.phone;
+    return '';
+  }
 
-  const touched = new Set<string>();
+  const touched = new Set<Field>();
 
-  function check(name: string) {
-    const el = field(name);
-    const message = rules[name](el);
+  function check(el: Field) {
+    const message = validate(el);
     const errorEl = form!.querySelector<HTMLElement>(`#${el.id}-error`);
     el.setAttribute('aria-invalid', String(!!message));
     if (errorEl) {
@@ -60,18 +58,37 @@ export function initContactForm() {
     return !message;
   }
 
-  for (const name of Object.keys(rules)) {
-    const el = field(name);
-    const revalidate = () => touched.has(name) && check(name);
+  // Le rappel « Vérifiez les champs signalés » disparaît dès que plus aucun champ n'est en erreur.
+  function clearSummary() {
+    if (errorBox.hidden || errorBox.textContent !== messages.summary) return;
+    if (fields.every((el) => el.getAttribute('aria-invalid') !== 'true')) errorBox.hidden = true;
+  }
+
+  for (const el of fields) {
+    const revalidate = () => {
+      if (!touched.has(el)) return;
+      check(el);
+      clearSummary();
+    };
     el.addEventListener('input', revalidate);
     el.addEventListener('change', revalidate);
     el.addEventListener('blur', () => {
-      if ((el as HTMLInputElement).value || touched.has(name)) {
-        touched.add(name);
-        check(name);
+      if ((el.type !== 'checkbox' && el.value) || touched.has(el)) {
+        touched.add(el);
+        check(el);
+        clearSummary();
       }
     });
   }
+
+  // Compteur « 0 sur 1000 » sous les précisions.
+  const counter = form.querySelector<HTMLElement>('[data-counter]');
+  const details = counter ? form.querySelector<HTMLTextAreaElement>(`[aria-describedby~="${counter.id}"]`) : null;
+  const updateCounter = () => {
+    if (!counter || !details) return;
+    counter.textContent = (counter.dataset.template ?? '{n}').replace('{n}', String(details.value.length)).replace('{max}', counter.dataset.max ?? '');
+  };
+  details?.addEventListener('input', updateCounter);
 
   function setSending(sending: boolean) {
     submit.disabled = sending;
@@ -84,17 +101,23 @@ export function initContactForm() {
     errorBox.hidden = false;
   }
 
+  function clear() {
+    form!.reset();
+    touched.clear();
+    fields.forEach((el) => el.removeAttribute('aria-invalid'));
+    updateCounter();
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     errorBox.hidden = true;
     success.hidden = true;
 
-    const names = Object.keys(rules);
-    names.forEach((name) => touched.add(name));
-    const invalid = names.filter((name) => !check(name));
+    fields.forEach((el) => touched.add(el));
+    const invalid = fields.filter((el) => !check(el));
     if (invalid.length) {
       showError(messages.summary);
-      const first = field(invalid[0]);
+      const first = invalid[0];
       // Centre le champ (et son libellé) au lieu de le coller sous le header fixe.
       first.focus({ preventScroll: true });
       first.closest('div')?.scrollIntoView({ block: 'center' });
@@ -105,7 +128,7 @@ export function initContactForm() {
 
     // Un robot a coché le piège : on simule un succès sans rien envoyer.
     if (data.botcheck) {
-      form.reset();
+      clear();
       success.hidden = false;
       success.focus();
       return;
@@ -131,9 +154,7 @@ export function initContactForm() {
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.success) throw new Error(result.message || `HTTP ${response.status}`);
 
-      form.reset();
-      touched.clear();
-      names.forEach((name) => field(name).removeAttribute('aria-invalid'));
+      clear();
       success.hidden = false;
       success.focus();
     } catch (error) {

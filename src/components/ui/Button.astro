@@ -1,7 +1,7 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 
-type Variant = 'primary' | 'outline' | 'ghost' | 'dark' | 'whatsapp';
+type Variant = 'primary' | 'outline' | 'line' | 'ghost' | 'dark' | 'whatsapp';
 type Size = 'md' | 'lg';
 
 interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
@@ -16,7 +16,9 @@ const { href, type = 'button', variant = 'primary', size = 'md', class: classNam
 
 const variants: Record<Variant, string> = {
   primary: 'bg-yellow text-ink',
-  outline: 'border border-metal-600 text-white font-medium hover:border-metal-300',
+  // Contour arrondi : sur fond sombre (outline) ou sur fond clair (line).
+  outline: 'border border-white/60 text-white font-medium hover:bg-white hover:text-navy',
+  line: 'border border-navy text-navy font-medium hover:bg-navy hover:text-white',
   ghost: 'border border-navy/30 bg-white/60 text-ink font-medium hover:border-navy',
   dark: 'bg-navy text-white',
   whatsapp: 'bg-navy text-white',

@@ -20,44 +20,135 @@ const firm = [
   { label: t.nav.contact, href: contactHref },
 ];
 const linkClass = 'link-u tap inline-flex items-center py-1 text-sm text-metal-200 hover:text-white';
+// Bande « AFRIEXPORT » : deux groupes identiques qui défilent à la suite, pour une boucle sans à-coup.
+const bandGroups = [0, 1];
+const bandWords = [0, 1];
 ---
 
-<footer class="on-dark bg-ink px-[max(16px,5%)] pb-8 pt-14">
-  <div class="mx-auto flex max-w-page flex-col gap-10">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,2fr)]">
-      <div class="flex max-w-[360px] flex-col gap-2.5">
-        <a href={routes.home[lang]} class="text-lg font-bold text-white no-underline">AFRIEXPORT<span class="text-yellow"> CONSULTING</span></a>
-        <span class="text-sm leading-relaxed text-metal-300">{t.footer.tagline}</span>
-      </div>
-      <nav aria-label={t.a11y.footerNav} class="grid gap-10 sm:grid-cols-2">
-        <div class="flex flex-col gap-3">
-          <p class="label-mono m-0 text-yellow">{t.pages.footerServices}</p>
-          <ul class="m-0 flex list-none flex-col p-0" role="list">
-            {services.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
-          </ul>
-        </div>
-        <div class="flex flex-col gap-3">
-          <p class="label-mono m-0 text-yellow">{t.pages.footerFirm}</p>
-          <ul class="m-0 flex list-none flex-col p-0" role="list">
-            {firm.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
-          </ul>
-        </div>
-      </nav>
+<footer class="on-dark bg-navy pb-8">
+  <!-- Bande décorative : AFRIEXPORT en très grand, qui défile seul vers la gauche.
+       Pause au survol, hors écran et avec « mouvement réduit » (texte immobile). -->
+  <div class="band" aria-hidden="true" data-anim>
+    <div class="band-track">
+      {
+        bandGroups.map(() => (
+          <div class="band-group">
+            {bandWords.map(() => (
+              <Fragment>
+                <span class="band-word">AFRIEXPORT</span>
+                <svg class="band-mark" viewBox="0 0 24 24" focusable="false">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18" />
+                  <path d="M12 3a14 14 0 0 1 0 18" />
+                  <path d="M12 3a14 14 0 0 0 0 18" />
+                </svg>
+              </Fragment>
+            ))}
+          </div>
+        ))
+      }
     </div>
-    <div class="flex flex-wrap justify-between gap-4 border-t border-metal-700 pt-6 text-[13px] text-metal-300">
-      <span>© {year} AFRIEXPORT CONSULTING. {t.footer.rights}</span>
-      <nav aria-label={t.a11y.legalNav}>
-        <ul class="flex flex-wrap gap-x-4 gap-y-1" role="list">
-          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.notice[lang]}>{t.legal.notice}</a></li>
-          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.privacy[lang]}>{t.legal.privacy}</a></li>
-          <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.cookies[lang]}>{t.legal.cookies}</a></li>
-          <li>
-            <button type="button" class="tap inline-flex cursor-pointer items-center bg-transparent p-0 text-metal-300 underline underline-offset-4 hover:text-white" data-cookie-settings>
-              {t.footer.cookieSettings}
-            </button>
-          </li>
-        </ul>
-      </nav>
+  </div>
+
+  <div class="px-[max(16px,5%)] pt-14">
+    <div class="mx-auto flex max-w-page flex-col gap-10">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,2fr)]">
+        <div class="flex max-w-[360px] flex-col gap-2.5">
+          <a href={routes.home[lang]} class="text-xl font-semibold tracking-[0.06em] text-white no-underline">AFRIEXPORT<span class="font-light text-yellow"> CONSULTING</span></a>
+          <span class="text-sm leading-relaxed text-metal-300">{t.footer.tagline}</span>
+        </div>
+        <nav aria-label={t.a11y.footerNav} class="grid gap-10 sm:grid-cols-2">
+          <div class="flex flex-col gap-3">
+            <p class="label-mono m-0 text-yellow">{t.pages.footerServices}</p>
+            <ul class="m-0 flex list-none flex-col p-0" role="list">
+              {services.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>
+          <div class="flex flex-col gap-3">
+            <p class="label-mono m-0 text-yellow">{t.pages.footerFirm}</p>
+            <ul class="m-0 flex list-none flex-col p-0" role="list">
+              {firm.map((link) => <li><a class={linkClass} href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="flex flex-wrap justify-between gap-4 border-t border-metal-700 pt-6 text-[13px] text-metal-300">
+        <span>© {year} AFRIEXPORT CONSULTING. {t.footer.rights}</span>
+        <nav aria-label={t.a11y.legalNav}>
+          <ul class="flex flex-wrap gap-x-4 gap-y-1" role="list">
+            <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.notice[lang]}>{t.legal.notice}</a></li>
+            <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.privacy[lang]}>{t.legal.privacy}</a></li>
+            <li><a class="tap inline-flex items-center text-metal-300 underline underline-offset-4 hover:text-white" href={routes.cookies[lang]}>{t.legal.cookies}</a></li>
+            <li>
+              <button type="button" class="tap inline-flex cursor-pointer items-center bg-transparent p-0 text-metal-300 underline underline-offset-4 hover:text-white" data-cookie-settings>
+                {t.footer.cookieSettings}
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </footer>
+
+<style>
+  .band {
+    overflow: hidden;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .band-track {
+    display: flex;
+    width: max-content;
+    animation: afBand 50s linear infinite;
+  }
+  .band:hover .band-track {
+    animation-play-state: paused;
+  }
+  .band-group {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+  /* Capitales très fines, en blanc sur le bleu marine (police du site, Inter Tight). */
+  .band-word {
+    padding: 0 0.22em;
+    font-size: clamp(4.5rem, 14vw, 16rem);
+    font-weight: 200;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #fff;
+  }
+  /* Entre deux mots, le globe du logo en jaune. */
+  .band-mark {
+    flex: none;
+    width: clamp(2.5rem, 6vw, 6.5rem);
+    height: auto;
+    margin: 0 0.4em;
+    fill: none;
+    stroke: #ffc342;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+  }
+  @keyframes afBand {
+    to {
+      translate: -50% 0;
+    }
+  }
+  /* Sur téléphone, les mots sont plus courts : même vitesse ressentie avec une boucle plus brève. */
+  @media (max-width: 640px) {
+    .band {
+      padding: 24px 0 18px;
+    }
+    .band-track {
+      animation-duration: 28s;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .band-track {
+      animation: none;
+    }
+  }
+</style>

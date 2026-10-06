@@ -1,0 +1,62 @@
+---
+/**
+ * 4. Bandeau des atouts : texte géant en contour seulement, sur une ligne, dupliqué.
+ * Il glisse vers la gauche au rythme du défilement (scrub, site-motion.ts), sans boucle CSS.
+ * Sous 768 px : immobile, sur plusieurs lignes. Lu une seule fois par les lecteurs d'écran.
+ */
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const words = all.why.reasons.map((reason) => reason.title);
+const line = words.join(' – ');
+---
+
+<section class="values on-light" aria-label={all.home.values.label} data-values>
+  <p class="sr-only">{words.join(', ')}</p>
+  <div class="values-track" aria-hidden="true" data-values-track>
+    <span class="values-text">{line} – </span>
+    <span class="values-text values-copy">{line} – </span>
+  </div>
+</section>
+
+<style>
+  .values {
+    overflow: hidden;
+    padding: clamp(56px, 10vh, 120px) max(16px, 5%);
+  }
+  /* Texte en contour : trait bleu marine de 1 px, intérieur transparent. */
+  .values-text {
+    font-size: clamp(2rem, 9.5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px #0f2340;
+  }
+  .values-copy {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .values {
+      padding-inline: 0;
+    }
+    .values-track {
+      display: flex;
+      width: max-content;
+      white-space: nowrap;
+    }
+    .values-text {
+      padding-right: 0.3em;
+      font-size: clamp(6rem, 12vw, 13rem);
+    }
+    .values-copy {
+      display: inline;
+    }
+  }
+</style>

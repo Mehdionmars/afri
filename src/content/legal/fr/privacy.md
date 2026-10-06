@@ -29,6 +29,7 @@ Vos données sont réservées à l'équipe d'AFRIEXPORT CONSULTING. Elles transi
 
 - **Web3Forms**, qui achemine les messages du formulaire vers notre boîte e-mail ;
 - **[nom de l'hébergeur]**, qui héberge le site ;
+- **cdnjs (Cloudflare)** et **jsDelivr**, qui fournissent les bibliothèques d'animation du site (GSAP, Lenis) : ils reçoivent l'adresse IP du visiteur pour lui envoyer ces fichiers ;
 - **Google (Google Analytics)**, uniquement si vous acceptez la mesure d'audience.
 
 Certains de ces prestataires peuvent traiter des données hors du Maroc. [À vérifier : formalités de transfert auprès de la CNDP.]
