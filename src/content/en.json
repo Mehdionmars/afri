@@ -38,6 +38,10 @@
       "Exporting once is a test.",
       "Exporting every month is a business."
     ],
+    "giant": [
+      "Import",
+      "& Export"
+    ],
     "title": "Grow your trade between Morocco, Africa and the world",
     "lead": "AFRIEXPORT CONSULTING supports companies in their import and export operations: market research, partner sourcing, customs regulations and international logistics.",
     "ctaPrimary": "Talk to a consultant",
@@ -183,7 +187,10 @@
         "title": "As Is",
         "text": "Sold without warranty, inspect before you buy."
       }
-    ]
+    ],
+    "dragHint": "Drag to rotate",
+    "rotateLabel": "3D container: drag, or use the arrow keys, to rotate it",
+    "rotateValue": "Rotated {deg} degrees"
   },
   "results": {
     "eyebrow": "Results",
@@ -1065,7 +1072,8 @@
     "familyLabels": {
       "uses": "Best for",
       "watch": "Good to know",
-      "formats": "Formats"
+      "formats": "Formats",
+      "detail": "Up close"
     },
     "families": {
       "dry": {
@@ -1281,7 +1289,15 @@
         "q": "Can I exceed the stated payload?",
         "a": "No. The payload is a technical maximum. You must also respect the road weight limits of every country crossed, which are often lower."
       }
-    ]
+    ],
+    "familyDetails": {
+      "dry": "The double doors and their locking bars, at the rear.",
+      "reefer": "The refrigeration unit, built in at the front: it is plugged in on the quay and on board.",
+      "openTop": "The removable tarpaulin, held down with ropes: loading is from the top, by crane.",
+      "flatRack": "The heavy load, lashed to the reinforced floor between the two end walls.",
+      "tank": "The stainless steel tank and its manhole, held in a 20-foot frame."
+    },
+    "familyIndex": "Choose a family"
   },
   "resultsPage": {
     "meta": {
@@ -1402,37 +1418,45 @@
     "whatsapp": "Message us on WhatsApp",
     "whatsappMessage": "Hello AFRIEXPORT CONSULTING, I would like to talk about my project.",
     "form": {
-      "title": "Contact form",
-      "name": "Full name",
-      "namePlaceholder": "Your name",
-      "company": "Company",
-      "companyPlaceholder": "Company name",
-      "optional": "optional",
+      "title": "Quote request",
+      "firstName": "First name",
+      "lastName": "Last name",
       "email": "Email",
-      "emailPlaceholder": "you@company.com",
-      "need": "Your need",
-      "needs": [
-        "Export my products",
-        "Import / find suppliers",
-        "Customs & regulations",
-        "Other"
+      "phone": "Phone",
+      "company": "Company",
+      "operation": "Type of operation",
+      "operations": [
+        "Export",
+        "Import",
+        "Both"
       ],
-      "message": "Message",
-      "messagePlaceholder": "Describe your project: product, target countries, volumes…",
+      "origin": "Country of origin",
+      "destination": "Destination country",
+      "service": "Service needed",
+      "servicePrompt": "Choose a service",
+      "serviceUnsure": "Not sure yet",
+      "container": "Container type",
+      "containerUnsure": "Not sure yet",
+      "groupage": "Groupage (less than a container load)",
+      "goods": "Goods concerned",
+      "volume": "Estimated volume",
+      "details": "Further details",
+      "counter": "{n} of {max}",
+      "requiredNote": "Required field",
       "consent": "I agree that my data will be used to handle my request, in line with the",
       "consentLink": "privacy policy",
       "honeypot": "Leave this field empty.",
-      "required": "required",
       "submit": "Send my request",
       "sending": "Sending…",
-      "subject": "New request from the AFRIEXPORT CONSULTING website",
+      "subject": "New quote request from the AFRIEXPORT CONSULTING website",
       "success": "Thank you, your request has been sent. A consultant will get back to you for a first call.",
       "error": "Your request could not be sent. Please try again in a moment, or reach us on WhatsApp or by email.",
       "summary": "Please check the highlighted fields.",
       "errors": {
         "required": "This field is required.",
         "email": "Enter a valid email address, for example name@company.com.",
-        "messageShort": "Add a few words about your project (20 characters minimum).",
+        "phone": "Enter a valid phone number, for example +212 6 12 34 56 78.",
+        "choice": "Choose an option from the list.",
         "consent": "Tick this box so we can handle your request."
       }
     }
@@ -1471,5 +1495,76 @@
     "title": "Page not found",
     "text": "This page does not exist or has moved.",
     "cta": "Back to home"
+  },
+  "home": {
+    "introCta": "Talk to a consultant",
+    "figures": {
+      "label": "Results",
+      "captions": [
+        "new strategic partnerships",
+        "time saved on your files",
+        "countries where your products are present",
+        "growth in your trade",
+        "areas of expertise, one point of contact",
+        "container formats in our guide"
+      ]
+    },
+    "people": {
+      "photoAlt": "A team gathered around a work table"
+    },
+    "values": {
+      "label": "Our strengths"
+    },
+    "method": {
+      "bgAlt": ""
+    },
+    "services": {
+      "label": "Our services"
+    },
+    "containers": {
+      "label": "Shipping containers",
+      "photoAlt": "Truck carrying containers on the road"
+    },
+    "commitments": {
+      "label": "Commitments",
+      "photoAAlt": "A craftsman at work in a workshop",
+      "photoBAlt": "Oranges on the tree in Morocco"
+    }
+  },
+  "sectionLabels": {
+    "containers": {
+      "picker": "3D selector",
+      "families": "Families",
+      "compare": "Comparison",
+      "calc": "Calculator",
+      "states": "Condition"
+    },
+    "method": {
+      "commitments": "Commitments"
+    },
+    "results": {
+      "figures": "Key figures",
+      "missions": "Typical projects",
+      "testimonials": "Testimonials",
+      "sectors": "Sectors"
+    },
+    "service": {
+      "what": "The service",
+      "steps": "How it works",
+      "deliverables": "Deliverables",
+      "related": "Explore more",
+      "hero": "Services"
+    },
+    "services": {
+      "list": "Our services",
+      "bundle": "Full project"
+    },
+    "why": {
+      "reasons": "Our strengths",
+      "network": "Network",
+      "zones": "Areas covered",
+      "team": "Team"
+    },
+    "faq": "FAQ"
   }
 }

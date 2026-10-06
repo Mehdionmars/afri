@@ -40,19 +40,21 @@ export default {
     colors: { transparent: 'transparent', current: 'currentColor', inherit: 'inherit', ...brand, ...shades },
     extend: {
       fontFamily: {
-        sans: ['"Helvetica Neue"', 'Helvetica', 'Archivo', 'sans-serif'],
+        // Grotesque fine (Inter Tight, auto-hébergée via @fontsource-variable/inter-tight).
+        sans: ['"Inter Tight Variable"', '"Inter Tight"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
         // Étiquettes de fret, codes et escales.
         mono: ['"IBM Plex Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       fontSize: {
-        display: ['clamp(2.5rem, 1.3rem + 3.6vw, 4.125rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        // Titres très grands, fins (300) et serrés : clamp(40px, 6vw, 96px).
+        display: ['clamp(40px, 6vw, 96px)', { lineHeight: '1', letterSpacing: '-0.035em' }],
         hook: ['clamp(2rem, 1rem + 3.6vw, 4.25rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],
-        mega: ['clamp(3.5rem, 2.4rem + 3.2vw, 5.25rem)', { lineHeight: '0.95', letterSpacing: '-0.045em' }],
-        label: ['0.75rem', { lineHeight: '1.3', letterSpacing: '0.12em' }],
-        'h2-xl': ['clamp(2.5rem, 1.25rem + 3.6vw, 4.125rem)', { lineHeight: '1.02', letterSpacing: '-0.032em' }],
-        'h2-lg': ['clamp(2.125rem, 1.25rem + 2.8vw, 3.5rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
-        'h2-md': ['clamp(2rem, 1.35rem + 2.1vw, 3.125rem)', { lineHeight: '1.1', letterSpacing: '-0.022em' }],
-        h2: ['clamp(1.875rem, 1.3rem + 1.8vw, 2.875rem)', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
+        mega: ['clamp(3.5rem, 2rem + 4.6vw, 6.5rem)', { lineHeight: '0.95', letterSpacing: '-0.045em' }],
+        label: ['13px', { lineHeight: '1.3', letterSpacing: '0.14em' }],
+        'h2-xl': ['clamp(40px, 6vw, 96px)', { lineHeight: '1', letterSpacing: '-0.035em' }],
+        'h2-lg': ['clamp(36px, 4.6vw, 76px)', { lineHeight: '1.02', letterSpacing: '-0.032em' }],
+        'h2-md': ['clamp(32px, 3.8vw, 60px)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        h2: ['clamp(30px, 3.2vw, 52px)', { lineHeight: '1.08', letterSpacing: '-0.028em' }],
         'h3-xl': ['clamp(1.625rem, 1.3rem + 1vw, 2.125rem)', { lineHeight: '1.1', letterSpacing: '-0.024em' }],
         'h3-lg': ['clamp(1.5rem, 1.25rem + 0.8vw, 1.875rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
         h3: ['1.5rem', { lineHeight: '1.2', letterSpacing: '-0.012em' }],

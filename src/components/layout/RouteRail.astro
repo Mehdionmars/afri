@@ -17,11 +17,11 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const stops = Astro.props.stops ?? [
   { id: 'accueil', label: t.route.home },
-  { id: 'services', label: t.nav.services },
-  { id: 'methode', label: t.nav.method },
-  { id: 'pourquoi', label: t.nav.why },
-  { id: 'conteneurs', label: t.nav.containers },
   { id: 'resultats', label: t.nav.results },
+  { id: 'pourquoi', label: t.nav.why },
+  { id: 'methode', label: t.nav.method },
+  { id: 'services', label: t.nav.services },
+  { id: 'conteneurs', label: t.nav.containers },
   { id: 'contact', label: t.nav.contact },
 ];
 ---
@@ -227,7 +227,11 @@ const stops = Astro.props.stops ?? [
     const stopPositions = () => {
       const line = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
       const max = root.scrollHeight - innerHeight;
-      return sections.map((s) => clamp(s.getBoundingClientRect().top + scrollY - line, 0, max));
+      // Section épinglée par GSAP : on mesure son enveloppe (.pin-spacer), qui, elle, ne bouge pas.
+      return sections.map((s) => {
+        const box = s.parentElement?.classList.contains('pin-spacer') ? s.parentElement : s;
+        return clamp(box.getBoundingClientRect().top + scrollY - line, 0, max);
+      });
     };
     const progressAt = (y: number, at: number[]) => {
       let i = 0;
@@ -267,6 +271,8 @@ const stops = Astro.props.stops ?? [
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('resize', schedule, { passive: true });
     addEventListener('load', schedule);
+    // Épinglages GSAP recalculés : la hauteur de la page a changé.
+    addEventListener('afx:layout', schedule);
     schedule();
 
     // ---------- À la souris : glisser le conteneur, cliquer sur la ligne ----------
@@ -276,7 +282,11 @@ const stops = Astro.props.stops ?? [
       return clamp((clientY - r.top) / r.height, 0, 1);
     };
     const goTo = (progress: number, smooth: boolean) => {
-      scrollTo({ top: scrollFor(progress, stopPositions()), behavior: smooth && !reduce.matches ? 'smooth' : 'instant' });
+      const top = scrollFor(progress, stopPositions());
+      // Avec le défilement doux (Lenis), on passe par lui pour rester synchronisé.
+      const lenis = (window as unknown as { afxLenis?: { scrollTo: (y: number, o: object) => void } }).afxLenis;
+      if (lenis) lenis.scrollTo(top, { immediate: !smooth || reduce.matches });
+      else scrollTo({ top, behavior: smooth && !reduce.matches ? 'smooth' : 'instant' });
     };
     let press: { id: number; startY: number; offset: number; onStop: boolean; moved: boolean } | null = null;
     let swallowClick = false;

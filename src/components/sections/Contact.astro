@@ -1,7 +1,10 @@
 ---
+/**
+ * Contact (accueil) : le titre à gauche, l'accroche, les coordonnées et WhatsApp à droite,
+ * puis la demande de devis sur toute la largeur.
+ */
 import ContactForm from './ContactForm.astro';
 import Icon from '../ui/Icon.astro';
-import SectionHeading from '../ui/SectionHeading.astro';
 import { colon, isPlaceholder, site, useTranslations, whatsappLink, type Lang } from '../../i18n/utils';
 
 interface Props {
@@ -24,54 +27,57 @@ const line = 'flex items-center gap-3.5 text-base text-ink';
 ---
 
 <section id="contact" class="on-light bg-metal-100 px-[max(16px,5%)] py-20 sm:py-28" aria-labelledby="contact-title">
-  <div class="mx-auto grid max-w-page items-stretch gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-    <div class="contact-panel flex flex-col gap-6 py-2 lg:py-10 lg:pr-10">
-      <SectionHeading title={t.title} id="contact-title" class="gap-6" titleClass="text-h2-lg text-ink">
-        <p class="m-0 text-[17px] leading-[1.65] text-metal-700">{t.lead}</p>
-      </SectionHeading>
+  <div class="mx-auto flex max-w-page flex-col gap-10 lg:gap-14">
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+      <div class="flex flex-col gap-5">
+        <p class="label reveal">{t.eyebrow}</p>
+        <h2 id="contact-title" class="reveal m-0 max-w-[16ch] text-h2-xl">{t.title}</h2>
+      </div>
 
-      <ul class="m-0 mt-2 flex list-none flex-col gap-4 p-0" role="list">
-        <li class={line}>
-          <Icon name="pin" size={22} class="shrink-0 text-ink" />
-          <span><span class="sr-only">{t.addressLabel}{colon(lang)}</span>{address}</span>
-        </li>
-        <li class={line}>
-          <Icon name="phone" size={22} class="shrink-0 text-ink" />
-          {
-            phone ? (
-              <a class="link-u tap inline-flex items-center text-ink" href={`tel:${phone.replace(/[^\d+]/g, '')}`}>
-                <span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{phone}
-              </a>
-            ) : (
-              <span><span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{t.placeholders.phone}</span>
-            )
-          }
-        </li>
-        <li class={line}>
-          <Icon name="mail" size={22} class="shrink-0 text-ink" />
-          {
-            email ? (
-              <a class="link-u tap inline-flex items-center text-ink" href={`mailto:${email}`}>
-                <span class="sr-only">{t.emailLabel}{colon(lang)}</span>{email}
-              </a>
-            ) : (
-              <span><span class="sr-only">{t.emailLabel}{colon(lang)}</span>{t.placeholders.email}</span>
-            )
-          }
-        </li>
-      </ul>
-
-      <a
-        class="btn mt-auto self-start bg-navy px-[22px] py-3.5 text-[15px] text-white"
-        href={whatsappHref ?? '#contact'}
-        target={whatsappHref ? '_blank' : undefined}
-        rel={whatsappHref ? 'noopener noreferrer' : undefined}
-        data-placeholder={whatsappHref ? undefined : 'whatsapp'}
-      >
-        <Icon name="whatsapp" size={20} />
-        {t.whatsapp}
-        {whatsappHref && <span class="sr-only">{useTranslations(lang).a11y.newWindow}</span>}
-      </a>
+      <div class="flex flex-col gap-5">
+        <p class="m-0 text-lead text-metal-600">{t.lead}</p>
+        <ul class="m-0 flex list-none flex-col gap-3 p-0" role="list">
+          <li class={line}>
+            <Icon name="pin" size={22} class="shrink-0 text-ink" />
+            <span><span class="sr-only">{t.addressLabel}{colon(lang)}</span>{address}</span>
+          </li>
+          <li class={line}>
+            <Icon name="phone" size={22} class="shrink-0 text-ink" />
+            {
+              phone ? (
+                <a class="link-u tap inline-flex items-center text-ink" href={`tel:${phone.replace(/[^\d+]/g, '')}`}>
+                  <span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{phone}
+                </a>
+              ) : (
+                <span><span class="sr-only">{t.phoneLabel}{colon(lang)}</span>{t.placeholders.phone}</span>
+              )
+            }
+          </li>
+          <li class={line}>
+            <Icon name="mail" size={22} class="shrink-0 text-ink" />
+            {
+              email ? (
+                <a class="link-u tap inline-flex items-center text-ink" href={`mailto:${email}`}>
+                  <span class="sr-only">{t.emailLabel}{colon(lang)}</span>{email}
+                </a>
+              ) : (
+                <span><span class="sr-only">{t.emailLabel}{colon(lang)}</span>{t.placeholders.email}</span>
+              )
+            }
+          </li>
+        </ul>
+        <a
+          class="btn self-start bg-navy px-6 py-3.5 text-[15px] text-white"
+          href={whatsappHref ?? '#contact'}
+          target={whatsappHref ? '_blank' : undefined}
+          rel={whatsappHref ? 'noopener noreferrer' : undefined}
+          data-placeholder={whatsappHref ? undefined : 'whatsapp'}
+        >
+          <Icon name="whatsapp" size={20} />
+          {t.whatsapp}
+          {whatsappHref && <span class="sr-only">{useTranslations(lang).a11y.newWindow}</span>}
+        </a>
+      </div>
     </div>
 
     <ContactForm lang={lang} />

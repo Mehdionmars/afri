@@ -145,7 +145,6 @@ const ribs = Array.from({ length: 15 }, (_, i) => 22 + i * 12.5);
         setTimeout(() => {
           loader.classList.add('is-done');
           root.classList.remove('is-loading');
-          root.classList.add('hero-intro');
           try {
             sessionStorage.setItem('afx-seen', '1');
           } catch {

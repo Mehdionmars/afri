@@ -51,6 +51,8 @@ Les valeurs exactes du voile sous les textes du film seront calées sur les vrai
 | 2 | 0,34 à 0,62 | Il passe devant les piles, la vitesse se sent | FR « Exporter chaque mois, c'est un métier. » / EN « Exporting every month is a business. » | Mots qui frappent avec un léger rebond |
 | 3 (arrivée) | 0,70 à 1,00 | Il se pose, la poussière retombe, tout s'arrête | Sur-titre FR « Conseil en import-export · Maroc » / EN « Import-export consulting · Morocco ». H1 du client : FR « Développez vos échanges entre le Maroc, l'Afrique et le monde » / EN « Grow your trade between Morocco, Africa and the world ». Texte d'intro et deux boutons du client, inchangés. | Montée mot à mot, puis le texte, puis les boutons |
 
+**Texte (6 octobre 2026, d'après un exemple fourni par le client)** : très grandes capitales fines (Archivo Thin, auto-hébergée), en escalier sur toute la largeur. « IMPORT » à gauche, « & EXPORT » à droite ; dessous, alignés sur « & EXPORT », la phrase H1 du client et le texte d'intro ; les deux boutons en bas à gauche. La taille dépend aussi de la hauteur d'écran, pour que tout reste dans le ciel, au-dessus du parc à conteneurs.
+
 Hauteur de l'accueil : environ 400 vh de scroll. Les textes 1 et 2 se placent à gauche et à droite du couloir central où descend le conteneur (voile à deux côtés, le centre reste lumineux).
 
 **Coût** : image de départ 2,75 crédits ; vidéo 6 s 1080p au modèle choisi (Kling 3.0 : 10,5 ; Grok Video 1.5 : 48 ; Seedance 2.5 : 72) ; 8 photos dans le même univers, environ 22. Total avec Kling 3.0 et une nouvelle tentative de réserve : environ 46 crédits.
@@ -71,7 +73,7 @@ Aucune section ne reprend la mise en page de sa voisine.
    Titre « Nos services ». Sous-titre FR « Six métiers, un seul interlocuteur. » / EN « Six skills, one point of contact. »
 2. **Notre méthode** : une route horizontale à quatre escales sur fond clair, tracée au scroll, avec les quatre étapes du client.
    Sous-titre FR « À chaque étape, vous savez ce qui est fait, par qui, et quand. » / EN « At every step, you know what is done, by whom, and when. »
-3. **Pourquoi nous** : grande photo à gauche, les quatre arguments du client à droite, et un chiffre réel en exergue.
+3. **Pourquoi nous** (reprise le 6 octobre 2026 d'après « Bold Stats » de 21st.dev) : le chiffre réel en très grand avec sa phrase, la photo du port à droite, puis un filet et les quatre arguments du client sur une ligne.
    FR « 73 % des PME marocaines exportent. Un tiers seulement le font de façon régulière. » / EN « 73% of Moroccan SMEs export. Only a third do it regularly. »
    Source en petit : FR « Enquête BEI auprès de 150 PME exportatrices, 2025 » / EN « EIB survey of 150 exporting SMEs, 2025 ».
    Suite : FR « Nous aidons les autres à passer le cap. » / EN « We help the others make the leap. »
@@ -81,7 +83,7 @@ Aucune section ne reprend la mise en page de sa voisine.
    États « Neuf (One Way) » et « Cargo Worthy (CW) » en deux pastilles sous le sélecteur.
    Avec mouvement réduit, le changement est instantané.
 5. **Résultats** : la seule section sombre, pour le rythme. Les quatre chiffres en très grand, avec un compteur qui monte à l'arrivée. Ils restent fictifs tant que le client ne les fournit pas.
-6. **Contact** : coordonnées et WhatsApp sur le fond clair de la page à gauche (sans panneau coloré, à la demande du client), formulaire blanc à droite. Textes et champs du client inchangés.
+6. **Contact** : titre à gauche ; accroche, coordonnées et WhatsApp à droite, sur le fond clair de la page. Dessous, sur toute la largeur, une demande de devis (reprise le 6 octobre 2026 d'après un formulaire « Quick Quote » fourni en exemple) : cadre blanc, champs sur deux colonnes à libellé flottant, astérisque sur les champs obligatoires, compteur sous les précisions, bouton noir.
 7. **Pied de page** : inchangé, avec les mentions légales et « Gérer les cookies ».
 
 Une touche vivante discrète par section : le trait de la route qui respire, un léger reflet sur le conteneur du sélecteur, une poussière lumineuse très lente dans l'accueil fixe. Tout s'arrête avec le mouvement réduit.
@@ -113,3 +115,11 @@ Tout texte de ce dossier part tel quel. Avant de montrer le site : zéro tiret c
 À la demande du client (« il n'y a pas de photo »), le site reçoit 20 photos libres de droits (Wikimedia Commons : CC0, CC BY, CC BY-SA, créditées dans les mentions légales), en priorité des vues du Maroc : Tanger Med, port de Casablanca, céramiques de Safi, orangers. Règle de choix : pas de logo de compagnie maritime en gros plan, pas de personnalité reconnaissable, même lumière de plein jour que l'accueil. Chaque élément parallèle a sa photo (les six services, les quatre étapes, les trois missions types).
 
 Les pages intérieures (Services, une page par service, Méthode, Pourquoi nous, Conteneurs, Résultats) reprennent les motifs du site : étiquettes mono, route en pointillés, conteneur jaune, livrables en étiquettes de fret. Les familles de conteneurs sont dessinées à l'échelle en SVG plutôt que photographiées, car toutes les photos disponibles portaient des logos de compagnies.
+
+## 11. Version 4 (6 octobre 2026) : refonte GSAP + Lenis
+
+Le site est refait d'après un brief fourni par le client (inspiré d'un site de transporteur), avec trois décisions validées : tout le site est concerné, les textes et chiffres restent ceux d'AFRIEXPORT (espaces réservés quand il en manque), et la charte en cinq couleurs est conservée (le jaune remplace le rouge du brief, le bleu marine reste #0F2340).
+
+- **Direction** : fond clair, texte bleu marine, accent jaune ; Inter Tight en 300, titres de clamp(40px, 6vw, 96px) à interlignage serré ; petit label en capitales au-dessus de chaque titre (bleu marine sur fond clair, jaune sur fond sombre) ; losanges en dégradé jaune ; boutons à contour arrondi ; en-tête minimal (logo texte, menu, langue), lien actif en jaune.
+- **Accueil** : intro (titre en lignes qui montent, puis effacement au scroll), chiffres clés épinglés (rangée qui glisse en X, losanges en sens inverse), pourquoi nous (73 % sur coup de pinceau), bandeau des atouts en contour piloté par le scroll, méthode épinglée sur photo voilée à 80 %, services avec titre épinglé, parallaxe camion et triangle, engagements avec deux photos décalées, demande de devis, pied de page bleu marine.
+- **Technique** : GSAP 3.15 + ScrollTrigger (cdnjs) et Lenis 1.3 (jsDelivr) avec empreintes SRI ; réglages regroupés dans `CONFIG` en haut de `src/scripts/site-motion.ts` ; pas d'épinglage ni de défilement horizontal sous 768 px ; rien au scroll avec le mouvement réduit ; site complet si les CDN ne répondent pas.

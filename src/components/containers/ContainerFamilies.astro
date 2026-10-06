@@ -1,5 +1,13 @@
 ---
-/** Les cinq familles de conteneurs : silhouette, usage, point de vigilance. */
+/**
+ * Les cinq familles de conteneurs, avec un zoom sur chacune.
+ * Ordinateur (à partir de 1024 px) : la séquence reste fixe à l'écran pendant le défilement ;
+ * chaque famille passe au premier plan, puis le dessin zoome sur le détail qui la distingue
+ * (portes, groupe froid, bâche, colis arrimé, trou d'homme) — animations dans site-motion.ts.
+ * Un index à gauche montre la famille en cours et permet d'y aller directement.
+ * Téléphone et tablette : les familles s'empilent et chaque dessin zoome quand on le fait défiler.
+ * Mouvement réduit ou sans JavaScript : dessins entiers, détail écrit en dessous.
+ */
 import { families, formats, sideView, type Family } from '../../lib/containers';
 import { colon, useTranslations, type Lang } from '../../i18n/utils';
 
@@ -9,76 +17,293 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang).containersPage;
-const S = 30; // px par mètre : toutes les cartes à la même échelle (20 pieds)
+const S = 30; // px par mètre : tous les dessins à la même échelle (20 pieds)
+const PAD = { x: 14, top: 22, bottom: 12 };
+
+/** Point de zoom de chaque famille (fraction de la longueur et de la hauteur) et grossissement. */
+const focus: Record<Family, { x: number; y: number; zoom: number }> = {
+  dry: { x: 0.93, y: 0.5, zoom: 2.6 },
+  reefer: { x: 0.08, y: 0.42, zoom: 2.6 },
+  openTop: { x: 0.5, y: 0.06, zoom: 2.2 },
+  flatRack: { x: 0.5, y: 0.6, zoom: 1.8 },
+  tank: { x: 0.5, y: 0.14, zoom: 2.4 },
+};
+
+const MOBILE_ZOOM = 1.7; // grossissement maximal sur téléphone
+const round = (n: number) => Math.round(n * 100) / 100;
+/** Cadrage (viewBox) centré sur le point de zoom : le dessin reste vectoriel, donc net à tout grossissement. */
+const framing = (cx: number, cy: number, vw: number, vh: number, zoom: number) => {
+  const w = vw / zoom;
+  const h = vh / zoom;
+  return `${round(cx - w / 2)} ${round(cy - h / 2)} ${round(w)} ${round(h)}`;
+};
+
 const cards = families.map((family) => {
-  const members = formats.filter((f) => f.family === family);
-  const sample = members[0];
+  const sample = formats.find((f) => f.family === family)!;
   const w = Math.round(sample.ext[0] * S);
   const h = Math.round(sample.ext[2] * S);
-  return { family, svg: sideView(sample, S), w, h, words: t.families[family as Family] };
+  const vw = w + PAD.x * 2;
+  const vh = h + PAD.top + PAD.bottom;
+  const f = focus[family];
+  const cx = f.x * w;
+  const cy = f.y * h;
+  return {
+    family,
+    svg: sideView(sample, S),
+    w,
+    h,
+    viewBox: `${-PAD.x} ${-PAD.top} ${vw} ${vh}`,
+    viewZoom: framing(cx, cy, vw, vh, f.zoom),
+    viewZoomMobile: framing(cx, cy, vw, vh, Math.min(f.zoom, MOBILE_ZOOM)),
+    cx,
+    cy,
+    // Cercle autour du détail : un tiers de la hauteur du cadrage zoomé.
+    ring: round((vh / f.zoom) * 0.34),
+    words: t.families[family],
+    detail: t.familyDetails[family],
+  };
 });
 ---
 
-<ul class="m-0 grid list-none gap-5 p-0 md:grid-cols-2 xl:grid-cols-3" role="list">
-  {
-    cards.map((card, i) => (
-      <li class="family reveal lift flex flex-col overflow-hidden rounded-panel bg-metal-100" style={`--i:${i % 3}`}>
-        <div class="drawing" aria-hidden="true">
-          <svg viewBox={`-14 -22 ${card.w + 28} ${card.h + 34}`} focusable="false">
-            <line x1="-14" x2={card.w + 14} y1={card.h + 1} y2={card.h + 1} stroke="rgba(15, 35, 64,.25)" stroke-width="1.5" />
-            <g set:html={card.svg} />
-          </svg>
-        </div>
-        <div class="flex flex-1 flex-col gap-4 p-6 sm:p-7">
-          <h3 class="m-0 text-h3-lg">{card.words.name}</h3>
-          <p class="m-0 text-[16px] leading-[1.6] text-metal-600">{card.words.text}</p>
-          <div class="mt-auto flex flex-col gap-3 border-t border-navy/10 pt-4 text-[15px] leading-[1.5] text-metal-700">
-            <p class="m-0">
-              <strong class="font-semibold text-ink">
-                {t.familyLabels.uses}
-                {colon(lang)}
-              </strong>
-              {card.words.uses}
-            </p>
-            <p class="m-0">
-              <strong class="font-semibold text-ink">
-                {t.familyLabels.watch}
-                {colon(lang)}
-              </strong>
-              {card.words.watch}
-            </p>
+<!-- Enveloppe en bloc (pas en flex) : GSAP peut alors réserver la hauteur de l'épinglage. -->
+<div class="fam-block">
+<div class="fam" data-families>
+  <nav class="fam-index" aria-label={t.familyIndex}>
+    <ol class="m-0 list-none p-0" role="list">
+      {
+        cards.map((card, i) => (
+          <li>
+            <button type="button" class="fam-go" data-fam-go={i} aria-current={i === 0 ? 'true' : undefined}>
+              {card.words.name}
+            </button>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <div class="fam-stage" data-fam-stage>
+    {
+      cards.map((card) => (
+        <article class="fam-item" data-fam-item aria-labelledby={`famille-${card.family}`}>
+          <div class="fam-view" aria-hidden="true">
+            <div class="fam-zoom">
+              <svg viewBox={card.viewBox} data-fam-svg data-view-zoom={card.viewZoom} data-view-zoom-mobile={card.viewZoomMobile} focusable="false">
+                <line x1={-PAD.x} x2={card.w + PAD.x} y1={card.h + 1} y2={card.h + 1} stroke="rgba(15, 35, 64,.25)" stroke-width="1.5" />
+                <g set:html={card.svg} />
+                <circle class="fam-ring" cx={card.cx} cy={card.cy} r={card.ring} data-fam-ring />
+              </svg>
+            </div>
           </div>
-        </div>
-      </li>
-    ))
-  }
-  <li class="family-cta reveal flex flex-col justify-between gap-6 rounded-panel bg-navy p-7 text-white" style="--i:2">
-    <p class="m-0 text-[clamp(1.25rem,1.1rem+0.5vw,1.5rem)] font-medium leading-snug">{t.compareLead}</p>
-    <span class="flex flex-wrap gap-3">
-      <a href="#comparateur" class="btn bg-yellow px-5 py-3 text-[15px] text-ink">{t.compareTitle}</a>
-      <a href="#calculateur" class="btn border border-metal-600 px-5 py-3 text-[15px] font-medium text-white hover:border-metal-300">{t.calcTitle}</a>
-    </span>
-  </li>
-</ul>
+          <div class="fam-text">
+            <h3 id={`famille-${card.family}`} class="fam-name">
+              {card.words.name}
+            </h3>
+            <p class="m-0 text-[17px] leading-[1.6] text-metal-700">{card.words.text}</p>
+            <p class="fam-detail" data-fam-detail>
+              <strong>
+                {t.familyLabels.detail}
+                {colon(lang)}
+              </strong>
+              {card.detail}
+            </p>
+            <div class="fam-facts">
+              <p class="m-0">
+                <strong>
+                  {t.familyLabels.uses}
+                  {colon(lang)}
+                </strong>
+                {card.words.uses}
+              </p>
+              <p class="m-0">
+                <strong>
+                  {t.familyLabels.watch}
+                  {colon(lang)}
+                </strong>
+                {card.words.watch}
+              </p>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<div class="family-cta on-dark reveal">
+  <p class="m-0 max-w-[46ch] text-[clamp(1.25rem,1.1rem+0.5vw,1.5rem)] font-light leading-snug">{t.compareLead}</p>
+  <span class="flex flex-wrap gap-3">
+    <a href="#comparateur" class="btn bg-yellow px-5 py-3 text-[15px] text-ink">{t.compareTitle}</a>
+    <a href="#calculateur" class="btn border border-white/60 px-5 py-3 text-[15px] font-medium text-white hover:bg-white hover:text-navy">{t.calcTitle}</a>
+  </span>
+</div>
+</div>
 
 <style>
-  .drawing {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 34px 28px 18px;
-    background:
-      linear-gradient(180deg, #f5f6f8 0%, #eef0f2 100%);
-    border-bottom: 1px solid rgba(15, 35, 64, 0.08);
+  /* ---------- Par défaut (téléphone, tablette, sans animation) : les familles s'empilent ---------- */
+  .fam-index {
+    display: none;
   }
-  .drawing svg {
+  .fam-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .fam-item {
+    display: grid;
+    gap: 28px;
+  }
+  .fam-view {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 0;
+    /* Pas de cadre : le dessin se pose directement sur le fond gris de la section (un seul fond).
+       Bords en fondu : zoomé, le dessin s'estompe au lieu d'être coupé net. */
+    background: transparent;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%), linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    mask-composite: intersect;
+  }
+  /* Le zoom recadre le dessin (viewBox animé par site-motion.ts) : il reste net. */
+  .fam-zoom {
+    position: relative;
     width: 100%;
-    max-width: 260px;
+    max-width: 640px;
+  }
+  .fam-zoom svg {
+    display: block;
+    width: 100%;
     height: auto;
     overflow: visible;
-    transition: translate 0.45s var(--ease-out);
   }
-  .family:hover .drawing svg {
-    translate: 0 -4px;
+  /* Cercle jaune autour du détail, visible quand on zoome (trait constant de 2 px). */
+  .fam-ring {
+    fill: none;
+    stroke: #ffc342;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    opacity: 0;
+  }
+  .fam-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .fam-name {
+    margin: 0;
+    font-size: clamp(2rem, 1.4rem + 2.2vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: #0f2340;
+  }
+  .fam-detail {
+    margin: 0;
+    padding-left: 14px;
+    border-left: 3px solid #ffc342;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #0f2340;
+  }
+  .fam-detail strong,
+  .fam-facts strong {
+    font-weight: 600;
+    color: #0f2340;
+  }
+  .fam-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(15, 35, 64, 0.12);
+    font-size: 15px;
+    line-height: 1.5;
+    color: #3f4650;
+  }
+  @media (min-width: 768px) {
+    .fam-item {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 48px;
+    }
+  }
+
+  /* ---------- Ordinateur : séquence épinglée (classe ajoutée par site-motion.ts) ---------- */
+  .fam.is-pinned {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    height: 100vh;
+    padding-top: calc(var(--header-h) + 16px);
+    box-sizing: border-box;
+  }
+  .fam.is-pinned .fam-index {
+    display: block;
+  }
+  .fam.is-pinned .fam-stage {
+    position: relative;
+    display: block;
+    height: min(64vh, 560px);
+  }
+  .fam.is-pinned .fam-item {
+    position: absolute;
+    inset: 0;
+  }
+  .fam.is-pinned .fam-view {
+    height: 100%;
+  }
+  .fam-index ol {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-left: 1px solid rgba(15, 35, 64, 0.2);
+  }
+  .fam-go {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 0 0 16px;
+    margin-left: -1px;
+    border: 0;
+    border-left: 3px solid transparent;
+    background: transparent;
+    color: #5e6670;
+    font: inherit;
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  }
+  .fam-go:hover {
+    color: #0f2340;
+  }
+  .fam-go[aria-current='true'] {
+    border-left-color: #ffc342;
+    color: #0f2340;
+    font-weight: 500;
+  }
+
+  /* ---------- Encart vers le comparateur et le calculateur ---------- */
+  .fam-block {
+    display: block;
+  }
+  .family-cta {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 32px;
+    border-radius: 4px;
+    background: #0f2340;
+    color: #fff;
   }
 </style>

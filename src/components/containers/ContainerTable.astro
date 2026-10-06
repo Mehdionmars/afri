@@ -29,7 +29,7 @@ const internal = (f: (typeof formats)[number]) =>
     <button type="button" class="filter" aria-pressed="true" data-filter="all">{t.filterAll}</button>
     {families.map((family) => <button type="button" class="filter" aria-pressed="false" data-filter={family}>{t.families[family].name}</button>)}
   </div>
-  <div class="scroller overflow-x-auto rounded-card bg-white" tabindex="0" role="region" aria-label={t.tableTitle}>
+  <div class="scroller relative overflow-x-auto rounded-card bg-white" tabindex="0" role="region" aria-label={t.tableTitle}>
     <table class="w-full min-w-[880px] border-collapse text-left text-[14.5px]">
       <thead>
         <tr>

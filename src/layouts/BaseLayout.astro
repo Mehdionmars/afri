@@ -1,4 +1,5 @@
 ---
+import '@fontsource-variable/inter-tight/wght.css';
 import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -40,7 +41,8 @@ const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
-      // Avant le premier affichage : écran de chargement (1re page de la visite) ou entrée directe de l'accueil.
+      // Avant le premier affichage : écran de chargement (1re page de la visite),
+      // puis, sur les pages suivantes, voile blanc qui se lève (src/scripts/page-transition.ts).
       (function () {
         var c = document.documentElement.classList;
         c.add('js');
@@ -49,12 +51,17 @@ const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
         try { seen = !!sessionStorage.getItem('afx-seen'); } catch (e) {}
         if (reduce || seen) {
           c.add('no-loader');
-          if (!reduce) c.add('hero-intro');
+          if (!reduce) c.add('veil');
         } else {
           c.add('is-loading');
         }
       })();
     </script>
+    <!-- GSAP 3 + ScrollTrigger (cdnjs) et Lenis (jsDelivr) : scripts « defer », vérifiés par leur empreinte (SRI).
+         S'ils ne chargent pas, le site reste complet, sans animation (src/scripts/site-motion.ts). -->
+    <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" integrity="sha512-oJ8QbaQThQoJZ7oEv+29jfPM6CcP+zUxh3PKJs1vyOhx0UraUrE7PQgeItu3dOuCJyrzWpoYMsVjkkPEBzbUqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" integrity="sha512-OaIE7ud4P04EhnBuhEcm0wQSceIxbi2pV03oBLS/+F6ampfxsnxcIxOp7H2eF9G7N0kEht0VAzOLG+dTLSo17Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script is:inline defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" integrity="sha384-jqpi9VmOdhyLoLURgjCn7EpnG9BbnHW57ibIZoeaIU+erWDH3k8fQQg0xH2ySjnw" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>{title}</title>
     <meta name="description" content={description} />
     {(noindex || isPreview) && <meta name="robots" content={isPreview ? 'noindex, nofollow' : 'noindex'} />}
@@ -86,6 +93,7 @@ const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
   </head>
   <body>
     <PageLoader lang={lang} />
+    <div class="page-veil" aria-hidden="true"></div>
     <a href="#main" class="skip-link">{t.a11y.skip}</a>
     <Header lang={lang} alternates={alternates} isHome={isHome} current={current} contactHref={contactHref} />
     <main id="main" tabindex="-1">
@@ -98,6 +106,53 @@ const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
 </html>
 
 <style>
+  /* Voile blanc entre deux pages : bords adoucis en haut et en bas.
+     Arrivée : il couvre l'écran puis se lève vers le haut en dévoilant la page de bas en haut.
+     Départ : il monte depuis le bas en s'éclaircissant de blanc, puis la page suivante s'ouvre. */
+  .page-veil {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 90;
+    display: none;
+    height: 180vh;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0, #fff 20vh, #fff 160vh, rgba(255, 255, 255, 0) 180vh);
+  }
+  :global(html.veil) .page-veil {
+    display: block;
+    animation: afVeilUp 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.08s both;
+  }
+  :global(html.veil-out) .page-veil {
+    display: block;
+    animation: afVeilIn 0.45s cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  @keyframes afVeilUp {
+    from {
+      translate: 0 -20vh;
+    }
+    to {
+      translate: 0 -180vh;
+      visibility: hidden;
+    }
+  }
+  @keyframes afVeilIn {
+    from {
+      translate: 0 100vh;
+      opacity: 0;
+    }
+    to {
+      translate: 0 -20vh;
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-veil {
+      display: none !important;
+    }
+  }
+
   .skip-link {
     position: fixed;
     left: 16px;
@@ -120,6 +175,7 @@ const contactHref = hasContact ? '#contact' : `${routes.home[lang]}#contact`;
 </style>
 
 <script>
-  import '../scripts/reveal';
+  import '../scripts/site-motion';
   import '../scripts/motion';
+  import '../scripts/page-transition';
 </script>

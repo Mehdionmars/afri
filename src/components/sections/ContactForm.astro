@@ -1,4 +1,10 @@
 ---
+/**
+ * Demande de devis : un cadre blanc, les champs sur deux colonnes (une seule sur téléphone),
+ * libellés flottants, astérisque sur les champs obligatoires, compteur sous les précisions.
+ * Envoi à Web3Forms sans backend (voir src/scripts/contact-form.ts).
+ */
+import FloatField from '../ui/FloatField.astro';
 import Icon from '../ui/Icon.astro';
 import { routes, useTranslations, type Lang } from '../../i18n/utils';
 
@@ -7,7 +13,8 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const t = useTranslations(lang).contact.form;
+const all = useTranslations(lang);
+const t = all.contact.form;
 
 // Clé Web3Forms : elle désigne la boîte e-mail de destination (voir README).
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
@@ -21,13 +28,15 @@ const messages = {
   submit: t.submit,
 };
 
-const input = 'min-h-12 w-full rounded-lg border border-metal bg-white px-3.5 py-3 text-base text-ink placeholder:text-metal-600 transition-[border-color,box-shadow] duration-200 focus:border-navy focus:outline-none focus:ring-[3px] focus:ring-yellow aria-[invalid=true]:border-ink aria-[invalid=true]:shadow-[inset_4px_0_0_#FFC342,0_0_0_1px_#0B0B0C]';
-const label = 'text-sm font-bold text-ink';
-const error = 'field-error m-0 text-sm font-semibold text-ink';
+// Les six services du site, puis « Je ne sais pas encore ».
+const services = [...all.services.items.map((item) => item.title), t.serviceUnsure];
+// Les formats du guide des conteneurs, plus le groupage pour les petits volumes.
+const containers = [t.containerUnsure, ...Object.values(all.containersPage.formats), t.groupage];
+const DETAILS_MAX = 1000;
 ---
 
 <form
-  class="reveal on-light flex flex-col gap-[18px] rounded-panel bg-white p-6 sm:p-9"
+  class="quote on-light"
   action="https://api.web3forms.com/submit"
   method="POST"
   novalidate
@@ -35,9 +44,9 @@ const error = 'field-error m-0 text-sm font-semibold text-ink';
   data-contact-form
   data-messages={JSON.stringify(messages)}
 >
-  <h3 id="contact-form-title" class="sr-only">{t.title}</h3>
+  <h3 id="contact-form-title" class="quote-title">{t.title}</h3>
 
-  <div class="form-success flex items-start gap-3 rounded-xl bg-metal-100 p-4 text-ink" tabindex="-1" hidden data-form-success>
+  <div class="form-success" tabindex="-1" hidden data-form-success>
     <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-navy text-white"><Icon name="check" size={14} stroke={3} /></span>
     <p class="m-0 text-[15px] leading-normal">{t.success}</p>
   </div>
@@ -52,36 +61,47 @@ const error = 'field-error m-0 text-sm font-semibold text-ink';
     <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
   </label>
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div class="flex flex-col gap-2">
-      <label for="cf-name" class={label}>{t.name}</label>
-      <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="120" placeholder={t.namePlaceholder} class={input} aria-describedby="cf-name-error" />
-      <p id="cf-name-error" class={error} hidden></p>
-    </div>
-    <div class="flex flex-col gap-2">
-      <label for="cf-company" class={label}>{t.company} <span class="font-normal text-metal-600">({t.optional})</span></label>
-      <input id="cf-company" name="company" type="text" autocomplete="organization" maxlength="120" placeholder={t.companyPlaceholder} class={input} />
-    </div>
-  </div>
+  <div class="quote-grid">
+    <FloatField id="cf-firstname" name="prenom" label={t.firstName} required autocomplete="given-name" maxlength={60} />
+    <FloatField id="cf-lastname" name="nom" label={t.lastName} required autocomplete="family-name" maxlength={60} />
+    <FloatField id="cf-email" name="email" type="email" label={t.email} required autocomplete="email" maxlength={160} />
+    <FloatField id="cf-phone" name="telephone" type="tel" label={t.phone} required autocomplete="tel" maxlength={30} />
+    <FloatField id="cf-company" name="societe" label={t.company} autocomplete="organization" maxlength={120} />
 
-  <div class="grid gap-4 sm:grid-cols-2">
-    <div class="flex flex-col gap-2">
-      <label for="cf-email" class={label}>{t.email}</label>
-      <input id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="160" placeholder={t.emailPlaceholder} class={input} aria-describedby="cf-email-error" />
-      <p id="cf-email-error" class={error} hidden></p>
-    </div>
-    <div class="flex flex-col gap-2">
-      <label for="cf-need" class={label}>{t.need}</label>
-      <select id="cf-need" name="need" required class={input}>
-        {t.needs.map((need) => <option value={need}>{need}</option>)}
-      </select>
-    </div>
-  </div>
+    <fieldset class="choice">
+      <legend class="choice-legend">{t.operation}</legend>
+      <div class="choice-options">
+        {
+          t.operations.map((operation, i) => (
+            <label class="choice-option">
+              <input type="radio" name="operation" value={operation} checked={i === 0} />
+              {operation}
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
 
-  <div class="flex flex-col gap-2">
-    <label for="cf-message" class={label}>{t.message}</label>
-    <textarea id="cf-message" name="message" rows="5" required minlength="20" maxlength="4000" placeholder={t.messagePlaceholder} class:list={[input, 'resize-y']} aria-describedby="cf-message-error"></textarea>
-    <p id="cf-message-error" class={error} hidden></p>
+    <FloatField id="cf-origin" name="pays_origine" label={t.origin} required maxlength={80} />
+    <FloatField id="cf-destination" name="pays_destination" label={t.destination} required maxlength={80} />
+
+    <FloatField id="cf-service" name="service" label={t.service} as="select" required>
+      <option value="" disabled selected>{t.servicePrompt}</option>
+      {services.map((service) => <option value={service}>{service}</option>)}
+    </FloatField>
+    <FloatField id="cf-container" name="conteneur" label={t.container} as="select">
+      {containers.map((container) => <option value={container}>{container}</option>)}
+    </FloatField>
+
+    <FloatField id="cf-goods" name="marchandise" label={t.goods} required maxlength={160} />
+    <FloatField id="cf-volume" name="volume_estime" label={t.volume} maxlength={120} />
+
+    <div class="span-2">
+      <FloatField id="cf-details" name="precisions" label={t.details} as="textarea" rows={4} maxlength={DETAILS_MAX} describedby="cf-details-count" />
+      <p id="cf-details-count" class="counter" data-counter data-template={t.counter} data-max={DETAILS_MAX}>
+        {t.counter.replace('{n}', '0').replace('{max}', String(DETAILS_MAX))}
+      </p>
+    </div>
   </div>
 
   <div class="flex flex-col gap-2">
@@ -91,24 +111,207 @@ const error = 'field-error m-0 text-sm font-semibold text-ink';
         {t.consent} <a href={routes.privacy[lang]} class="font-semibold text-ink underline underline-offset-2">{t.consentLink}</a>.
       </label>
     </div>
-    <p id="cf-consent-error" class={error} hidden></p>
+    <p id="cf-consent-error" class="field-error" hidden></p>
   </div>
 
   <p class="m-0 rounded-lg border-l-4 border-yellow bg-metal-100 p-3 text-sm font-semibold text-ink" role="alert" hidden data-form-error></p>
 
-  <button type="submit" class="btn min-h-12 w-full border-0 bg-navy p-4 text-base text-white disabled:cursor-wait disabled:opacity-80" data-form-submit>
-    {t.submit}
-  </button>
+  <div class="quote-footer">
+    <button type="submit" class="btn min-h-12 border-0 bg-ink px-8 text-base text-white disabled:cursor-wait disabled:opacity-80" data-form-submit>
+      {t.submit}
+    </button>
+    <p class="m-0 text-sm text-metal-600"><span aria-hidden="true">* </span>{t.requiredNote}</p>
+  </div>
 </form>
 
-<style>
-  /* Message d'erreur : pictogramme « ! » jaune devant le texte. */
-  .field-error:not([hidden]) {
+<style is:global>
+  /* ---------- Cadre ---------- */
+  .quote {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 24px 18px;
+    border: 1px solid #b8c0c9;
+    border-radius: 20px;
+    background: #fff;
+  }
+  .quote-title {
+    margin: 0;
+    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .quote-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .quote-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+  }
+  .quote .form-success {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #eef0f2;
+    color: #0b0b0c;
+  }
+  .quote .form-success[hidden] {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .quote {
+      padding: 36px 40px 32px;
+    }
+    .quote-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 28px;
+    }
+    .quote-grid .span-2 {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ---------- Champs à libellé flottant ---------- */
+  .fl {
+    position: relative;
+  }
+  .fl-control {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    padding: 24px 14px 8px;
+    border: 1px solid #8b949e;
+    border-radius: 8px;
+    background: #fff;
+    color: #0b0b0c;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.4;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .fl-area .fl-control {
+    min-height: 132px;
+    padding-top: 28px;
+    resize: vertical;
+  }
+  .fl-select .fl-control {
+    padding-right: 40px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230B0B0C' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+  /* Liste obligatoire pas encore choisie : le texte d'invite reste gris. */
+  .fl-select .fl-control:invalid {
+    color: #5e6670;
+  }
+  .fl-control:hover {
+    border-color: #0f2340;
+  }
+  .fl-control:focus {
+    border-color: #0f2340;
+    outline: none;
+    box-shadow: 0 0 0 3px #ffc342;
+  }
+  .fl-control[aria-invalid='true'] {
+    border-color: #0b0b0c;
+    box-shadow: inset 4px 0 0 #ffc342, 0 0 0 1px #0b0b0c;
+  }
+  .fl-label {
+    position: absolute;
+    top: 17px;
+    left: 15px;
+    right: 15px;
+    overflow: hidden;
+    color: #5e6670;
+    font-size: 16px;
+    line-height: 1.3;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    transition: top 0.15s, font-size 0.15s, color 0.15s;
+  }
+  /* Le libellé remonte en petit dès que le champ a le focus ou une valeur (toujours pour une liste). */
+  .fl-control:focus + .fl-label,
+  .fl-control:not(:placeholder-shown) + .fl-label,
+  .fl-select .fl-label {
+    top: 7px;
+    color: #0b0b0c;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .fl .field-error {
+    margin-top: 6px;
+  }
+
+  /* ---------- Type d'opération (boutons radio) ---------- */
+  .choice {
+    position: relative;
+    min-width: 0;
+    min-height: 56px;
+    margin: 0;
+    padding: 26px 14px 8px;
+    border: 1px solid #8b949e;
+    border-radius: 8px;
+  }
+  .choice-legend {
+    position: absolute;
+    top: 7px;
+    left: 15px;
+    padding: 0;
+    color: #0b0b0c;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .choice-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+  }
+  .choice-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .choice-option input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #0f2340;
+    cursor: pointer;
+  }
+
+  /* ---------- Compteur, erreurs, piège à robots ---------- */
+  .counter {
+    margin: 6px 0 0;
+    color: #5e6670;
+    font-size: 14px;
+    text-align: right;
+  }
+  .quote .field-error {
+    margin-bottom: 0;
+    color: #0b0b0c;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .quote .field-error:not([hidden]) {
     display: flex;
     align-items: flex-start;
     gap: 8px;
   }
-  .field-error::before {
+  /* Message d'erreur : pictogramme « ! » jaune devant le texte. */
+  .quote .field-error::before {
     content: '!';
     display: inline-flex;
     flex: none;
@@ -124,14 +327,14 @@ const error = 'field-error m-0 text-sm font-semibold text-ink';
     font-weight: 800;
     line-height: 1;
   }
-  .hp {
+  .quote .hp {
     position: absolute;
+    left: -9999px;
     width: 1px;
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
-    left: -9999px;
   }
 </style>
 

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "AFRIEXPORT CONSULTING | Conseil en import-export au Maroc",
-    "description": "Cabinet de conseil en import-export basé au Maroc : étude de marché, recherche de partenaires, douane et logistique internationale vers l'Afrique et le monde.",
+    "description": "Cabinet de conseil en import-export basé au Maroc : étude de marché, recherche de partenaires, douane et logistique internationale vers l'Afrique et le monde.",
     "ogImageAlt": "AFRIEXPORT CONSULTING, conseil en import-export entre le Maroc, l'Afrique et le monde",
     "locale": "fr_FR"
   },
@@ -38,8 +38,12 @@
       "Exporter une fois, c'est un essai.",
       "Exporter chaque mois, c'est un métier."
     ],
+    "giant": [
+      "Import",
+      "& Export"
+    ],
     "title": "Développez vos échanges entre le Maroc, l'Afrique et le monde",
-    "lead": "AFRIEXPORT CONSULTING accompagne les entreprises dans leurs opérations d'import et d'export : étude de marché, recherche de partenaires, réglementation douanière et logistique internationale.",
+    "lead": "AFRIEXPORT CONSULTING accompagne les entreprises dans leurs opérations d'import et d'export : étude de marché, recherche de partenaires, réglementation douanière et logistique internationale.",
     "ctaPrimary": "Parler à un consultant",
     "ctaSecondary": "Découvrir nos services"
   },
@@ -52,42 +56,42 @@
         "id": "etude-de-marche",
         "title": "Étude de marché",
         "tag": "Marchés & prix",
-        "photo": "[Photo : analyse de marché]",
+        "photo": "[Photo : analyse de marché]",
         "alt": "Analyse de marché à l'export"
       },
       {
         "id": "partenaires",
         "title": "Recherche de partenaires",
         "tag": "Acheteurs & fournisseurs",
-        "photo": "[Photo : poignée de main]",
+        "photo": "[Photo : poignée de main]",
         "alt": "Poignée de main entre partenaires commerciaux"
       },
       {
         "id": "douane",
         "title": "Douane et réglementation",
         "tag": "Conformité de vos dossiers",
-        "photo": "[Photo : contrôle douanier]",
+        "photo": "[Photo : contrôle douanier]",
         "alt": "Contrôle douanier de marchandises"
       },
       {
         "id": "logistique",
         "title": "Logistique internationale",
         "tag": "Mer · air · route",
-        "photo": "[Photo : porte-conteneurs]",
+        "photo": "[Photo : porte-conteneurs]",
         "alt": "Porte-conteneurs en mer"
       },
       {
         "id": "contrats",
         "title": "Contrats et paiements",
         "tag": "Paiements sécurisés",
-        "photo": "[Photo : signature de contrat]",
+        "photo": "[Photo : signature de contrat]",
         "alt": "Signature d'un contrat commercial"
       },
       {
         "id": "formation",
         "title": "Formation export",
         "tag": "Équipes formées",
-        "photo": "[Photo : formation]",
+        "photo": "[Photo : formation]",
         "alt": "Formation d'une équipe à l'export"
       }
     ]
@@ -108,7 +112,7 @@
       },
       {
         "title": "Mise en œuvre",
-        "text": "Démarches douanières, contrats, transport : nous coordonnons chaque intervenant."
+        "text": "Démarches douanières, contrats, transport : nous coordonnons chaque intervenant."
       },
       {
         "title": "Suivi",
@@ -119,7 +123,7 @@
   "why": {
     "eyebrow": "Pourquoi AFRIEXPORT",
     "title": "Un partenaire qui connaît le terrain africain",
-    "photo": "[Photo : port, conteneurs ou équipe AFRIEXPORT]",
+    "photo": "[Photo : port, conteneurs ou équipe AFRIEXPORT]",
     "photoAlt": "L'équipe AFRIEXPORT CONSULTING sur un terminal à conteneurs",
     "reasons": [
       {
@@ -132,7 +136,7 @@
       },
       {
         "title": "Réseau de partenaires",
-        "text": "Transitaires, transporteurs, organismes de certification : nous mobilisons les bons acteurs."
+        "text": "Transitaires, transporteurs, organismes de certification : nous mobilisons les bons acteurs."
       },
       {
         "title": "Transparence",
@@ -183,7 +187,10 @@
         "title": "En l'état (As Is)",
         "text": "Vendu sans garantie, à inspecter avant tout achat."
       }
-    ]
+    ],
+    "dragHint": "Glissez pour faire tourner",
+    "rotateLabel": "Conteneur en 3D : glissez, ou utilisez les flèches du clavier, pour le faire tourner",
+    "rotateValue": "Rotation de {deg} degrés"
   },
   "results": {
     "eyebrow": "Résultats",
@@ -195,7 +202,7 @@
     "faster": {
       "title": "Dossiers traités plus vite",
       "text": "Procédures douanières et documents préparés en amont",
-      "photo": "[Photo : équipe sur le terminal à conteneurs]",
+      "photo": "[Photo : équipe sur le terminal à conteneurs]",
       "photoAlt": "Équipe sur un terminal à conteneurs"
     },
     "presence": {
@@ -1065,7 +1072,8 @@
     "familyLabels": {
       "uses": "Idéal pour",
       "watch": "À savoir",
-      "formats": "Formats"
+      "formats": "Formats",
+      "detail": "En détail"
     },
     "families": {
       "dry": {
@@ -1281,7 +1289,15 @@
         "q": "Peut-on dépasser la charge utile indiquée ?",
         "a": "Non. La charge utile est un maximum technique. Il faut aussi respecter les limites de poids sur route de chaque pays traversé, souvent plus basses."
       }
-    ]
+    ],
+    "familyDetails": {
+      "dry": "Les portes à double battant et leurs barres de verrouillage, à l'arrière.",
+      "reefer": "Le groupe froid, intégré à l'avant : il se branche à quai et à bord.",
+      "openTop": "La bâche amovible, tenue par des cordes : on charge par le haut, à la grue.",
+      "flatRack": "Le colis lourd, arrimé sur le plancher renforcé entre les deux parois d'extrémité.",
+      "tank": "La cuve en acier inoxydable et son trou d'homme, dans un cadre de 20 pieds."
+    },
+    "familyIndex": "Choisir une famille"
   },
   "resultsPage": {
     "meta": {
@@ -1390,7 +1406,7 @@
   "contact": {
     "eyebrow": "Contact",
     "title": "Parlons de votre projet à l'international",
-    "lead": "Décrivez-nous votre besoin : un consultant vous recontacte pour un premier échange.",
+    "lead": "Décrivez-nous votre besoin : un consultant vous recontacte pour un premier échange.",
     "addressLabel": "Adresse",
     "phoneLabel": "Téléphone",
     "emailLabel": "E-mail",
@@ -1402,37 +1418,45 @@
     "whatsapp": "Écrire sur WhatsApp",
     "whatsappMessage": "Bonjour AFRIEXPORT CONSULTING, je souhaite parler de mon projet.",
     "form": {
-      "title": "Formulaire de contact",
-      "name": "Nom complet",
-      "namePlaceholder": "Votre nom",
-      "company": "Société",
-      "companyPlaceholder": "Nom de l'entreprise",
-      "optional": "facultatif",
+      "title": "Demande de devis",
+      "firstName": "Prénom",
+      "lastName": "Nom",
       "email": "E-mail",
-      "emailPlaceholder": "vous@entreprise.ma",
-      "need": "Votre besoin",
-      "needs": [
-        "Exporter mes produits",
-        "Importer / trouver des fournisseurs",
-        "Douane et réglementation",
-        "Autre"
+      "phone": "Téléphone",
+      "company": "Société",
+      "operation": "Type d'opération",
+      "operations": [
+        "Export",
+        "Import",
+        "Les deux"
       ],
-      "message": "Message",
-      "messagePlaceholder": "Décrivez votre projet : produit, pays visés, volumes…",
+      "origin": "Pays d'origine",
+      "destination": "Pays de destination",
+      "service": "Service souhaité",
+      "servicePrompt": "Choisissez un service",
+      "serviceUnsure": "Je ne sais pas encore",
+      "container": "Type de conteneur",
+      "containerUnsure": "Je ne sais pas encore",
+      "groupage": "Groupage (moins d'un conteneur)",
+      "goods": "Marchandise concernée",
+      "volume": "Volume estimé",
+      "details": "Précisions",
+      "counter": "{n} sur {max}",
+      "requiredNote": "Champ obligatoire",
       "consent": "J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la",
       "consentLink": "politique de confidentialité",
       "honeypot": "Ne remplissez pas ce champ.",
-      "required": "obligatoire",
       "submit": "Envoyer ma demande",
       "sending": "Envoi en cours…",
-      "subject": "Nouvelle demande depuis le site AFRIEXPORT CONSULTING",
+      "subject": "Nouvelle demande de devis depuis le site AFRIEXPORT CONSULTING",
       "success": "Merci, votre demande est bien envoyée. Un consultant vous recontacte pour un premier échange.",
       "error": "L'envoi n'a pas abouti. Réessayez dans un instant, ou écrivez-nous sur WhatsApp ou par e-mail.",
       "summary": "Vérifiez les champs signalés.",
       "errors": {
         "required": "Ce champ est obligatoire.",
         "email": "Saisissez une adresse e-mail valide, par exemple nom@entreprise.ma.",
-        "messageShort": "Ajoutez quelques mots sur votre projet (20 caractères minimum).",
+        "phone": "Saisissez un numéro de téléphone valide, par exemple +212 6 12 34 56 78.",
+        "choice": "Choisissez une option dans la liste.",
         "consent": "Cochez cette case pour que nous puissions traiter votre demande."
       }
     }
@@ -1471,5 +1495,76 @@
     "title": "Page introuvable",
     "text": "Cette page n'existe pas ou a été déplacée.",
     "cta": "Retour à l'accueil"
+  },
+  "home": {
+    "introCta": "Parler à un consultant",
+    "figures": {
+      "label": "Résultats",
+      "captions": [
+        "nouveaux partenariats stratégiques",
+        "de temps gagné sur vos dossiers",
+        "pays où vos produits sont présents",
+        "de croissance de vos échanges",
+        "métiers, un seul interlocuteur",
+        "formats de conteneurs dans notre guide"
+      ]
+    },
+    "people": {
+      "photoAlt": "Une équipe réunie autour d'une table de travail"
+    },
+    "values": {
+      "label": "Nos atouts"
+    },
+    "method": {
+      "bgAlt": ""
+    },
+    "services": {
+      "label": "Nos services"
+    },
+    "containers": {
+      "label": "Conteneurs maritimes",
+      "photoAlt": "Camion transportant des conteneurs sur la route"
+    },
+    "commitments": {
+      "label": "Engagements",
+      "photoAAlt": "Artisan au travail dans son atelier",
+      "photoBAlt": "Oranges sur l'arbre, au Maroc"
+    }
+  },
+  "sectionLabels": {
+    "containers": {
+      "picker": "Sélecteur 3D",
+      "families": "Familles",
+      "compare": "Comparateur",
+      "calc": "Calculateur",
+      "states": "États"
+    },
+    "method": {
+      "commitments": "Engagements"
+    },
+    "results": {
+      "figures": "Chiffres clés",
+      "missions": "Missions types",
+      "testimonials": "Témoignages",
+      "sectors": "Secteurs"
+    },
+    "service": {
+      "what": "Le service",
+      "steps": "Déroulé",
+      "deliverables": "Livrables",
+      "related": "À découvrir",
+      "hero": "Services"
+    },
+    "services": {
+      "list": "Nos services",
+      "bundle": "Mission complète"
+    },
+    "why": {
+      "reasons": "Nos atouts",
+      "network": "Réseau",
+      "zones": "Zones couvertes",
+      "team": "Équipe"
+    },
+    "faq": "FAQ"
   }
 }

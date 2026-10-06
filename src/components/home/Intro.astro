@@ -1,0 +1,97 @@
+---
+/**
+ * 1. Intro de l'accueil : label, très grand titre (H1 du client) découpé en lignes par GSAP,
+ * texte d'introduction en bas à droite. Au scroll, le contenu s'efface et remonte (site-motion.ts).
+ */
+import Button from '../ui/Button.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const all = useTranslations(lang);
+const t = all.hero;
+---
+
+<section id="accueil" class="intro on-light" aria-labelledby="hero-title" data-intro>
+  <span class="diamond intro-diamond" aria-hidden="true"></span>
+  <span class="diamond intro-diamond-2" aria-hidden="true"></span>
+  <div class="intro-content" data-intro-content>
+    <p class="label" data-intro-fade>{t.eyebrow}</p>
+    <h1 id="hero-title" class="intro-title" data-intro-title>{t.title}</h1>
+    <div class="intro-foot">
+      <p class="intro-lead" data-intro-fade>{t.lead}</p>
+      <div data-intro-fade>
+        <Button href="#contact" variant="line" size="lg">{all.home.introCta}</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    min-height: 100svh;
+    padding: calc(var(--header-h) + clamp(32px, 7vh, 96px)) max(16px, 5%) clamp(40px, 7vh, 88px);
+  }
+  .intro-content {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vh, 32px);
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  /* Titre très grand, fin et serré. */
+  .intro-title {
+    max-width: 15ch;
+    margin: 0;
+    font-size: clamp(40px, 6vw, 96px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: #0f2340;
+  }
+  /* Texte d'introduction en bas à droite. */
+  .intro-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+  .intro-lead {
+    max-width: 34rem;
+    margin: 0;
+    font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.1875rem);
+    line-height: 1.6;
+    color: #3f4650;
+  }
+  @media (min-width: 1024px) {
+    .intro-foot {
+      align-self: flex-end;
+      width: min(34rem, 45%);
+    }
+  }
+  /* Losanges : un grand en partie hors de l'écran à droite, un petit plus bas. */
+  .intro-diamond {
+    z-index: -1;
+    right: -14vw;
+    top: 18%;
+    width: clamp(260px, 38vw, 620px);
+    opacity: 0.55;
+  }
+  .intro-diamond-2 {
+    z-index: -1;
+    left: 38%;
+    bottom: -6vw;
+    width: clamp(90px, 12vw, 200px);
+    opacity: 0.35;
+  }
+</style>
