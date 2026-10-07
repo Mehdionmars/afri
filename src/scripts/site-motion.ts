@@ -5,6 +5,9 @@
  * - Chaque section de l'accueil a son animation ; les pages intérieures utilisent les animations
  *   génériques (.reveal, titres découpés en lignes).
  * - Sous 768 px : ni épinglage, ni défilement horizontal (gsap.matchMedia).
+ * - Écrans tactiles (téléphones, tablettes) : aucun effet lié au défilement et rien n'est masqué
+ *   en attendant de défiler. Sur iOS, l'élan du défilement retarde les mises à jour : du contenu masqué
+ *   n'apparaissait qu'à l'arrêt. Les effets au scroll sont réservés à la souris.
  * - Avec « mouvement réduit » : ni Lenis, ni animation au scroll ; tout reste visible.
  * - Sans GSAP (CDN injoignable) : rien n'est masqué, le site reste complet.
  *
@@ -16,7 +19,12 @@ const CONFIG = {
   lenis: { lerp: 0.1, wheelMultiplier: 1 },
   /** Amorti des animations liées au scroll (secondes de retard sur la molette). */
   scrub: 0.2,
-  breakpoints: { desktop: '(min-width: 768px)', mobile: '(max-width: 767px)', wide: '(min-width: 1024px)' },
+  /** Effets liés au défilement : seulement avec une souris (pas sur écran tactile). */
+  pointer: '(hover: hover) and (pointer: fine)',
+  breakpoints: {
+    desktop: '(min-width: 768px) and (hover: hover) and (pointer: fine)',
+    wide: '(min-width: 1024px) and (hover: hover) and (pointer: fine)',
+  },
   /** Apparition générique des éléments .reveal. */
   reveal: { y: 30, duration: 0.9, ease: 'power3.out', start: 'top 88%' },
   /** 1. Intro : lignes du titre, puis effacement au scroll. */
@@ -36,8 +44,8 @@ const CONFIG = {
   /** Page Conteneurs, familles : conditions d'épinglage et durée par famille (en % d'écran).
    *  Le point et le grossissement de chaque zoom sont dans ContainerFamilies.astro (focus). */
   families: {
-    pinned: '(min-width: 1024px) and (min-height: 600px)',
-    stacked: '(max-width: 1023px), (max-height: 599px)',
+    pinned: '(min-width: 1024px) and (min-height: 600px) and (hover: hover) and (pointer: fine)',
+    stacked: '(max-width: 1023px), (max-height: 599px), (hover: none), (pointer: coarse)',
     perItem: 90,
   },
 };
@@ -116,6 +124,10 @@ function start() {
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
+  // iOS et Android : la barre d'adresse qui apparaît et disparaît ne relance pas tous les calculs
+  // (cela provoquait des saccades pendant le défilement).
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  const mm = gsap.matchMedia();
 
   // ---------- Lenis, synchronisé avec ScrollTrigger ----------
   if (w.Lenis) {
@@ -128,17 +140,20 @@ function start() {
   }
   root.classList.add('motion');
 
-  // ---------- Générique : apparition en fondu des éléments .reveal ----------
+  // ---------- Générique : apparition en fondu des éléments .reveal (avec une souris seulement) ----------
   // Opacité seule (pas de visibility: hidden) : les liens et champs restent atteignables au clavier
   // avant d'être apparus ; le focus fait défiler jusqu'à eux, ce qui les fait apparaître.
-  gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
-    if (el.closest('[data-no-reveal]')) return;
-    gsap.from(el, {
-      y: CONFIG.reveal.y,
-      opacity: 0,
-      duration: CONFIG.reveal.duration,
-      ease: CONFIG.reveal.ease,
-      scrollTrigger: { trigger: el, start: CONFIG.reveal.start, once: true },
+  // Sur écran tactile, tout est affiché tout de suite.
+  mm.add(CONFIG.pointer, () => {
+    gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+      if (el.closest('[data-no-reveal]')) return;
+      gsap.from(el, {
+        y: CONFIG.reveal.y,
+        opacity: 0,
+        duration: CONFIG.reveal.duration,
+        ease: CONFIG.reveal.ease,
+        scrollTrigger: { trigger: el, start: CONFIG.reveal.start, once: true },
+      });
     });
   });
 
@@ -171,16 +186,16 @@ function start() {
             .to(fades, { y: 0, opacity: 1, duration: CONFIG.intro.duration, stagger: 0.08, ease: CONFIG.intro.ease }, '<0.15'),
         ),
     });
-    // Puis, au scroll : le titre et le texte s'effacent et la section remonte.
-    gsap.to(content, {
-      opacity: 0,
-      y: CONFIG.intro.exitY,
-      ease: 'none',
-      scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom top', scrub: CONFIG.scrub },
+    // Puis, au scroll (avec une souris) : le titre et le texte s'effacent et la section remonte.
+    mm.add(CONFIG.pointer, () => {
+      gsap.to(content, {
+        opacity: 0,
+        y: CONFIG.intro.exitY,
+        ease: 'none',
+        scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom top', scrub: CONFIG.scrub },
+      });
     });
   }
-
-  const mm = gsap.matchMedia();
 
   // ---------- 2. Chiffres clés : section épinglée, rangée qui défile en X ----------
   const figures = document.querySelector<HTMLElement>('[data-figures]');
@@ -188,6 +203,8 @@ function start() {
     const track = figures.querySelector<HTMLElement>('[data-figures-track]')!;
     const diamonds = figures.querySelectorAll('[data-figures-diamond]');
     mm.add(CONFIG.breakpoints.desktop, () => {
+      // La rangée sur une ligne n'existe que pendant cet effet ; sinon, grille (voir KeyFigures.astro).
+      figures.classList.add('is-horizontal');
       gsap.to(track, {
         x: () => -(track.scrollWidth - innerWidth),
         ease: 'none',
@@ -199,6 +216,7 @@ function start() {
         ease: 'none',
         scrollTrigger: { trigger: figures, start: 'top top', end: CONFIG.figures.end, scrub: CONFIG.scrub, invalidateOnRefresh: true },
       });
+      return () => figures.classList.remove('is-horizontal');
     });
   }
 
@@ -207,11 +225,14 @@ function start() {
   if (values) {
     const track = values.querySelector<HTMLElement>('[data-values-track]')!;
     mm.add(CONFIG.breakpoints.desktop, () => {
+      // Une seule ligne seulement pendant l'effet ; sinon le texte passe à la ligne (ValuesBand.astro).
+      values.classList.add('is-moving');
       gsap.to(track, {
         x: () => -track.scrollWidth * CONFIG.values.travel,
         ease: 'none',
         scrollTrigger: { trigger: values, start: 'top bottom', end: 'bottom top', scrub: CONFIG.scrub, invalidateOnRefresh: true },
       });
+      return () => values.classList.remove('is-moving');
     });
   }
 
@@ -230,16 +251,6 @@ function start() {
         .from(cols, { y: 40, opacity: 0, duration: 0.5, stagger: CONFIG.method.stagger, ease: 'power2.out' }, '>-0.1')
         .to({}, { duration: 0.4 });
     });
-    mm.add(CONFIG.breakpoints.mobile, () => {
-      gsap.from([...extras, ...lines, ...cols], {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: method, start: 'top 75%', once: true },
-      });
-    });
   }
 
   // ---------- 6. Services : titre épinglé à gauche, la liste défile, puis la section s'efface ----------
@@ -251,10 +262,12 @@ function start() {
       // Le titre reste en place (là où il est quand la section atteint le haut) jusqu'à la fin de la liste.
       ScrollTrigger.create({ trigger: services, start: 'top top', end: 'bottom bottom', pin: left, pinSpacing: false, invalidateOnRefresh: true });
     });
-    gsap.to(inner, {
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: { trigger: services, start: CONFIG.services.fadeStart, end: CONFIG.services.fadeEnd, scrub: CONFIG.scrub },
+    mm.add(CONFIG.pointer, () => {
+      gsap.to(inner, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: { trigger: services, start: CONFIG.services.fadeStart, end: CONFIG.services.fadeEnd, scrub: CONFIG.scrub },
+      });
     });
   }
 
@@ -262,9 +275,12 @@ function start() {
   const parallax = document.querySelector<HTMLElement>('[data-parallax]');
   if (parallax) {
     mm.add(CONFIG.breakpoints.desktop, () => {
+      // La photo démarre plus bas seulement pendant l'effet (voir ParallaxImages.astro).
+      parallax.classList.add('is-parallax');
       const scroll = { trigger: parallax, start: 'top bottom', end: 'bottom top', scrub: CONFIG.scrub };
       gsap.to(parallax.querySelector('[data-parallax-photo]'), { y: CONFIG.parallax.photoY, ease: 'none', scrollTrigger: scroll });
       gsap.to(parallax.querySelector('[data-parallax-triangle]'), { y: CONFIG.parallax.triangleY, ease: 'none', scrollTrigger: { ...scroll } });
+      return () => parallax.classList.remove('is-parallax');
     });
   }
 

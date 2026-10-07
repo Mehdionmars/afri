@@ -42,21 +42,26 @@ const line = words.join(' – ');
   .values-copy {
     display: none;
   }
+  /* Une seule ligne qui glisse : seulement pendant l'effet (classe posée par site-motion.ts).
+     Sinon (tactile, mouvement réduit), le texte passe à la ligne et reste entier. */
+  .values.is-moving {
+    padding-inline: 0;
+  }
+  .is-moving .values-track {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+  }
+  .is-moving .values-text {
+    padding-right: 0.3em;
+    font-size: clamp(6rem, 12vw, 13rem);
+  }
+  .is-moving .values-copy {
+    display: inline;
+  }
   @media (min-width: 768px) {
-    .values {
-      padding-inline: 0;
-    }
-    .values-track {
-      display: flex;
-      width: max-content;
-      white-space: nowrap;
-    }
     .values-text {
-      padding-right: 0.3em;
-      font-size: clamp(6rem, 12vw, 13rem);
-    }
-    .values-copy {
-      display: inline;
+      font-size: clamp(3rem, 7vw, 6rem);
     }
   }
 </style>

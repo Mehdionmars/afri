@@ -131,6 +131,7 @@ Les trois bibliothèques sont chargées dans `src/layouts/BaseLayout.astro` en s
 
 - **Lenis** lisse le défilement ; il est synchronisé avec ScrollTrigger (`lenis.on('scroll', ScrollTrigger.update)` et `gsap.ticker`). Les liens d'ancre passent par Lenis, avec la hauteur de l'en-tête en décalage.
 - **Sous 768 px** (`gsap.matchMedia`, l'équivalent actuel de `ScrollTrigger.matchMedia`) : ni épinglage, ni défilement horizontal ; les chiffres clés passent en grille de deux colonnes.
+- **Écrans tactiles** (téléphones, tablettes, y compris iPad) : aucun effet lié au défilement et rien n'est masqué en attendant de défiler. Sur iOS, l'élan du défilement retarde les mises à jour : du contenu masqué n'apparaissait qu'une fois le défilement arrêté. Les effets au scroll sont réservés à la souris (`(hover: hover) and (pointer: fine)`), et la barre d'adresse mobile ne relance plus les calculs (`ignoreMobileResize`).
 - **Mouvement réduit** : ni Lenis, ni animation au scroll ; tout est visible tout de suite.
 - **Sans les CDN** (réseau bloqué) : le site reste complet et lisible, simplement sans animation.
 - Les apparitions jouent sur l'opacité (pas sur `visibility`) : liens et champs restent atteignables au clavier avant d'être apparus.

@@ -120,35 +120,60 @@ const items = values.map((value, i) => ({ value, caption: t.captions[i] }));
     color: #3f4650;
   }
 
-  /* ---------- Ordinateur : une rangée de six chiffres, ~12vw, légende alignée à droite ---------- */
+  /* Tablette, ou ordinateur sans animation : grille de trois colonnes. */
   @media (min-width: 768px) {
-    .figures {
-      justify-content: center;
-      min-height: 100vh;
-      padding: calc(var(--header-h) + 24px) 0 48px;
-    }
     .figures-track {
-      display: flex;
-      width: max-content;
-      gap: 8vw;
-      padding: clamp(24px, 4vh, 48px) max(max(16px, 5vw), calc((100vw - 1240px) / 2));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .figure,
     .figure:nth-child(odd),
-    .figure:nth-child(even),
+    .figure:nth-child(even) {
+      padding: 32px 20px;
+      border-left: 1px solid rgba(15, 35, 64, 0.15);
+    }
+    .figure:nth-child(3n + 1) {
+      padding-left: 0;
+      border-left: 0;
+    }
     .figure:nth-child(n + 3) {
-      align-items: flex-end;
-      padding: 0;
-      border: 0;
+      border-top: 0;
+    }
+    .figure:nth-child(n + 4) {
+      border-top: 1px solid rgba(15, 35, 64, 0.15);
     }
     .figure-value {
-      font-size: min(12vw, 24vh);
+      font-size: clamp(3.5rem, 7vw, 6rem);
     }
-    .figure-caption {
-      max-width: 22ch;
-      font-size: 15px;
-      text-align: right;
-    }
+  }
+
+  /* ---------- Ordinateur avec souris : une rangée de six chiffres, ~12vw, légende alignée à droite.
+     Classe .is-horizontal posée par site-motion.ts seulement pendant le défilement horizontal. ---------- */
+  .figures.is-horizontal {
+    justify-content: center;
+    min-height: 100vh;
+    padding: calc(var(--header-h) + 24px) 0 48px;
+  }
+  .is-horizontal .figures-track {
+    display: flex;
+    width: max-content;
+    gap: 8vw;
+    padding: clamp(24px, 4vh, 48px) max(max(16px, 5vw), calc((100vw - 1240px) / 2));
+  }
+  .is-horizontal .figure,
+  .is-horizontal .figure:nth-child(odd),
+  .is-horizontal .figure:nth-child(even),
+  .is-horizontal .figure:nth-child(n + 3),
+  .is-horizontal .figure:nth-child(3n + 1) {
+    align-items: flex-end;
+    padding: 0;
+    border: 0;
+  }
+  .is-horizontal .figure-value {
+    font-size: min(12vw, 24vh);
+  }
+  .is-horizontal .figure-caption {
+    max-width: 22ch;
+    font-size: 15px;
+    text-align: right;
   }
 
   /* Losanges jaunes qui traversent en sens inverse de la rangée. */
